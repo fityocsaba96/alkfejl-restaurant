@@ -1,108 +1,52 @@
 # Web application of a hungarian restaurant network with home delivery
 
-## Functions
+## Functional requirements
 
-**Guest functions**
-- sign up
-- log in
+- differentiate functions between user roles
 
-**User functions**
-- edit user settings
-- view menu
-- sort menu by category
-- add product to cart
-- place order
-- view user orders and its status
-- review products
+### Guest functions
+- sign up *to become an user*
+- log in *to be able to use non-guest functions*
 
-**Admin functions**
-- view orders for the restaurant that is set in settings
-- change status of order
-- add product
-- remove product
+### User functions
+- edit user settings *to change your preferred restaurant or your address*
+- view menu *to find what you want to order*
+- filter menu by category *to see the products only from your chosen category*
+- add product to cart *to select the products that you want to order*
+- place order *to let the restaurant staff know what you want to order*
+- view user orders and its status *to know what have you already ordered and when will you get your order*
+- review products *to tell others about your opinion of the product*
 
-## Details
+### Admin functions
+- view orders for the restaurant *to find and manage incoming orders*
+- change status of order *to let the customer know when will the order arrive*
+- add product *to let customers know about a new product*
+- remove product *to don't let customers order a discontinued product*
+
+### Details
 - guests can sign up only with a city where there is a restaurant
 - users can review a product only if the user has already ordered it
 - users can place orders only when the restaurant is open
 - the restaurants offer the same menu, but their opening hours may differ
 - the order is made to the restaurant that is set in settings
+- admins can only manage the restaurant that is set in settings
 - contents of the cart are stored in session
 - no delivery cost, no online payment
 
+## Non-functional requirements
+
+- new orders are immediately available for the restaurant staff to process
+- no downtime during opening hours
+- available documentation
+- reliable, fast operation
+- store passwords securely, hashed
+- user friendly user interface
+
 ## Database design
-```sql
-USER (
-    ID IDENTITY PRIMARY KEY,
-    FIRST_NAME VARCHAR(50),
-    LAST_NAME VARCHAR(50),
-    PASSWORD_HASH VARCHAR(60),
-    ZIP_CODE SMALLINT,
-    CITY_ID BIGINT,
-    ADDRESS VARCHAR(50),
-    PHONE_NUMBER VARCHAR(12),
-    RESTAURANT_ID BIGINT,
-    IS_ADMIN BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY(CITY_ID) REFERENCES CITY(ID),
-    FOREIGN KEY(RESTAURANT_ID) REFERENCES RESTAURANT(ID)
-)
-RESTAURANT (
-    ID IDENTITY PRIMARY KEY,
-    ZIP_CODE SMALLINT,
-    CITY_ID BIGINT,
-    ADDRESS VARCHAR(50),
-    OPEN_HOUR_WEEKDAY TINYINT,
-    CLOSE_HOUR_WEEKDAY TINYINT,
-    OPEN_HOUR_WEEKEND TINYINT,
-    CLOSE_HOUR_WEEKEND TINYINT,
-    PHONE_NUMBER VARCHAR(12),
-    FOREIGN KEY(CITY_ID) REFERENCES CITY(ID)
-)
-CITY (
-    ID IDENTITY PRIMARY KEY,
-    NAME VARCHAR(30)
-)
-PRODUCT (
-    ID IDENTITY PRIMARY KEY,
-    NAME VARCHAR(50),
-    CATEGORY_ID BIGINT,
-    DESCRIPTION VARCHAR(300),
-    PRICE SMALLINT,
-    FOREIGN KEY(CATEGORY_ID) REFERENCES CATEGORY(ID)
-)
-CATEGORY (
-    ID IDENTITY PRIMARY KEY,
-    NAME VARCHAR(50)
-)
-REVIEW (
-    ID IDENTITY PRIMARY KEY,
-    CREATE_DATE TIMESTAMP,
-    PRODUCT_ID BIGINT,
-    USER_ID BIGINT,
-    STARS TINYINT,
-    DESCRIPTION VARCHAR(300),
-    FOREIGN KEY(PRODUCT_ID) REFERENCES PRODUCT(ID),
-    FOREIGN KEY(USER_ID) REFERENCES USER(ID)
-)
-ORDER (
-    ID IDENTITY PRIMARY KEY,
-    USER_ID BIGINT,
-    CREATE_DATE TIMESTAMP,
-    NOTE VARCHAR(100),
-    STATUS_ID BIGINT,
-    FOREIGN KEY(USER_ID) REFERENCES USER(ID),
-    FOREIGN KEY(STATUS_ID) REFERENCES STATUS(ID)
-)
-ORDER_PRODUCT (
-    ID IDENTITY PRIMARY KEY,
-    ORDER_ID BIGINT,
-    PRODUCT_ID BIGINT,
-    QUANTITY TINYINT,
-    FOREIGN KEY(ORDER_ID) REFERENCES ORDER(ID),
-    FOREIGN KEY(PRODUCT_ID) REFERENCES PRODUCT(ID)
-)
-STATUS (
-    ID IDENTITY PRIMARY KEY,
-    DESCRIPTION VARCHAR(100)
-)
-```
+
+![Database design](/doc/database_design.png?raw=true)
+
+## Team members
+
+- [Fityó Csaba](https://github.com/fityocsaba96/)
+- Márhoffer Balázs
