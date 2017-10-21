@@ -49,4 +49,4 @@
 ## Team members
 
 - [Fityó Csaba](https://github.com/fityocsaba96/)
-- Márhoffer Balázs
+- [Márhoffer Balázs](https://github.com/marhofferbalazs/)
