@@ -6,7 +6,7 @@
 
 ### Guest functions
 - sign up *to become an user*
-- log in *to be able to use non-guest functions*
+- log in using email and password *to be able to use non-guest functions*
 
 ### User functions
 - edit user settings *to change your preferred restaurant or your address*
@@ -24,6 +24,7 @@
 - remove product *to don't let customers order a discontinued product*
 
 ### Details
+- each email can only be used for one user
 - guests can sign up only with a city where there is a restaurant
 - users can review a product only if the user has already ordered it
 - users can place orders only when the restaurant is open
