@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class OrderProduct extends BaseEntity{
 
     @Column
-    private byte quantity;
+    private Byte quantity;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn

@@ -15,31 +15,32 @@ import java.util.List;
 @EqualsAndHashCode (callSuper = true)
 public class User extends BaseEntity{
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String lastName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String firstName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 60)
     private String passwordHash;
 
     @Column(nullable = false)
-    private int zipCode;
+    private Short zipCode;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 50)
     private String address;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 12)
     private String phoneNumber;
 
     @Column(nullable = false)
-    private boolean isAdmin;
+    private Boolean isAdmin;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn
+    private Restaurant restaurant;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn
     private City city;
-
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
 }

@@ -19,9 +19,9 @@ public class Review extends BaseEntity {
     private Timestamp createDate;
 
     @Column
-    private byte stars;
+    private Byte stars;
 
-    @Column
+    @Column(length = 300)
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

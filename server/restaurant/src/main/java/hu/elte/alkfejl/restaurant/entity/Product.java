@@ -1,6 +1,5 @@
 package hu.elte.alkfejl.restaurant.entity;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,14 +14,14 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = true)
 public class Product extends BaseEntity{
 
-    @Column
+    @Column(length = 50)
     private String Name;
 
-    @Column
+    @Column(length = 300)
     private String description;
 
     @Column
-    private int price;
+    private Short price;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn

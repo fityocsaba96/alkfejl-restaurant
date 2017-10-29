@@ -15,24 +15,24 @@ import javax.persistence.*;
 public class Restaurant extends BaseEntity{
 
     @Column
-    private int zipCode;
+    private Short zipCode;
 
-    @Column
+    @Column(length = 50)
     private String address;
 
     @Column
-    private byte openHourWeekday;
+    private Byte openHourWeekday;
 
     @Column
-    private byte closeHourWeekday;
+    private Byte closeHourWeekday;
 
     @Column
-    private byte openHourWeekend;
+    private Byte openHourWeekend;
 
     @Column
-    private byte closeHourWeekend;
+    private Byte closeHourWeekend;
 
-    @Column
+    @Column(length = 12)
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -15,6 +15,6 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 public class Status extends BaseEntity{
 
-    @Column
+    @Column(length = 100)
     private String description;
 }

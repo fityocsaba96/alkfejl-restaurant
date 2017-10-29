@@ -13,20 +13,20 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "order_table")
+@Table(name = "`ORDER`")
 public class Order extends BaseEntity {
 
     @Column
     private Timestamp createDate;
 
-    @Column
+    @Column(length = 100)
     private String note;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "STATUS_ID")
+    @JoinColumn
     private Status status;
 }

@@ -15,6 +15,6 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 public class Category extends BaseEntity{
 
-    @Column
+    @Column(length = 50)
     private String name;
 }

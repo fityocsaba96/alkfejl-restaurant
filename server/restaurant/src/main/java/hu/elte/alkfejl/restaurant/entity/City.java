@@ -15,6 +15,6 @@ import javax.persistence.Entity;
 @EqualsAndHashCode(callSuper = true)
 public class City extends BaseEntity{
 
-    @Column
+    @Column(length = 30)
     private String name;
 }
