@@ -36,7 +36,7 @@ public class User extends BaseEntity{
     @Column(nullable = false, length = 12)
     private String phoneNumber;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE", nullable = false)
     private Boolean isAdmin;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
