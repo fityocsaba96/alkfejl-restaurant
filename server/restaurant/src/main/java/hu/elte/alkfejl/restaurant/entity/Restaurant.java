@@ -40,8 +40,4 @@ public class Restaurant extends BaseEntity{
     @ManyToOne
     @JoinColumn
     private City city;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-    private List<User> users;
 }

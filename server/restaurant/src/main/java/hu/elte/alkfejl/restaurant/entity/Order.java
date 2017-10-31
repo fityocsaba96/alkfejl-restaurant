@@ -31,8 +31,4 @@ public class Order extends BaseEntity {
     @ManyToOne
     @JoinColumn
     private Status status;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    private List<OrderProduct> orderProducts;
 }

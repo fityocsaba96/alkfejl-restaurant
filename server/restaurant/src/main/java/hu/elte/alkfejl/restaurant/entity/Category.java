@@ -21,8 +21,4 @@ public class Category extends BaseEntity{
 
     @Column(length = 50)
     private String name;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private List<Product> products;
 }

@@ -48,14 +48,6 @@ public class User extends BaseEntity{
     @JoinColumn
     private City city;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Order> orders;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Review> reviews;
-
     public enum Role {
         GUEST, USER, ADMIN
     }

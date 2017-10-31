@@ -21,8 +21,4 @@ public class Status extends BaseEntity{
 
     @Column(length = 100)
     private String description;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
-    private List<Order> orders;
 }

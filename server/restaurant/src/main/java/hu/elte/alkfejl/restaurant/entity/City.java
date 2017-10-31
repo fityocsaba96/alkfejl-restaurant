@@ -21,12 +21,4 @@ public class City extends BaseEntity{
 
     @Column(length = 30)
     private String name;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
-    private List<User> users;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
-    private List<Restaurant> restaurants;
 }

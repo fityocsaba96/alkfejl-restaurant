@@ -31,9 +31,5 @@ public class Product extends BaseEntity{
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private List<OrderProduct> orderProducts;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<Review> reviews;
 }
