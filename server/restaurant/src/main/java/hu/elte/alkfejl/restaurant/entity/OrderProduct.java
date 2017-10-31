@@ -17,11 +17,11 @@ public class OrderProduct extends BaseEntity{
     @Column
     private Byte quantity;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn
     private Order order;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn
     private Product product;
 }
