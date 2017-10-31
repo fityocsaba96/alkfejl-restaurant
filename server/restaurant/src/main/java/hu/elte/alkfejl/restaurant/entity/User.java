@@ -46,4 +46,8 @@ public class User extends BaseEntity{
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn
     private City city;
+
+    public enum Role {
+        GUEST, USER, ADMIN
+    }
 }
