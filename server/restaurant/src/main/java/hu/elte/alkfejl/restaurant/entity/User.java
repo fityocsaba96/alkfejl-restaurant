@@ -1,13 +1,13 @@
 package hu.elte.alkfejl.restaurant.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.*;
 
 @Data
 @Entity
@@ -16,34 +16,51 @@ import java.util.List;
 @EqualsAndHashCode (callSuper = true)
 public class User extends BaseEntity{
 
-    @Column(nullable = false, length = 50)
+    @Email(message = "Invalid email format")
+    @NotNull
+    @Column(length = 50)
     private String email;
 
-    @Column(nullable = false, length = 50)
+    @Size(min = 1, message = "Last name should not be blank")
+    @NotNull
+    @Column(length = 50)
     private String lastName;
 
-    @Column(nullable = false, length = 50)
+    @Size(min = 1, message = "First name should not be blank")
+    @NotNull
+    @Column(length = 50)
     private String firstName;
 
-    @Column(nullable = false, length = 60)
+    @Size(min = 6, message = "Password should be at least 6 characters long")
+    @NotNull
+    @Column(length = 60)
     private String passwordHash;
 
-    @Column(nullable = false)
+    @Min(value = 1000, message = "ZIP code should be 4 characters long")
+    @Max(value = 9999, message = "ZIP code should be 4 characters long")
+    @NotNull
+    @Column
     private Short zipCode;
 
-    @Column(nullable = false, length = 50)
+    @Size(min = 1, message = "Address should not be blank")
+    @NotNull
+    @Column(length = 50)
     private String address;
 
-    @Column(nullable = false, length = 12)
+    @Size(min = 10, max = 12, message = "Phone number should be between 10 and 12 characters long")
+    @NotNull
+    @Column(length = 12)
     private String phoneNumber;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE", nullable = false)
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isAdmin;
 
+    @NotNull
     @ManyToOne
     @JoinColumn
     private Restaurant restaurant;
 
+    @NotNull
     @ManyToOne
     @JoinColumn
     private City city;
