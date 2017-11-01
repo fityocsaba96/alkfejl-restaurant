@@ -18,4 +18,8 @@ public class ProductService {
     public Iterable<Product> list() {
         return productRepository.findAll();
     }
+
+    public Iterable<Product> listByCategory(Long id) {
+        return productRepository.findAllByCategory_Id(id);
+    }
 }
