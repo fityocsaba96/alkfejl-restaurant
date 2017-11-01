@@ -5,9 +5,7 @@ import hu.elte.alkfejl.restaurant.entity.Product;
 import hu.elte.alkfejl.restaurant.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static hu.elte.alkfejl.restaurant.entity.User.Role.ADMIN;
 import static hu.elte.alkfejl.restaurant.entity.User.Role.USER;
@@ -34,5 +32,11 @@ public class ProductController {
     private ResponseEntity<Iterable<Product>> listByCategory(@PathVariable Long id) {
         Iterable<Product> list = productService.listByCategory(id);
         return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("/products")
+    private ResponseEntity<Product> addNewProduct(@RequestBody Product product){
+        Product newProduct=productService.addNewProduct(product);
+        return ResponseEntity.ok(newProduct);
     }
 }
