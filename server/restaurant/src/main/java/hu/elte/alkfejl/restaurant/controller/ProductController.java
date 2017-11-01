@@ -34,6 +34,7 @@ public class ProductController {
         return ResponseEntity.ok(list);
     }
 
+    @Role(ADMIN)
     @PostMapping("/products")
     private ResponseEntity<Product> addNewProduct(@RequestBody Product product){
         Product newProduct=productService.addNewProduct(product);

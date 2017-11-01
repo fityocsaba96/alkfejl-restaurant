@@ -1,6 +1,8 @@
 package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.User;
+import hu.elte.alkfejl.restaurant.repository.CityRepository;
+import hu.elte.alkfejl.restaurant.repository.RestaurantRepository;
 import hu.elte.alkfejl.restaurant.repository.UserRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,12 @@ public class UserService {
         this.restaurantService = restaurantService;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private CityRepository cityRepository;
 
     private String encodePassword(String password) {
         return passwordEncoder.encode(password);
@@ -61,6 +69,14 @@ public class UserService {
         user.setId(this.user.getId());
         user.setIsAdmin(this.user.getIsAdmin());
         user.setPasswordHash(encodePassword(user.getPasswordHash()));
+        return user;
+    }
+
+    public User register(User user){
+        user.setPasswordHash(encodePassword(user.getPasswordHash()));
+        user.setRestaurant(restaurantRepository.findOne(user.getRestaurant().getId()));
+        user.setCity(cityRepository.findOne(user.getCity().getId()));
+        this.user=userRepository.save(user);
         return user;
     }
 }

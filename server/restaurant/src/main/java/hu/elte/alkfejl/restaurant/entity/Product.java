@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -17,12 +19,15 @@ import java.util.List;
 public class Product extends BaseEntity{
 
     @Column(length = 50)
+    @NotNull
+    @Size(min = 1, message = "name should not be blank")
     private String name;
 
     @Column(length = 300)
     private String description;
 
     @Column
+    @NotNull
     private Short price;
 
     @ManyToOne
