@@ -1,9 +1,6 @@
 package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.User;
-import hu.elte.alkfejl.restaurant.exception.UserNotValidException;
-import hu.elte.alkfejl.restaurant.repository.CityRepository;
-import hu.elte.alkfejl.restaurant.repository.RestaurantRepository;
 import hu.elte.alkfejl.restaurant.repository.UserRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +26,6 @@ public class UserService {
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-
-    @Autowired
-    private CityRepository cityRepository;
-
     private String encodePassword(String password) {
         return passwordEncoder.encode(password);
     }
@@ -55,12 +46,15 @@ public class UserService {
         return user;
     }
 
-    public User update(User user) {
+    private void assertUserCitySameAsRestaurantCity(User user) {
         if (!restaurantService.findOne(user.getRestaurant().getId()).getCity().getId()
                 .equals(user.getCity().getId())) {
             throw new IllegalArgumentException();
         }
+    }
 
+    public User update(User user) {
+        assertUserCitySameAsRestaurantCity(user);
         User updated = userRepository.save(restore(user));
         this.user = updated;
         return updated;
@@ -74,20 +68,28 @@ public class UserService {
     }
 
     public User register(User user){
+        assertUserCitySameAsRestaurantCity(user);
+        this.user = userRepository.save(secure(user));
+        return this.user;
+    }
+
+    private User secure(User user) {
+        user.setId(null);
+        user.setIsAdmin(false);
         user.setPasswordHash(encodePassword(user.getPasswordHash()));
-        user.setRestaurant(restaurantRepository.findOne(user.getRestaurant().getId()));
-        user.setCity(cityRepository.findOne(user.getCity().getId()));
-        this.user=userRepository.save(user);
         return user;
     }
 
-    public User login(User user) throws UserNotValidException {
+    public User login(User user) {
+        if (user.getPasswordHash() == null || user.getEmail() == null) {
+            throw new IllegalArgumentException();
+        }
         if(userRepository.findByEmail(user.getEmail()).isPresent()) {
             User dbStoredUser = userRepository.findByEmail(user.getEmail()).get();
-            if (dbStoredUser != null && passwordMatches(user.getPasswordHash(), dbStoredUser.getPasswordHash())) {
+            if (passwordMatches(user.getPasswordHash(), dbStoredUser.getPasswordHash())) {
                 return this.user = dbStoredUser;
             }
         }
-        throw new UserNotValidException();
+        throw new IllegalArgumentException();
     }
 }

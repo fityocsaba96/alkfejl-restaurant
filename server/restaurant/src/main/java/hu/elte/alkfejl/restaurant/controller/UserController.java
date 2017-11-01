@@ -2,7 +2,6 @@ package hu.elte.alkfejl.restaurant.controller;
 
 import hu.elte.alkfejl.restaurant.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.User;
-import hu.elte.alkfejl.restaurant.exception.UserNotValidException;
 import hu.elte.alkfejl.restaurant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import static hu.elte.alkfejl.restaurant.entity.User.Role.ADMIN;
+import static hu.elte.alkfejl.restaurant.entity.User.Role.GUEST;
 import static hu.elte.alkfejl.restaurant.entity.User.Role.USER;
 
 @RestController
@@ -37,21 +37,28 @@ public class UserController {
         try {
             User updated = userService.update(user);
             return ResponseEntity.ok(updated);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
+    @Role(GUEST)
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        return ResponseEntity.ok(userService.register(user));
+    public ResponseEntity<User> register(@RequestBody @Valid User user) {
+        try {
+            User registered = userService.register(user);
+            return ResponseEntity.ok(registered);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
+    @Role(GUEST)
     @PostMapping("/login")
     public ResponseEntity<User> login( @RequestBody User user) {
         try {
             return ResponseEntity.ok(userService.login(user));
-        } catch (UserNotValidException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }

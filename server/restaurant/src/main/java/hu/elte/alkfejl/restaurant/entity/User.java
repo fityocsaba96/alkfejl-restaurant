@@ -18,7 +18,7 @@ public class User extends BaseEntity{
 
     @Email(message = "Invalid email format")
     @NotNull
-    @Column(length = 50)
+    @Column(length = 50, unique = true)
     private String email;
 
     @Size(min = 1, message = "Last name should not be blank")

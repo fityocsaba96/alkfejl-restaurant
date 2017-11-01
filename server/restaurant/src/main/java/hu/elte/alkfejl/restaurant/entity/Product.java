@@ -20,16 +20,18 @@ public class Product extends BaseEntity{
 
     @Column(length = 50)
     @NotNull
-    @Size(min = 1, message = "name should not be blank")
+    @Size(min = 1, message = "Name should not be blank")
     private String name;
 
     @Column(length = 300)
+    @NotNull
     private String description;
 
     @Column
     @NotNull
     private Short price;
 
+    @NotNull
     @ManyToOne
     @JoinColumn
     private Category category;

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static hu.elte.alkfejl.restaurant.entity.User.Role.ADMIN;
 import static hu.elte.alkfejl.restaurant.entity.User.Role.USER;
 
@@ -36,7 +38,7 @@ public class ProductController {
 
     @Role(ADMIN)
     @PostMapping("/products")
-    private ResponseEntity<Product> addNewProduct(@RequestBody Product product){
+    private ResponseEntity<Product> addNewProduct(@RequestBody @Valid Product product){
         Product newProduct=productService.addNewProduct(product);
         return ResponseEntity.ok(newProduct);
     }
