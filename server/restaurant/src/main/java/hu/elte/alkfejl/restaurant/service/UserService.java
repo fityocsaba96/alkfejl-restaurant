@@ -1,6 +1,7 @@
 package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.User;
+import hu.elte.alkfejl.restaurant.exception.UserNotValidException;
 import hu.elte.alkfejl.restaurant.repository.CityRepository;
 import hu.elte.alkfejl.restaurant.repository.RestaurantRepository;
 import hu.elte.alkfejl.restaurant.repository.UserRepository;
@@ -78,5 +79,15 @@ public class UserService {
         user.setCity(cityRepository.findOne(user.getCity().getId()));
         this.user=userRepository.save(user);
         return user;
+    }
+
+    public User login(User user) throws UserNotValidException {
+        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
+            User dbStoredUser = userRepository.findByEmail(user.getEmail()).get();
+            if (dbStoredUser != null && passwordMatches(user.getPasswordHash(), dbStoredUser.getPasswordHash())) {
+                return this.user = dbStoredUser;
+            }
+        }
+        throw new UserNotValidException();
     }
 }

@@ -2,6 +2,7 @@ package hu.elte.alkfejl.restaurant.controller;
 
 import hu.elte.alkfejl.restaurant.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.User;
+import hu.elte.alkfejl.restaurant.exception.UserNotValidException;
 import hu.elte.alkfejl.restaurant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +45,14 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
         return ResponseEntity.ok(userService.register(user));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> login( @RequestBody User user) {
+        try {
+            return ResponseEntity.ok(userService.login(user));
+        } catch (UserNotValidException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
