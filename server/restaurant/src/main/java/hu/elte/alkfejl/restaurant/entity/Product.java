@@ -17,7 +17,7 @@ import java.util.List;
 public class Product extends BaseEntity{
 
     @Column(length = 50)
-    private String Name;
+    private String name;
 
     @Column(length = 300)
     private String description;
