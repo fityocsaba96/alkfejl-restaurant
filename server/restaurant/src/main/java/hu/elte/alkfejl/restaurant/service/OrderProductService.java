@@ -21,4 +21,8 @@ public class OrderProductService {
     public List<OrderProduct> listByOrder(Order order) {
         return orderProductRepository.findAllByOrder(order);
     }
+
+    public Iterable<OrderProduct> save(Iterable<OrderProduct> orderProducts) {
+        return orderProductRepository.save(orderProducts);
+    }
 }

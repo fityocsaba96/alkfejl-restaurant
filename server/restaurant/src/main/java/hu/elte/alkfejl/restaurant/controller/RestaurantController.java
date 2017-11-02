@@ -29,4 +29,11 @@ public class RestaurantController {
         Iterable<Restaurant> list = restaurantService.listByCity(id);
         return ResponseEntity.ok(list);
     }
+
+    @Role({ADMIN, USER, GUEST})
+    @GetMapping("/restaurants")
+    private ResponseEntity<Iterable<Restaurant>> list() {
+        Iterable<Restaurant> list = restaurantService.list();
+        return ResponseEntity.ok(list);
+    }
 }

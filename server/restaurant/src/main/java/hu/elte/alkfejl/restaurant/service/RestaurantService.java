@@ -19,6 +19,10 @@ public class RestaurantService {
         return restaurantRepository.findAllByCity_Id(id);
     }
 
+    public Iterable<Restaurant> list() {
+        return restaurantRepository.findAll();
+    }
+
     public Restaurant findOne(Long id) {
         return restaurantRepository.findOne(id);
     }

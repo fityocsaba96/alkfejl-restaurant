@@ -1,13 +1,11 @@
 package hu.elte.alkfejl.restaurant.service;
 
-import hu.elte.alkfejl.restaurant.entity.Order;
-import hu.elte.alkfejl.restaurant.entity.OrderProduct;
-import hu.elte.alkfejl.restaurant.entity.Restaurant;
-import hu.elte.alkfejl.restaurant.entity.User;
+import hu.elte.alkfejl.restaurant.entity.*;
 import hu.elte.alkfejl.restaurant.repository.OrderRepository;
 import hu.elte.alkfejl.restaurant.repository.RestaurantRepository;
 import hu.elte.alkfejl.restaurant.repository.StatusRepository;
 import hu.elte.alkfejl.restaurant.repository.UserRepository;
+import hu.elte.alkfejl.restaurant.request.OrderRequest;
 import hu.elte.alkfejl.restaurant.response.OrderResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -15,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -81,5 +81,49 @@ public class OrderService {
             return orderRepository.save(currentOrder);
         }
         return orderRepository.save(currentOrder);
+    }
+
+    public Order create(OrderRequest orderRequest) {
+        if (orderRequest.getOrderProducts().isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        assertUsersRestaurantIsOpen();
+
+        ModelMapper modelMapper = new ModelMapper();
+        Order order = modelMapper.map(orderRequest, Order.class);
+        order.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        order.setUser(userService.getUser());
+        Status status = new Status();
+        status.setId(1L);
+        order.setStatus(status);
+
+        order = orderRepository.save(order);
+
+        Type listType = new TypeToken<List<OrderProduct>>() {}.getType();
+        List<OrderProduct> orderProducts = modelMapper.map(orderRequest.getOrderProducts(), listType);
+        for (OrderProduct orderProduct : orderProducts) {
+            orderProduct.setOrder(order);
+        }
+
+        orderProductService.save(orderProducts);
+
+        return order;
+    }
+
+    private void assertUsersRestaurantIsOpen() {
+        Restaurant restaurant = userService.getUser().getRestaurant();
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+        if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
+            if (restaurant.getOpenHourWeekend() > hourOfDay || restaurant.getCloseHourWeekend() <= hourOfDay) {
+                throw new IllegalArgumentException();
+            }
+        } else {
+            if (restaurant.getOpenHourWeekday() > hourOfDay || restaurant.getCloseHourWeekday() <= hourOfDay) {
+                throw new IllegalArgumentException();
+            }
+        }
     }
 }

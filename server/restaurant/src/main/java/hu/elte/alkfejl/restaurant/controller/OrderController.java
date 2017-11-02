@@ -2,7 +2,7 @@ package hu.elte.alkfejl.restaurant.controller;
 
 import hu.elte.alkfejl.restaurant.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.Order;
-import hu.elte.alkfejl.restaurant.entity.Restaurant;
+import hu.elte.alkfejl.restaurant.request.OrderRequest;
 import hu.elte.alkfejl.restaurant.response.OrderResponse;
 import hu.elte.alkfejl.restaurant.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +44,16 @@ public class OrderController {
     private ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order order) {
         Order updated = orderService.update(id, order);
         return ResponseEntity.ok(updated);
+    }
+
+    @Role(USER)
+    @PostMapping("/order")
+    private ResponseEntity<Order> create(@RequestBody @Valid OrderRequest orderRequest) {
+        try {
+            Order order = orderService.create(orderRequest);
+            return ResponseEntity.ok(order);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
