@@ -1,10 +1,16 @@
 package hu.elte.alkfejl.restaurant.service;
 
+import hu.elte.alkfejl.restaurant.entity.OrderProduct;
 import hu.elte.alkfejl.restaurant.entity.Product;
+import hu.elte.alkfejl.restaurant.entity.Review;
 import hu.elte.alkfejl.restaurant.repository.CategoryRepository;
+import hu.elte.alkfejl.restaurant.repository.OrderProductRepository;
 import hu.elte.alkfejl.restaurant.repository.ProductRepository;
+import hu.elte.alkfejl.restaurant.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -18,6 +24,12 @@ public class ProductService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private OrderProductRepository orderProductRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     public Iterable<Product> list() {
         return productRepository.findAll();
@@ -36,5 +48,17 @@ public class ProductService {
 
     public Product findOne(Long id) {
         return productRepository.findOne(id);
+    }
+
+    public void deleteProduct(Long id){
+        Product deletedProduct=productRepository.findOne((long) 0);
+        Product product=productRepository.findOne(id);
+        if(product!=null && product.getId()!=0) {
+            List<OrderProduct> orderProducts = orderProductRepository.findAllByProduct(product);
+            for (OrderProduct orderProduct : orderProducts) {
+                orderProduct.setProduct(deletedProduct);
+            }
+            productRepository.delete(id);
+        }
     }
 }
