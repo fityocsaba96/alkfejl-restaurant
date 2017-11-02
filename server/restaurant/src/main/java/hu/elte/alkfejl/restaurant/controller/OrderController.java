@@ -38,4 +38,11 @@ public class OrderController {
         Iterable<Order> orders=orderService.listByRestaurant(id);
         return ResponseEntity.ok(orders);
     }
+
+    @Role(ADMIN)
+    @PutMapping("/orders/{id}")
+    private ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order order) {
+        Order updated = orderService.update(id, order);
+        return ResponseEntity.ok(updated);
+    }
 }

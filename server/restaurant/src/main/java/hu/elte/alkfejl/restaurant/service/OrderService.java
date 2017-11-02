@@ -6,6 +6,7 @@ import hu.elte.alkfejl.restaurant.entity.Restaurant;
 import hu.elte.alkfejl.restaurant.entity.User;
 import hu.elte.alkfejl.restaurant.repository.OrderRepository;
 import hu.elte.alkfejl.restaurant.repository.RestaurantRepository;
+import hu.elte.alkfejl.restaurant.repository.StatusRepository;
 import hu.elte.alkfejl.restaurant.repository.UserRepository;
 import hu.elte.alkfejl.restaurant.response.OrderResponse;
 import org.modelmapper.ModelMapper;
@@ -35,6 +36,9 @@ public class OrderService {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private StatusRepository statusRepository;
 
     public List<OrderResponse> listMyOwn() {
         List<Order> list = orderRepository.findAllByUser(userService.getUser());
@@ -68,5 +72,14 @@ public class OrderService {
                 orders.addAll(orderRepository.findAllByUser(user));
             }
             return orders;
+    }
+
+    public Order update(Long id, Order updatedOrder){
+        Order currentOrder=orderRepository.findOne(id);
+        if(statusRepository.findOne(updatedOrder.getStatus().getId())!=null){
+            currentOrder.setStatus(statusRepository.findOne(updatedOrder.getStatus().getId()));
+            return orderRepository.save(currentOrder);
+        }
+        return orderRepository.save(currentOrder);
     }
 }
