@@ -46,4 +46,8 @@ public class OrderService {
         }
         return listResponse;
     }
+
+    public boolean hasUserOrderedProduct(Long userId, Long productId) {
+        return orderRepository.countByUserAndOrderProduct(userId, productId) != 0;
+    }
 }

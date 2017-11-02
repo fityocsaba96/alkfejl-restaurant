@@ -6,6 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Data
@@ -18,9 +22,14 @@ public class Review extends BaseEntity {
     @Column
     private Timestamp createDate;
 
+    @Min(value = 1, message = "Minimum is 1 stars")
+    @Max(value = 5, message = "Maximum is 5 stars")
+    @NotNull
     @Column
     private Byte stars;
 
+    @Size(min = 10, message = "Minimum of 10 characters required for the description")
+    @NotNull
     @Column(length = 300)
     private String description;
 
