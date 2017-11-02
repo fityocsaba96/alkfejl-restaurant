@@ -2,7 +2,11 @@ package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.Order;
 import hu.elte.alkfejl.restaurant.entity.OrderProduct;
+import hu.elte.alkfejl.restaurant.entity.Restaurant;
+import hu.elte.alkfejl.restaurant.entity.User;
 import hu.elte.alkfejl.restaurant.repository.OrderRepository;
+import hu.elte.alkfejl.restaurant.repository.RestaurantRepository;
+import hu.elte.alkfejl.restaurant.repository.UserRepository;
 import hu.elte.alkfejl.restaurant.response.OrderResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -19,13 +23,18 @@ public class OrderService {
     private OrderRepository orderRepository;
     private UserService userService;
     private OrderProductService orderProductService;
+    private UserRepository userRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, UserService userService, OrderProductService orderProductService) {
+    public OrderService(OrderRepository orderRepository, UserService userService, OrderProductService orderProductService, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.userService = userService;
         this.orderProductService = orderProductService;
+        this.userRepository=userRepository;
     }
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     public List<OrderResponse> listMyOwn() {
         List<Order> list = orderRepository.findAllByUser(userService.getUser());
@@ -49,5 +58,15 @@ public class OrderService {
 
     public boolean hasUserOrderedProduct(Long userId, Long productId) {
         return orderRepository.countByUserAndOrderProduct(userId, productId) != 0;
+    }
+
+    public Iterable<Order> listByRestaurant(Long id){
+            Restaurant dbStroedRestaurant = restaurantRepository.findOne(id);
+            List<User> usersInRestaurant = userRepository.findAllByRestaurant(dbStroedRestaurant);
+            List<Order> orders = new ArrayList<>();
+            for (User user : usersInRestaurant) {
+                orders.addAll(orderRepository.findAllByUser(user));
+            }
+            return orders;
     }
 }
