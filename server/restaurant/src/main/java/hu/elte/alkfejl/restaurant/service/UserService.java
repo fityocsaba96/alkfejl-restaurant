@@ -1,5 +1,6 @@
 package hu.elte.alkfejl.restaurant.service;
 
+import hu.elte.alkfejl.restaurant.entity.Restaurant;
 import hu.elte.alkfejl.restaurant.entity.User;
 import hu.elte.alkfejl.restaurant.repository.UserRepository;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
+
+import java.util.List;
 
 @Service
 @SessionScope
@@ -91,5 +94,9 @@ public class UserService {
             }
         }
         throw new IllegalArgumentException();
+    }
+
+    public List<User> findAllByRestaurant(Restaurant restaurant) {
+        return userRepository.findAllByRestaurant(restaurant);
     }
 }

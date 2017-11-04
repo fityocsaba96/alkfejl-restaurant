@@ -16,6 +16,10 @@ public class CategoryService {
     }
 
     public Iterable<Category> list() {
-        return categoryRepository.findAll();
+        return categoryRepository.findAllByIdIsNot(0L);
+    }
+
+    public Category findOne(Long id) {
+        return categoryRepository.findOne(id);
     }
 }

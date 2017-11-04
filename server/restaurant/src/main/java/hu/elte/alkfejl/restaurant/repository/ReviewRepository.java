@@ -12,7 +12,5 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
     List<Review> findAllByProduct_Id(Long id);
 
-    List<Review> findAllByProduct(Product product);
-
     int countByUser_IdAndProduct_Id(Long userId, Long productId);
 }

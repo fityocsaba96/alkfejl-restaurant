@@ -2,6 +2,7 @@ package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.Order;
 import hu.elte.alkfejl.restaurant.entity.OrderProduct;
+import hu.elte.alkfejl.restaurant.entity.Product;
 import hu.elte.alkfejl.restaurant.repository.OrderProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,9 @@ public class OrderProductService {
 
     public Iterable<OrderProduct> save(Iterable<OrderProduct> orderProducts) {
         return orderProductRepository.save(orderProducts);
+    }
+
+    public List<OrderProduct> findAllByProduct(Product product) {
+        return orderProductRepository.findAllByProduct(product);
     }
 }

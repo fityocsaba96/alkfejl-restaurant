@@ -2,9 +2,6 @@ package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.*;
 import hu.elte.alkfejl.restaurant.repository.OrderRepository;
-import hu.elte.alkfejl.restaurant.repository.RestaurantRepository;
-import hu.elte.alkfejl.restaurant.repository.StatusRepository;
-import hu.elte.alkfejl.restaurant.repository.UserRepository;
 import hu.elte.alkfejl.restaurant.request.OrderRequest;
 import hu.elte.alkfejl.restaurant.response.OrderResponse;
 import org.modelmapper.ModelMapper;
@@ -24,21 +21,16 @@ public class OrderService {
     private OrderRepository orderRepository;
     private UserService userService;
     private OrderProductService orderProductService;
-    private UserRepository userRepository;
+    private StatusService statusService;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository, UserService userService, OrderProductService orderProductService, UserRepository userRepository) {
+    public OrderService(OrderRepository orderRepository, UserService userService,
+                        OrderProductService orderProductService, StatusService statusService) {
         this.orderRepository = orderRepository;
         this.userService = userService;
         this.orderProductService = orderProductService;
-        this.userRepository=userRepository;
+        this.statusService = statusService;
     }
-
-    @Autowired
-    private RestaurantRepository restaurantRepository;
-
-    @Autowired
-    private StatusRepository statusRepository;
 
     public List<OrderResponse> listMyOwn() {
         List<Order> list = orderRepository.findAllByUser(userService.getUser());
@@ -64,23 +56,23 @@ public class OrderService {
         return orderRepository.countByUserAndOrderProduct(userId, productId) != 0;
     }
 
-    public Iterable<Order> listByRestaurant(Long id){
-            Restaurant dbStroedRestaurant = restaurantRepository.findOne(id);
-            List<User> usersInRestaurant = userRepository.findAllByRestaurant(dbStroedRestaurant);
-            List<Order> orders = new ArrayList<>();
-            for (User user : usersInRestaurant) {
-                orders.addAll(orderRepository.findAllByUser(user));
-            }
-            return orders;
+    public Iterable<Order> listByOwnRestaurant(){
+        List<User> usersInRestaurant = userService.findAllByRestaurant(userService.getUser().getRestaurant());
+        List<Order> orders = new ArrayList<>();
+        for (User user : usersInRestaurant) {
+            orders.addAll(orderRepository.findAllByUser(user));
+        }
+        return orders;
     }
 
     public Order update(Long id, Order updatedOrder){
         Order currentOrder=orderRepository.findOne(id);
-        if(statusRepository.findOne(updatedOrder.getStatus().getId())!=null){
-            currentOrder.setStatus(statusRepository.findOne(updatedOrder.getStatus().getId()));
+        Status newStatus = statusService.findOne(updatedOrder.getStatus().getId());
+        if(newStatus!=null){
+            currentOrder.setStatus(newStatus);
             return orderRepository.save(currentOrder);
         }
-        return orderRepository.save(currentOrder);
+        throw new IllegalArgumentException();
     }
 
     public Order create(OrderRequest orderRequest) {

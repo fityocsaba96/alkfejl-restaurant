@@ -16,23 +16,19 @@ import java.util.List;
 public class ProductService {
 
     private ProductRepository productRepository;
+    private CategoryService categoryService;
+    private OrderProductService orderProductService;
 
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, CategoryService categoryService,
+                          OrderProductService orderProductService) {
         this.productRepository = productRepository;
+        this.categoryService = categoryService;
+        this.orderProductService = orderProductService;
     }
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private OrderProductRepository orderProductRepository;
-
-    @Autowired
-    private ReviewRepository reviewRepository;
-
     public Iterable<Product> list() {
-        return productRepository.findAll();
+        return productRepository.findAllByIdIsNot(0L);
     }
 
     public Iterable<Product> listByCategory(Long id) {
@@ -41,7 +37,7 @@ public class ProductService {
 
     public Product addNewProduct(Product product){
         if(product.getCategory().getId()!=null){
-            product.setCategory(categoryRepository.findOne(product.getCategory().getId()));
+            product.setCategory(categoryService.findOne(product.getCategory().getId()));
         }
         return productRepository.save(product);
     }
@@ -54,11 +50,13 @@ public class ProductService {
         Product deletedProduct=productRepository.findOne((long) 0);
         Product product=productRepository.findOne(id);
         if(product!=null && product.getId()!=0) {
-            List<OrderProduct> orderProducts = orderProductRepository.findAllByProduct(product);
+            List<OrderProduct> orderProducts = orderProductService.findAllByProduct(product);
             for (OrderProduct orderProduct : orderProducts) {
                 orderProduct.setProduct(deletedProduct);
             }
             productRepository.delete(id);
+        } else {
+            throw new IllegalArgumentException();
         }
     }
 }

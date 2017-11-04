@@ -43,9 +43,14 @@ public class ProductController {
         return ResponseEntity.ok(newProduct);
     }
 
-    @DeleteMapping("/products/{id}")
+    @Role(ADMIN)
+    @DeleteMapping("/product/{id}")
     private ResponseEntity delete(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ResponseEntity.ok().build();
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

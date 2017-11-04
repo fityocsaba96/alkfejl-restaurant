@@ -27,6 +27,7 @@ public class Order extends BaseEntity {
     @JoinColumn
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn
     private Status status;

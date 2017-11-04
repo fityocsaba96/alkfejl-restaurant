@@ -33,17 +33,21 @@ public class OrderController {
     }
 
     @Role(ADMIN)
-    @PostMapping("/orders/{id}")
-    private ResponseEntity<Iterable<Order>> listByRestaurant(@PathVariable Long id){
-        Iterable<Order> orders=orderService.listByRestaurant(id);
+    @GetMapping("/orders/incoming")
+    private ResponseEntity<Iterable<Order>> listByOwnRestaurant(){
+        Iterable<Order> orders=orderService.listByOwnRestaurant();
         return ResponseEntity.ok(orders);
     }
 
     @Role(ADMIN)
-    @PutMapping("/orders/{id}")
-    private ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order order) {
-        Order updated = orderService.update(id, order);
-        return ResponseEntity.ok(updated);
+    @PutMapping("/order/{id}")
+    private ResponseEntity<Order> update(@PathVariable Long id, @RequestBody @Valid Order order) {
+        try {
+            Order updated = orderService.update(id, order);
+            return ResponseEntity.ok(updated);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @Role(USER)
