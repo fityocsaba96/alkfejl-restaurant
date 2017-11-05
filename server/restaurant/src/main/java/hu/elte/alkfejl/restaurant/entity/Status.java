@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Status extends BaseEntity{
+public class Status extends BaseEntity {
 
     @Column(length = 100)
     private String description;

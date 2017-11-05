@@ -1,4 +1,4 @@
-package hu.elte.alkfejl.restaurant.annotation;
+package hu.elte.alkfejl.restaurant.service.annotation;
 
 import hu.elte.alkfejl.restaurant.entity.User;
 

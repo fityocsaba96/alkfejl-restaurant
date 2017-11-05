@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class OrderProduct extends BaseEntity{
+public class OrderProduct extends BaseEntity {
 
     @Column
     private Byte quantity;

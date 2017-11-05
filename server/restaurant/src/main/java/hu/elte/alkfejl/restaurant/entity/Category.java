@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Category extends BaseEntity{
+public class Category extends BaseEntity {
 
     @Column(length = 50)
     private String name;

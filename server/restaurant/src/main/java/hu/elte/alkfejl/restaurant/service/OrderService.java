@@ -2,8 +2,8 @@ package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.*;
 import hu.elte.alkfejl.restaurant.repository.OrderRepository;
-import hu.elte.alkfejl.restaurant.request.OrderRequest;
-import hu.elte.alkfejl.restaurant.response.OrderResponse;
+import hu.elte.alkfejl.restaurant.entity.request.OrderRequest;
+import hu.elte.alkfejl.restaurant.entity.response.OrderResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class OrderService {
             Type listType = new TypeToken<List<OrderResponse.OrderProductResponse>>() {}.getType();
             orderResponse.setOrderProducts(modelMapper.map(orderProducts, listType));
 
-            Short total = (short)orderProducts.stream().mapToInt(orderProduct -> orderProduct.getProduct().getPrice() * orderProduct.getQuantity()).sum();
+            Short total = (short) orderProducts.stream().mapToInt(orderProduct -> orderProduct.getProduct().getPrice() * orderProduct.getQuantity()).sum();
             orderResponse.setTotal(total);
 
             listResponse.add(orderResponse);
@@ -56,7 +56,7 @@ public class OrderService {
         return orderRepository.countByUserAndOrderProduct(userId, productId) != 0;
     }
 
-    public Iterable<Order> listByOwnRestaurant(){
+    public Iterable<Order> listByOwnRestaurant() {
         List<User> usersInRestaurant = userService.findAllByRestaurant(userService.getUser().getRestaurant());
         List<Order> orders = new ArrayList<>();
         for (User user : usersInRestaurant) {
@@ -65,10 +65,10 @@ public class OrderService {
         return orders;
     }
 
-    public Order update(Long id, Order updatedOrder){
-        Order currentOrder=orderRepository.findOne(id);
+    public Order update(Long id, Order updatedOrder) {
+        Order currentOrder = orderRepository.findOne(id);
         Status newStatus = statusService.findOne(updatedOrder.getStatus().getId());
-        if(newStatus!=null){
+        if (newStatus != null) {
             currentOrder.setStatus(newStatus);
             return orderRepository.save(currentOrder);
         }

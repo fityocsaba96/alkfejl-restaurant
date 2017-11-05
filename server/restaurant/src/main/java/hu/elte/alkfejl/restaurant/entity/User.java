@@ -13,8 +13,8 @@ import javax.validation.constraints.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode (callSuper = true)
-public class User extends BaseEntity{
+@EqualsAndHashCode(callSuper = true)
+public class User extends BaseEntity {
 
     @Email(message = "Invalid email format")
     @NotNull

@@ -14,6 +14,6 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
     List<Order> findAllByUser(User user);
 
     @Query(value = "SELECT COUNT (*) FROM \"order\" O, ORDER_PRODUCT OP WHERE O.ID=OP.\"order_id\" AND USER_ID=?1 AND PRODUCT_ID=?2",
-           nativeQuery = true)
+            nativeQuery = true)
     int countByUserAndOrderProduct(Long userId, Long productId);
 }

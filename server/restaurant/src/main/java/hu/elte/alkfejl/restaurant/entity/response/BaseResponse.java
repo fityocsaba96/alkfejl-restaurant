@@ -1,4 +1,4 @@
-package hu.elte.alkfejl.restaurant.response;
+package hu.elte.alkfejl.restaurant.entity.response;
 
 import lombok.Data;
 

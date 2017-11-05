@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Restaurant extends BaseEntity{
+public class Restaurant extends BaseEntity {
 
     @Column
     private Short zipCode;

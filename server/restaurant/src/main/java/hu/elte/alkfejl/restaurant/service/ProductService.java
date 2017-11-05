@@ -2,11 +2,7 @@ package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.OrderProduct;
 import hu.elte.alkfejl.restaurant.entity.Product;
-import hu.elte.alkfejl.restaurant.entity.Review;
-import hu.elte.alkfejl.restaurant.repository.CategoryRepository;
-import hu.elte.alkfejl.restaurant.repository.OrderProductRepository;
 import hu.elte.alkfejl.restaurant.repository.ProductRepository;
-import hu.elte.alkfejl.restaurant.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +31,8 @@ public class ProductService {
         return productRepository.findAllByCategory_Id(id);
     }
 
-    public Product addNewProduct(Product product){
-        if(product.getCategory().getId()!=null){
+    public Product addNewProduct(Product product) {
+        if (product.getCategory().getId() != null) {
             product.setCategory(categoryService.findOne(product.getCategory().getId()));
         }
         return productRepository.save(product);
@@ -46,10 +42,10 @@ public class ProductService {
         return productRepository.findOne(id);
     }
 
-    public void deleteProduct(Long id){
-        Product deletedProduct=productRepository.findOne((long) 0);
-        Product product=productRepository.findOne(id);
-        if(product!=null && product.getId()!=0) {
+    public void deleteProduct(Long id) {
+        Product deletedProduct = productRepository.findOne((long) 0);
+        Product product = productRepository.findOne(id);
+        if (product != null && product.getId() != 0) {
             List<OrderProduct> orderProducts = orderProductService.findAllByProduct(product);
             for (OrderProduct orderProduct : orderProducts) {
                 orderProduct.setProduct(deletedProduct);

@@ -1,4 +1,4 @@
-package hu.elte.alkfejl.restaurant.request;
+package hu.elte.alkfejl.restaurant.entity.request;
 
 import hu.elte.alkfejl.restaurant.entity.Product;
 import lombok.Data;

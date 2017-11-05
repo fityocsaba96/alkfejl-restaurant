@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Product extends BaseEntity{
+public class Product extends BaseEntity {
 
     @Column(length = 50)
     @NotNull

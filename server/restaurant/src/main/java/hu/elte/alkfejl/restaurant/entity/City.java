@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class City extends BaseEntity{
+public class City extends BaseEntity {
 
     @Column(length = 30)
     private String name;

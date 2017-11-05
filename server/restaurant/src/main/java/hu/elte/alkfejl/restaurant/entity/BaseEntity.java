@@ -1,6 +1,7 @@
 package hu.elte.alkfejl.restaurant.entity;
 
 import lombok.Data;
+
 import javax.persistence.*;
 
 @Data

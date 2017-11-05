@@ -2,7 +2,7 @@ package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.Review;
 import hu.elte.alkfejl.restaurant.repository.ReviewRepository;
-import hu.elte.alkfejl.restaurant.response.ReviewsResponse;
+import hu.elte.alkfejl.restaurant.entity.response.ReviewsResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;

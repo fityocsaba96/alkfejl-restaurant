@@ -1,6 +1,6 @@
 package hu.elte.alkfejl.restaurant.controller;
 
-import hu.elte.alkfejl.restaurant.annotation.Role;
+import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.City;
 import hu.elte.alkfejl.restaurant.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;

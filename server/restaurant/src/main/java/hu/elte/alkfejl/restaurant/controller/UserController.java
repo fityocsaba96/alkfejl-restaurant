@@ -1,6 +1,6 @@
 package hu.elte.alkfejl.restaurant.controller;
 
-import hu.elte.alkfejl.restaurant.annotation.Role;
+import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.User;
 import hu.elte.alkfejl.restaurant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class UserController {
 
     @Role(GUEST)
     @PostMapping("/login")
-    public ResponseEntity<User> login( @RequestBody User user) {
+    public ResponseEntity<User> login(@RequestBody User user) {
         try {
             return ResponseEntity.ok(userService.login(user));
         } catch (Exception e) {

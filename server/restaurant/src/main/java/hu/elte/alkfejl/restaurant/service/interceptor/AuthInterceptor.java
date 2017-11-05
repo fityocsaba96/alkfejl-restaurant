@@ -1,6 +1,6 @@
-package hu.elte.alkfejl.restaurant.interceptor;
+package hu.elte.alkfejl.restaurant.service.interceptor;
 
-import hu.elte.alkfejl.restaurant.annotation.Role;
+import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.User;
 import hu.elte.alkfejl.restaurant.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

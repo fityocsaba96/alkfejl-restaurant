@@ -1,9 +1,9 @@
 package hu.elte.alkfejl.restaurant.controller;
 
-import hu.elte.alkfejl.restaurant.annotation.Role;
+import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.Order;
-import hu.elte.alkfejl.restaurant.request.OrderRequest;
-import hu.elte.alkfejl.restaurant.response.OrderResponse;
+import hu.elte.alkfejl.restaurant.entity.request.OrderRequest;
+import hu.elte.alkfejl.restaurant.entity.response.OrderResponse;
 import hu.elte.alkfejl.restaurant.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +34,8 @@ public class OrderController {
 
     @Role(ADMIN)
     @GetMapping("/orders/incoming")
-    private ResponseEntity<Iterable<Order>> listByOwnRestaurant(){
-        Iterable<Order> orders=orderService.listByOwnRestaurant();
+    private ResponseEntity<Iterable<Order>> listByOwnRestaurant() {
+        Iterable<Order> orders = orderService.listByOwnRestaurant();
         return ResponseEntity.ok(orders);
     }
 

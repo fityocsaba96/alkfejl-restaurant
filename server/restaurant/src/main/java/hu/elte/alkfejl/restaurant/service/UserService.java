@@ -70,7 +70,7 @@ public class UserService {
         return user;
     }
 
-    public User register(User user){
+    public User register(User user) {
         assertUserCitySameAsRestaurantCity(user);
         this.user = userRepository.save(secure(user));
         return this.user;
@@ -87,7 +87,7 @@ public class UserService {
         if (user.getPasswordHash() == null || user.getEmail() == null) {
             throw new IllegalArgumentException();
         }
-        if(userRepository.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             User dbStoredUser = userRepository.findByEmail(user.getEmail()).get();
             if (passwordMatches(user.getPasswordHash(), dbStoredUser.getPasswordHash())) {
                 return this.user = dbStoredUser;

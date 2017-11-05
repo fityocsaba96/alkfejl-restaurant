@@ -1,6 +1,6 @@
 package hu.elte.alkfejl.restaurant.controller;
 
-import hu.elte.alkfejl.restaurant.annotation.Role;
+import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.Product;
 import hu.elte.alkfejl.restaurant.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +38,8 @@ public class ProductController {
 
     @Role(ADMIN)
     @PostMapping("/products")
-    private ResponseEntity<Product> addNewProduct(@RequestBody @Valid Product product){
-        Product newProduct=productService.addNewProduct(product);
+    private ResponseEntity<Product> addNewProduct(@RequestBody @Valid Product product) {
+        Product newProduct = productService.addNewProduct(product);
         return ResponseEntity.ok(newProduct);
     }
 

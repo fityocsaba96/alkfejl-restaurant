@@ -1,8 +1,8 @@
 package hu.elte.alkfejl.restaurant.controller;
 
-import hu.elte.alkfejl.restaurant.annotation.Role;
+import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.Review;
-import hu.elte.alkfejl.restaurant.response.ReviewsResponse;
+import hu.elte.alkfejl.restaurant.entity.response.ReviewsResponse;
 import hu.elte.alkfejl.restaurant.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
