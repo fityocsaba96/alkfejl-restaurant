@@ -25,7 +25,6 @@ public class CityController {
     @Role({ADMIN, USER, GUEST})
     @GetMapping("/cities")
     private ResponseEntity<Iterable<City>> list() {
-        Iterable<City> list = cityService.list();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(cityService.list());
     }
 }

@@ -67,20 +67,11 @@ public class OrderService {
 
     public Order update(Long id, Order updatedOrder) {
         Order currentOrder = orderRepository.findOne(id);
-        Status newStatus = statusService.findOne(updatedOrder.getStatus().getId());
-        if (newStatus != null) {
-            currentOrder.setStatus(newStatus);
-            return orderRepository.save(currentOrder);
-        }
-        throw new IllegalArgumentException();
+        currentOrder.setStatus(statusService.findOne(updatedOrder.getStatus().getId()));
+        return orderRepository.save(currentOrder);
     }
 
     public Order create(OrderRequest orderRequest) {
-        if (orderRequest.getOrderProducts().isEmpty()) {
-            throw new IllegalArgumentException();
-        }
-        assertUsersRestaurantIsOpen();
-
         ModelMapper modelMapper = new ModelMapper();
         Order order = modelMapper.map(orderRequest, Order.class);
         order.setCreateDate(new Timestamp(System.currentTimeMillis()));
@@ -100,22 +91,5 @@ public class OrderService {
         orderProductService.save(orderProducts);
 
         return order;
-    }
-
-    private void assertUsersRestaurantIsOpen() {
-        Restaurant restaurant = userService.getUser().getRestaurant();
-        Calendar calendar = Calendar.getInstance();
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-
-        if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
-            if (restaurant.getOpenHourWeekend() > hourOfDay || restaurant.getCloseHourWeekend() <= hourOfDay) {
-                throw new IllegalArgumentException();
-            }
-        } else {
-            if (restaurant.getOpenHourWeekday() > hourOfDay || restaurant.getCloseHourWeekday() <= hourOfDay) {
-                throw new IllegalArgumentException();
-            }
-        }
     }
 }

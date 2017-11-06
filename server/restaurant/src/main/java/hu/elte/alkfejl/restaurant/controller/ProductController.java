@@ -1,5 +1,6 @@
 package hu.elte.alkfejl.restaurant.controller;
 
+import hu.elte.alkfejl.restaurant.entity.response.ErrorResponse;
 import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.Product;
 import hu.elte.alkfejl.restaurant.service.ProductService;
@@ -25,32 +26,29 @@ public class ProductController {
     @Role({ADMIN, USER})
     @GetMapping("/products")
     private ResponseEntity<Iterable<Product>> list() {
-        Iterable<Product> list = productService.list();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(productService.list());
     }
 
     @Role({ADMIN, USER})
     @GetMapping("/category/{id}/products")
     private ResponseEntity<Iterable<Product>> listByCategory(@PathVariable Long id) {
-        Iterable<Product> list = productService.listByCategory(id);
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(productService.listByCategory(id));
     }
 
     @Role(ADMIN)
     @PostMapping("/products")
     private ResponseEntity<Product> addNewProduct(@RequestBody @Valid Product product) {
-        Product newProduct = productService.addNewProduct(product);
-        return ResponseEntity.ok(newProduct);
+        return ResponseEntity.ok(productService.addNewProduct(product));
     }
 
     @Role(ADMIN)
     @DeleteMapping("/product/{id}")
     private ResponseEntity delete(@PathVariable Long id) {
-        try {
+        if (id == 0) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Cannot delete the deleted product"));
+        } else {
             productService.deleteProduct(id);
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
         }
     }
 }

@@ -18,20 +18,21 @@ public class User extends BaseEntity {
 
     @Email(message = "Invalid email format")
     @NotNull
+    @Size(max = 50, message = "Email size should be max 50 characters")
     @Column(length = 50, unique = true)
     private String email;
 
-    @Size(min = 1, message = "Last name should not be blank")
+    @Size(min = 1, max = 50, message = "Last name size should be 1-50 characters")
     @NotNull
     @Column(length = 50)
     private String lastName;
 
-    @Size(min = 1, message = "First name should not be blank")
+    @Size(min = 1, max = 50, message = "First name size should be 1-50 characters")
     @NotNull
     @Column(length = 50)
     private String firstName;
 
-    @Size(min = 6, message = "Password should be at least 6 characters long")
+    @Size(min = 6, max = 60, message = "Password size should be 6-60 characters")
     @NotNull
     @Column(length = 60)
     private String passwordHash;
@@ -42,12 +43,12 @@ public class User extends BaseEntity {
     @Column
     private Short zipCode;
 
-    @Size(min = 1, message = "Address should not be blank")
+    @Size(min = 1, max = 50, message = "Address size should be 1-50 characters")
     @NotNull
     @Column(length = 50)
     private String address;
 
-    @Size(min = 10, max = 12, message = "Phone number should be between 10 and 12 characters long")
+    @Size(min = 10, max = 12, message = "Phone number should be 10-12 characters")
     @NotNull
     @Column(length = 12)
     private String phoneNumber;

@@ -26,14 +26,12 @@ public class RestaurantController {
     @Role({ADMIN, USER, GUEST})
     @GetMapping("/city/{id}/restaurants")
     private ResponseEntity<Iterable<Restaurant>> listByCity(@PathVariable Long id) {
-        Iterable<Restaurant> list = restaurantService.listByCity(id);
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(restaurantService.listByCity(id));
     }
 
     @Role({ADMIN, USER, GUEST})
     @GetMapping("/restaurants")
     private ResponseEntity<Iterable<Restaurant>> list() {
-        Iterable<Restaurant> list = restaurantService.list();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(restaurantService.list());
     }
 }

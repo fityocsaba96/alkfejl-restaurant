@@ -24,7 +24,6 @@ public class CategoryController {
     @Role({ADMIN, USER})
     @GetMapping("/categories")
     private ResponseEntity<Iterable<Category>> list() {
-        Iterable<Category> list = categoryService.list();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(categoryService.list());
     }
 }

@@ -18,15 +18,12 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
     private ProductService productService;
     private UserService userService;
-    private OrderService orderService;
 
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository, ProductService productService,
-                         UserService userService, OrderService orderService) {
+    public ReviewService(ReviewRepository reviewRepository, ProductService productService, UserService userService) {
         this.reviewRepository = reviewRepository;
         this.productService = productService;
         this.userService = userService;
-        this.orderService = orderService;
     }
 
     public ReviewsResponse listByProduct(Long id) {
@@ -44,13 +41,6 @@ public class ReviewService {
     }
 
     public Review create(Long productId, Review review) {
-        if (!orderService.hasUserOrderedProduct(userService.getUser().getId(), productId)) {
-            throw new IllegalArgumentException();
-        }
-        if (reviewRepository.countByUser_IdAndProduct_Id(userService.getUser().getId(), productId) != 0) {
-            throw new IllegalArgumentException();
-        }
-
         review.setCreateDate(new Timestamp(System.currentTimeMillis()));
         review.setUser(userService.getUser());
         review.setProduct(productService.findOne(productId));

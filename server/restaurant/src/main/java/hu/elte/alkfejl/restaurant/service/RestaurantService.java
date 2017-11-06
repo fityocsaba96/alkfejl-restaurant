@@ -22,8 +22,4 @@ public class RestaurantService {
     public Iterable<Restaurant> list() {
         return restaurantRepository.findAll();
     }
-
-    public Restaurant findOne(Long id) {
-        return restaurantRepository.findOne(id);
-    }
 }

@@ -28,7 +28,7 @@ public class Review extends BaseEntity {
     @Column
     private Byte stars;
 
-    @Size(min = 10, message = "Minimum of 10 characters required for the description")
+    @Size(min = 10, max = 300, message = "Description size should be 10-300 characters")
     @NotNull
     @Column(length = 300)
     private String description;

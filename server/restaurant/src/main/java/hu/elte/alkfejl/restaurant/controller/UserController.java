@@ -1,10 +1,14 @@
 package hu.elte.alkfejl.restaurant.controller;
 
+import hu.elte.alkfejl.restaurant.entity.request.LoginRequest;
 import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.User;
 import hu.elte.alkfejl.restaurant.service.UserService;
+import hu.elte.alkfejl.restaurant.service.validator.LoginRequestValidator;
+import hu.elte.alkfejl.restaurant.service.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,48 +22,47 @@ import static hu.elte.alkfejl.restaurant.entity.User.Role.USER;
 public class UserController {
 
     private UserService userService;
+    private UserValidator userValidator;
+    private LoginRequestValidator loginRequestValidator;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserValidator userValidator, LoginRequestValidator loginRequestValidator) {
         this.userService = userService;
+        this.userValidator = userValidator;
+        this.loginRequestValidator = loginRequestValidator;
+    }
+
+    @InitBinder("user")
+    public void setupUserValidator(WebDataBinder binder) {
+        binder.addValidators(userValidator);
+    }
+
+    @InitBinder("loginRequest")
+    public void setupLoginRequestValidator(WebDataBinder binder) {
+        binder.addValidators(loginRequestValidator);
     }
 
     @Role({ADMIN, USER})
     @GetMapping("/me")
     private ResponseEntity<User> read() {
-        User read = userService.read();
-        return ResponseEntity.ok(read);
+        return ResponseEntity.ok(userService.read());
     }
 
     @Role({ADMIN, USER})
     @PutMapping("/me")
     private ResponseEntity<User> update(@RequestBody @Valid User user) {
-        try {
-            User updated = userService.update(user);
-            return ResponseEntity.ok(updated);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(userService.update(user));
     }
 
     @Role(GUEST)
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody @Valid User user) {
-        try {
-            User registered = userService.register(user);
-            return ResponseEntity.ok(registered);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(userService.register(user));
     }
 
     @Role(GUEST)
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody User user) {
-        try {
-            return ResponseEntity.ok(userService.login(user));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<User> login(@RequestBody @Valid LoginRequest loginRequest) {
+        return ResponseEntity.ok(userService.login(loginRequest));
     }
 }

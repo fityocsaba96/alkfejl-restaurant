@@ -2,6 +2,7 @@ package hu.elte.alkfejl.restaurant.service;
 
 import hu.elte.alkfejl.restaurant.entity.Restaurant;
 import hu.elte.alkfejl.restaurant.entity.User;
+import hu.elte.alkfejl.restaurant.entity.request.LoginRequest;
 import hu.elte.alkfejl.restaurant.repository.UserRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,14 @@ import java.util.List;
 public class UserService {
 
     private UserRepository userRepository;
-    private RestaurantService restaurantService;
     @Getter
     private User user;
 
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RestaurantService restaurantService) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.restaurantService = restaurantService;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -33,7 +32,7 @@ public class UserService {
         return passwordEncoder.encode(password);
     }
 
-    private boolean passwordMatches(String originalPassword, String encodedPassword) {
+    public boolean passwordMatches(String originalPassword, String encodedPassword) {
         return passwordEncoder.matches(originalPassword, encodedPassword);
     }
 
@@ -49,15 +48,7 @@ public class UserService {
         return user;
     }
 
-    private void assertUserCitySameAsRestaurantCity(User user) {
-        if (!restaurantService.findOne(user.getRestaurant().getId()).getCity().getId()
-                .equals(user.getCity().getId())) {
-            throw new IllegalArgumentException();
-        }
-    }
-
     public User update(User user) {
-        assertUserCitySameAsRestaurantCity(user);
         User updated = userRepository.save(restore(user));
         this.user = updated;
         return updated;
@@ -71,9 +62,7 @@ public class UserService {
     }
 
     public User register(User user) {
-        assertUserCitySameAsRestaurantCity(user);
-        this.user = userRepository.save(secure(user));
-        return this.user;
+        return userRepository.save(secure(user));
     }
 
     private User secure(User user) {
@@ -83,17 +72,8 @@ public class UserService {
         return user;
     }
 
-    public User login(User user) {
-        if (user.getPasswordHash() == null || user.getEmail() == null) {
-            throw new IllegalArgumentException();
-        }
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            User dbStoredUser = userRepository.findByEmail(user.getEmail()).get();
-            if (passwordMatches(user.getPasswordHash(), dbStoredUser.getPasswordHash())) {
-                return this.user = dbStoredUser;
-            }
-        }
-        throw new IllegalArgumentException();
+    public User login(LoginRequest loginRequest) {
+        return this.user = userRepository.findByEmail(loginRequest.getEmail());
     }
 
     public List<User> findAllByRestaurant(Restaurant restaurant) {

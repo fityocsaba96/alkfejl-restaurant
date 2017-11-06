@@ -20,9 +20,10 @@ public class Product extends BaseEntity {
 
     @Column(length = 50)
     @NotNull
-    @Size(min = 1, message = "Name should not be blank")
+    @Size(min = 1, max = 50, message = "Name size should be 1-50 characters")
     private String name;
 
+    @Size(max = 300, message = "Description size should be max 300 characters")
     @Column(length = 300)
     @NotNull
     private String description;

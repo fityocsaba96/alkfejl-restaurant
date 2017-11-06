@@ -5,8 +5,10 @@ import hu.elte.alkfejl.restaurant.entity.Order;
 import hu.elte.alkfejl.restaurant.entity.request.OrderRequest;
 import hu.elte.alkfejl.restaurant.entity.response.OrderResponse;
 import hu.elte.alkfejl.restaurant.service.OrderService;
+import hu.elte.alkfejl.restaurant.service.validator.OrderRequestValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,45 +21,40 @@ import static hu.elte.alkfejl.restaurant.entity.User.Role.USER;
 public class OrderController {
 
     private OrderService orderService;
+    private OrderRequestValidator orderRequestValidator;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, OrderRequestValidator orderRequestValidator) {
         this.orderService = orderService;
+        this.orderRequestValidator = orderRequestValidator;
+    }
+
+    @InitBinder("orderRequest")
+    public void setupOrderRequestValidator(WebDataBinder binder) {
+        binder.addValidators(orderRequestValidator);
     }
 
     @Role({ADMIN, USER})
     @GetMapping("/user/me/orders")
     private ResponseEntity<List<OrderResponse>> listMyOwn() {
-        List<OrderResponse> list = orderService.listMyOwn();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(orderService.listMyOwn());
     }
 
     @Role(ADMIN)
     @GetMapping("/orders/incoming")
     private ResponseEntity<Iterable<Order>> listByOwnRestaurant() {
-        Iterable<Order> orders = orderService.listByOwnRestaurant();
-        return ResponseEntity.ok(orders);
+        return ResponseEntity.ok(orderService.listByOwnRestaurant());
     }
 
     @Role(ADMIN)
     @PutMapping("/order/{id}")
     private ResponseEntity<Order> update(@PathVariable Long id, @RequestBody @Valid Order order) {
-        try {
-            Order updated = orderService.update(id, order);
-            return ResponseEntity.ok(updated);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(orderService.update(id, order));
     }
 
     @Role(USER)
     @PostMapping("/order")
     private ResponseEntity<Order> create(@RequestBody @Valid OrderRequest orderRequest) {
-        try {
-            Order order = orderService.create(orderRequest);
-            return ResponseEntity.ok(order);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        return ResponseEntity.ok(orderService.create(orderRequest));
     }
 }

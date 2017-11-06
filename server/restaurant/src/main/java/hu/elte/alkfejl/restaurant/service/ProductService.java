@@ -32,9 +32,7 @@ public class ProductService {
     }
 
     public Product addNewProduct(Product product) {
-        if (product.getCategory().getId() != null) {
-            product.setCategory(categoryService.findOne(product.getCategory().getId()));
-        }
+        product.setCategory(categoryService.findOne(product.getCategory().getId()));
         return productRepository.save(product);
     }
 
@@ -45,14 +43,11 @@ public class ProductService {
     public void deleteProduct(Long id) {
         Product deletedProduct = productRepository.findOne((long) 0);
         Product product = productRepository.findOne(id);
-        if (product != null && product.getId() != 0) {
-            List<OrderProduct> orderProducts = orderProductService.findAllByProduct(product);
-            for (OrderProduct orderProduct : orderProducts) {
-                orderProduct.setProduct(deletedProduct);
-            }
-            productRepository.delete(id);
-        } else {
-            throw new IllegalArgumentException();
+
+        List<OrderProduct> orderProducts = orderProductService.findAllByProduct(product);
+        for (OrderProduct orderProduct : orderProducts) {
+            orderProduct.setProduct(deletedProduct);
         }
+        productRepository.delete(id);
     }
 }

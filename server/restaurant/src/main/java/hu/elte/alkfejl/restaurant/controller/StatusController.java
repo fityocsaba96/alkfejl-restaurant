@@ -23,7 +23,6 @@ public class StatusController {
     @Role(ADMIN)
     @GetMapping("/statuses")
     private ResponseEntity<Iterable<Status>> list() {
-        Iterable<Status> list = statusService.list();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(statusService.list());
     }
 }
