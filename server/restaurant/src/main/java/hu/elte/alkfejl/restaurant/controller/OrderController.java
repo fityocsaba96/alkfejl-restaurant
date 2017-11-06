@@ -34,7 +34,7 @@ public class OrderController {
         binder.addValidators(orderRequestValidator);
     }
 
-    @Role({ADMIN, USER})
+    @Role(USER)
     @GetMapping("/user/me/orders")
     private ResponseEntity<List<OrderResponse>> listMyOwn() {
         return ResponseEntity.ok(orderService.listMyOwn());

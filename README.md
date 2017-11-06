@@ -43,10 +43,6 @@
 - store passwords securely, hashed
 - user friendly user interface
 
-## Database design
-
-![Database design](/doc/database_design.png?raw=true)
-
 ## Team members
 
 - [Fityó Csaba](https://github.com/fityocsaba96/)
