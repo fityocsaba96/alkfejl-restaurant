@@ -48,7 +48,7 @@ public class ProductController {
             return ResponseEntity.badRequest().body(new ErrorResponse("Cannot delete the deleted product"));
         } else {
             productService.deleteProduct(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(true);
         }
     }
 }

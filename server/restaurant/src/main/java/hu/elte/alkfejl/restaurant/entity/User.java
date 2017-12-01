@@ -1,5 +1,6 @@
 package hu.elte.alkfejl.restaurant.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,6 +33,7 @@ public class User extends BaseEntity {
     @Column(length = 50)
     private String firstName;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(min = 6, max = 60, message = "Password size should be 6-60 characters")
     @NotNull
     @Column(length = 60)

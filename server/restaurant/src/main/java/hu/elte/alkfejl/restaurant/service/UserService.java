@@ -76,6 +76,11 @@ public class UserService {
         return this.user = userRepository.findByEmail(loginRequest.getEmail());
     }
 
+    public Boolean logout() {
+        this.user = null;
+        return true;
+    }
+
     public List<User> findAllByRestaurant(Restaurant restaurant) {
         return userRepository.findAllByRestaurant(restaurant);
     }

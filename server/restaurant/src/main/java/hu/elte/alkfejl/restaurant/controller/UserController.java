@@ -65,4 +65,10 @@ public class UserController {
     public ResponseEntity<User> login(@RequestBody @Valid LoginRequest loginRequest) {
         return ResponseEntity.ok(userService.login(loginRequest));
     }
+
+    @Role({ADMIN, USER})
+    @PostMapping("/logout")
+    public ResponseEntity<Boolean> logout() {
+        return ResponseEntity.ok(userService.logout());
+    }
 }

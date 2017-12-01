@@ -108,6 +108,12 @@ A regisztráció leadása a megadott adatok ellenőrzésével. A regisztráció 
 
 Email és jelszó alapján történő bejelentkezés. Ha az email cím nem létezik, vagy a hozzá tartozó jelszó nem egyezik, a bejelentkezés nem történik meg.
 
+### Kijelentkezés
+
+`POST /api/user/logout` *(A,U)*
+
+A bejelentkezett felhasználó kijelentkeztetése.
+
 ### Felhasználó adatainak módosítása
 
 `GET /api/user/me` *(A,U)*
