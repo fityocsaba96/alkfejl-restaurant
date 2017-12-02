@@ -19,3 +19,7 @@ export class User extends BaseModel {
         Object.assign(this, object);
     }
 }
+
+export enum Role {
+    GUEST, USER, ADMIN
+}

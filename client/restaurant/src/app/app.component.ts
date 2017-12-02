@@ -9,8 +9,6 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent implements OnInit {
 
-  public title: String = 'Restaurant';
-
   constructor(
     private userService: UserService
   ) {}
