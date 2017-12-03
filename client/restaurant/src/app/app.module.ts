@@ -8,11 +8,15 @@ import { RoutingGuard } from './services/routing-guard.service';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { RestaurantListComponent } from './components/restaurant-list/restaurant-list.component';
+import { RestaurantComponent } from './components/restaurant/restaurant.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    RestaurantListComponent,
+    RestaurantComponent
   ],
   imports: [
     BrowserModule,

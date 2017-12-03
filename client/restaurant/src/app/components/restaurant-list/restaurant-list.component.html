@@ -1,0 +1,4 @@
+<ng-container *ngIf="restaurants">
+    <app-restaurant *ngFor="let restaurant of restaurants" [restaurant]="restaurant"></app-restaurant>
+</ng-container>
+<mat-spinner *ngIf="!restaurants"></mat-spinner>

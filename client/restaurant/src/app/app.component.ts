@@ -9,11 +9,17 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent implements OnInit {
 
+  private pageTitle: string;
+
   constructor(
     private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.userService.syncLoginStatus();
+  }
+
+  onActivate(component): void {
+    this.pageTitle = component.pageTitle;
   }
 }

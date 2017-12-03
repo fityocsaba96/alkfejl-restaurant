@@ -3,14 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { Role } from '../models/user';
 import { RoutingGuard } from '../services/routing-guard.service';
 import { UserService } from '../services/user.service';
+import { RestaurantListComponent } from '../components/restaurant-list/restaurant-list.component';
 
 const routes: Routes = [
   {
     path: '',
     canActivateChild: [RoutingGuard],
     children: [
-      /*{ path: '', redirectTo: 'restaurants', pathMatch: 'full' },
-      { path: 'restaurants', component: RestaurantListComponent, data: { roles: [Role.ADMIN, Role.USER, Role.GUEST] } },
+      { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
+      { path: 'restaurants', component: RestaurantListComponent, data: { roles: [Role.ADMIN, Role.USER, Role.GUEST] } }/*,
       { path: 'user/register', component: RegisterComponent, data: { roles: [Role.GUEST] } },
       { path: 'user/login', component: LoginComponent, data: { roles: [Role.GUEST] } },
       { path: 'user/settings', component: UserSettingsComponent, data: { roles: [Role.ADMIN, Role.USER] } },

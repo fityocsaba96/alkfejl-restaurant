@@ -1,2 +1,5 @@
 <app-menu></app-menu>
-<router-outlet></router-outlet>
+<div class="content">
+    <h2 class="mat-h2">{{pageTitle}}</h2>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>
