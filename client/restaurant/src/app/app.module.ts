@@ -7,10 +7,12 @@ import { MaterialModule } from './modules/material.module';
 import { RoutingGuard } from './services/routing-guard.service';
 
 import { AppComponent } from './app.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

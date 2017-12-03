@@ -1,0 +1,43 @@
+<mat-toolbar id="top-menu" color="primary">
+  <a mat-button routerLink="/restaurants">
+    <mat-icon>restaurant</mat-icon> <span class="mat-h1">Restaurant</span>
+  </a>
+  
+  <ng-container *ngIf="admin()">
+    <button mat-button [matMenuTriggerFor]="adminMenu">Admin menu</button>
+    <mat-menu #adminMenu="matMenu">
+      <a mat-menu-item routerLink="/orders/incoming">Incoming orders</a>
+      <a mat-menu-item routerLink="/products/add">Add product</a>
+    </mat-menu>
+  </ng-container>
+  
+  <ng-container *ngIf="admin() || user()">
+    <button mat-button [matMenuTriggerFor]="productsMenu">Products</button>
+    <mat-menu #productsMenu="matMenu">
+      <a mat-menu-item routerLink="/products">All</a>
+      <button mat-menu-item [matMenuTriggerFor]="categoriesMenu">By category</button>
+    </mat-menu>
+    <mat-menu #categoriesMenu="matMenu">
+      <a *ngFor="let category of categories" mat-menu-item routerLink="/category/{{category.id}}/products">{{category.name}}</a>
+      <button mat-menu-item *ngIf="!categories"><mat-spinner [diameter]="25"></mat-spinner></button>
+    </mat-menu>
+
+    <a mat-button routerLink="/user/settings">User settings</a>
+  </ng-container>
+  
+  <ng-container *ngIf="user()">
+    <a mat-button routerLink="/user/orders">My orders</a>
+
+    <a mat-button routerLink="/cart">Cart</a>
+  </ng-container>
+
+  <span class="fill-space"></span>
+
+  <ng-container *ngIf="guest()">
+    <a mat-button routerLink="/user/login">Log in</a>
+
+    <a mat-button routerLink="/user/register">Register</a>
+  </ng-container>
+  
+  <button *ngIf="admin() || user()" mat-button (click)="logout()">Log out</button>
+</mat-toolbar>
