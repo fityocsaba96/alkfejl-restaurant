@@ -4,6 +4,7 @@ import { Role } from '../models/user';
 import { RoutingGuard } from '../services/routing-guard.service';
 import { UserService } from '../services/user.service';
 import { RestaurantListComponent } from '../components/restaurant-list/restaurant-list.component';
+import { ProductListComponent } from '../components/product-list/product-list.component';
 
 const routes: Routes = [
   {
@@ -11,16 +12,16 @@ const routes: Routes = [
     canActivateChild: [RoutingGuard],
     children: [
       { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
-      { path: 'restaurants', component: RestaurantListComponent, data: { roles: [Role.ADMIN, Role.USER, Role.GUEST] } }/*,
+      { path: 'restaurants', component: RestaurantListComponent, data: { roles: [Role.ADMIN, Role.USER, Role.GUEST] } }, /*
       { path: 'user/register', component: RegisterComponent, data: { roles: [Role.GUEST] } },
       { path: 'user/login', component: LoginComponent, data: { roles: [Role.GUEST] } },
-      { path: 'user/settings', component: UserSettingsComponent, data: { roles: [Role.ADMIN, Role.USER] } },
-      { path: 'products', component: ProductsComponent, data: { roles: [Role.ADMIN, Role.USER] } },
-      { path: 'category/:id/products', component: ProductsByCategoryComponent, data: { roles: [Role.ADMIN, Role.USER] } },
+      { path: 'user/settings', component: UserSettingsComponent, data: { roles: [Role.ADMIN, Role.USER] } },*/
+      { path: 'products', component: ProductListComponent, data: { roles: [Role.ADMIN, Role.USER] } }/*,
+      { path: 'category/:id/products', component: ProductListByCategoryComponent, data: { roles: [Role.ADMIN, Role.USER] } },
       { path: 'cart', component: CartComponent, data: { roles: [Role.USER] } },
-      { path: 'user/orders', component: UserOrdersComponent, data: { roles: [Role.USER] } },
-      { path: 'product/:id/reviews', component: ProductReviewsComponent, data: { roles: [Role.ADMIN, Role.USER] } },
-      { path: 'orders/incoming', component: IncomingOrdersComponent, data: { roles: [Role.ADMIN] } },
+      { path: 'user/orders', component: UserOrderListComponent, data: { roles: [Role.USER] } },
+      { path: 'product/:id/reviews', component: ProductReviewListComponent, data: { roles: [Role.ADMIN, Role.USER] } },
+      { path: 'orders/incoming', component: IncomingOrderListComponent, data: { roles: [Role.ADMIN] } },
       { path: 'products/add', component: AddProductComponent, data: { roles: [Role.ADMIN] } }*/
     ]
   }

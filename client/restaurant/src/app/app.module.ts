@@ -10,13 +10,17 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { RestaurantListComponent } from './components/restaurant-list/restaurant-list.component';
 import { RestaurantComponent } from './components/restaurant/restaurant.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     RestaurantListComponent,
-    RestaurantComponent
+    RestaurantComponent,
+    ProductListComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
