@@ -2,7 +2,7 @@
   <mat-card-title>
     {{product.name}}
   </mat-card-title>
-  <mat-card-subtitle>
+  <mat-card-subtitle *ngIf="showCategory">
     {{product.category.name}}
   </mat-card-subtitle>
   <mat-list>

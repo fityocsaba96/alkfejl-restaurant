@@ -11,5 +11,10 @@ export class ProductComponent {
   @Input()
   public product: Product;
 
-  constructor() { }
+  @Input()
+  public showCategory: boolean;
+
+  constructor() {
+    this.showCategory = true;
+  }
 }

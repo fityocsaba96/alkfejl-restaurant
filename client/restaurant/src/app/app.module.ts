@@ -12,6 +12,7 @@ import { RestaurantListComponent } from './components/restaurant-list/restaurant
 import { RestaurantComponent } from './components/restaurant/restaurant.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductComponent } from './components/product/product.component';
+import { ProductListByCategoryComponent } from './components/product-list-by-category/product-list-by-category.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProductComponent } from './components/product/product.component';
     RestaurantListComponent,
     RestaurantComponent,
     ProductListComponent,
-    ProductComponent
+    ProductComponent,
+    ProductListByCategoryComponent
   ],
   imports: [
     BrowserModule,
