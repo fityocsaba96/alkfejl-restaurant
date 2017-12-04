@@ -9,6 +9,7 @@ import { ProductListByCategoryComponent } from '../components/product-list-by-ca
 import { CartComponent } from '../components/cart/cart.component';
 import { IncomingOrderListComponent } from '../components/incoming-order-list/incoming-order-list.component';
 import { LoginComponent } from '../components/login/login.component';
+import { AddProductComponent } from '../components/add-product/add-product.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
       { path: 'user/orders', component: UserOrderListComponent, data: { roles: [Role.USER] } },
       { path: 'product/:id/reviews', component: ProductReviewListComponent, data: { roles: [Role.ADMIN, Role.USER] } },
       */{ path: 'orders/incoming', component: IncomingOrderListComponent, data: { roles: [Role.ADMIN] } },
-      //{ path: 'products/add', component: AddProductComponent, data: { roles: [Role.ADMIN] } }
+      { path: 'products/add', component: AddProductComponent, data: { roles: [Role.ADMIN] } }
     ]
   }
 ];

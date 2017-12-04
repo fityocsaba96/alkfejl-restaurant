@@ -16,11 +16,14 @@ export class LoginComponent implements OnInit {
   });
 
   private error: boolean;
+  private _pageTitle: string;
 
   constructor(
     private userService: UserService,
     private router: Router
-  ) { }
+  ) { 
+    this._pageTitle="Log in"
+  }
 
   ngOnInit() {
   }

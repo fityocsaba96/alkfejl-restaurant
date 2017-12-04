@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product';
 import { Observable } from 'rxjs/Observable';
+import { Category } from '../models/category';
 
 @Injectable()
 export class ProductService {
@@ -27,6 +28,15 @@ export class ProductService {
       newValue = '1';
     }
     window.sessionStorage.setItem(key, newValue);
+  }
+
+  public addProduct(name:string, category:Category, description:string, price:number) : Observable<Product>{
+    return this.http.post('/api/products', {
+      "name": name,
+      "category": category,
+      "description": description,
+      "price": price
+    }) as Observable<Product>;
   }
 
   public deleteFromCart(id: number): void {

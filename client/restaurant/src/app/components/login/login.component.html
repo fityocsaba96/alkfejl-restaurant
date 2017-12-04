@@ -1,7 +1,7 @@
 <div class="page-body">
-  <h2 class="mat-h2">Bejelentkezés</h2>
+  <h2 class="mat-h2">Log in</h2>
   <div *ngIf="error">
-    <p>Hibás email/jelszó!</p>
+    <p>Incorrect email/password!</p>
   </div>
   <form [formGroup]="loginForm" novalidate>
       <div class="form-control">
@@ -12,10 +12,10 @@
     </div>
     <div class="form-control">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Jelszó" formControlName="password" type="password">
+          <input matInput placeholder="Password" formControlName="password" type="password">
         </mat-form-field>
         </div>
-        <button mat-raised-button class="mat-primary" (click)="tryLogin()" >Bejelentkezés</button>
+        <button mat-raised-button class="mat-primary" (click)="tryLogin()" >Log in</button>
         <a mat-button class="mat-accent" routerLink="/">Back</a>
 </form>
 </div>
