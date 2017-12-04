@@ -82,7 +82,6 @@ export class RegisterComponent implements OnInit {
     this.city=new City(city);
     this.userService.register(this.email.value,this.firstname.value,this.lastname.value,this.password.value,
       this.zipcode.value,this.city,this.address.value,this.phonenumber.value,this.restaurant,false).subscribe((user) => {
-      console.log(user);
       this.router.navigate(['/user/login']);
     }, (err) => {
       if (err.status === 400) {

@@ -16,6 +16,8 @@ export class AddProductComponent implements OnInit {
   private categories:Category[];
   private category:Category;
   private _pageTitle:string;
+  private error:boolean;
+  private errorString:string;
   addProductForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
@@ -51,6 +53,11 @@ export class AddProductComponent implements OnInit {
     this.category=new Category(category)
     this.productService.addProduct(this.name.value,this.category,this.description.value,this.price.value).subscribe((product) =>{
       this.router.navigate(['/products']);
-    })
+    }, (err) => {
+      if (err.status === 400) {
+        this.error = true;
+        this.errorString=err.error.error;
+      }
+    });
   }
 }

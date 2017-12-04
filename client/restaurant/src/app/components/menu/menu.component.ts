@@ -3,6 +3,7 @@ import { Role } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -15,7 +16,8 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private categoryService: CategoryService,
-    private userService: UserService
+    private userService: UserService,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
@@ -36,5 +38,10 @@ export class MenuComponent implements OnInit {
 
   private admin(): boolean {
     return UserService.role === Role.ADMIN;
+  }
+
+  private logout():void{
+    this.userService.logout();
+    this.router.navigate(['/restaurants']);
   }
 }

@@ -61,4 +61,11 @@ export class UserService {
         "isAdmin":is_admin
       }) as Observable<User>;
   }
+
+  public logout():void{
+    this.http.post('api/user/logout','').subscribe(() => {
+      UserService._user = undefined;
+      UserService._role = Role.GUEST;
+    });
+  }
 }

@@ -1,7 +1,9 @@
 <div class="page-body">
   <h2 class="mat-h2">Log in</h2>
   <div *ngIf="error">
-    <p>Incorrect email/password!</p>
+    <div>>
+      <font color="red">{{errorString}}!</font><br>
+      </div>
   </div>
   <form [formGroup]="loginForm" novalidate>
       <div class="form-control">

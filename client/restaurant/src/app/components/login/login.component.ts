@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   private error: boolean;
   private _pageTitle: string;
+  private errorString: string;
 
   constructor(
     private userService: UserService,
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
     }, (err) => {
       if (err.status === 400) {
         this.error = true;
+        this.errorString=err.error.error;
       }
     });
 } 
