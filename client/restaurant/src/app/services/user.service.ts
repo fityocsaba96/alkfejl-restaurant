@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { User, Role } from '../models/user';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
+import { Restaurant } from '../models/restaurant';
+import { City } from '../models/city';
 
 @Injectable()
 export class UserService {
@@ -42,5 +44,21 @@ export class UserService {
 
   public get sharedLoginInfoRequest() {
     return this._sharedLoginInfoRequest;
+  }
+
+  public register(email:string, firstName:string, lastName:string, password:string, zipCode:number, city:City, address: string, 
+    phoneNumber:string,restaurant:Restaurant, is_admin:boolean) : Observable<User> { 
+    return this.http.post('api/user/register', {
+        "email":email,
+        "firstName":firstName,
+        "lastName":lastName,
+        "passwordHash":password,
+        "zipCode":zipCode,
+        "city":city,
+        "address":address,
+        "phoneNumber":phoneNumber,
+        "restaurant":restaurant,
+        "isAdmin":is_admin
+      }) as Observable<User>;
   }
 }
