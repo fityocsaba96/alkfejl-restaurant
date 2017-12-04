@@ -25,6 +25,17 @@ export class UserService {
     }, () => {});
   }
 
+  public login(email:string, password: string): Observable<User>{ 
+    return this.http.post('api/user/login', {
+        email,
+        password
+    }) as Observable<User>;
+}
+
+  public setUser(user: User) {
+    UserService._user = user;
+  }
+
   public static get role(): Role {
     return UserService._role;
   }

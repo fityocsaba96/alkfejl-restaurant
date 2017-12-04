@@ -1,0 +1,21 @@
+<div class="page-body">
+  <h2 class="mat-h2">Bejelentkezés</h2>
+  <div *ngIf="error">
+    <p>Hibás email/jelszó!</p>
+  </div>
+  <form [formGroup]="loginForm" novalidate>
+      <div class="form-control">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Email" formControlName="email">
+      
+    </mat-form-field>
+    </div>
+    <div class="form-control">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Jelszó" formControlName="password" type="password">
+        </mat-form-field>
+        </div>
+        <button mat-raised-button class="mat-primary" (click)="tryLogin()" >Bejelentkezés</button>
+        <a mat-button class="mat-accent" routerLink="/">Back</a>
+</form>
+</div>
