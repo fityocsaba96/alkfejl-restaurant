@@ -7,8 +7,7 @@ import { CategoryService } from '../../services/category.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
-  providers: [CategoryService]
+  styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
 

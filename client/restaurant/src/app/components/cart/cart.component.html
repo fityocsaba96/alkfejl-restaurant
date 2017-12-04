@@ -1,0 +1,45 @@
+<ng-container *ngIf="tableDataLoaded">
+  <mat-table *ngIf="dataSource.data.length !== 0" [dataSource]="dataSource" class="mat-elevation-z3">
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>restaurant_menu</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>attach_money</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">${{element.price}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>grain</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.quantity}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell class="small" *matHeaderCellDef>
+        <div class="spacer"></div><mat-icon>remove_shopping_cart</mat-icon>
+      </mat-header-cell>
+      <mat-cell class="small" *matCellDef="let element">
+        <button mat-icon-button color="primary" (click)="deleteFromCart(element.id)">
+          <mat-icon>remove_shopping_cart</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-card *ngIf="dataSource.data.length === 0">
+    <mat-card-title>Cart is empty</mat-card-title>
+  </mat-card>
+</ng-container>
+
+<mat-spinner *ngIf="!tableDataLoaded"></mat-spinner>

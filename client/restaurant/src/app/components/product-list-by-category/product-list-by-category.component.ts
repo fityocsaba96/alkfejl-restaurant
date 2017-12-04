@@ -7,8 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-product-list-by-category',
   templateUrl: './product-list-by-category.component.html',
-  styleUrls: ['./product-list-by-category.component.css'],
-  providers: [ProductService, CategoryService]
+  styleUrls: ['./product-list-by-category.component.css']
 })
 export class ProductListByCategoryComponent implements OnInit {
 

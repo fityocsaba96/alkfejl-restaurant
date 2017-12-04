@@ -13,6 +13,11 @@ import { RestaurantComponent } from './components/restaurant/restaurant.componen
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductListByCategoryComponent } from './components/product-list-by-category/product-list-by-category.component';
+import { UserService } from './services/user.service';
+import { CategoryService } from './services/category.service';
+import { RestaurantService } from './services/restaurant.service';
+import { ProductService } from './services/product.service';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +27,8 @@ import { ProductListByCategoryComponent } from './components/product-list-by-cat
     RestaurantComponent,
     ProductListComponent,
     ProductComponent,
-    ProductListByCategoryComponent
+    ProductListByCategoryComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +37,7 @@ import { ProductListByCategoryComponent } from './components/product-list-by-cat
     MaterialModule,
     HttpClientModule
   ],
-  providers: [RoutingGuard],
+  providers: [RoutingGuard, UserService, CategoryService, RestaurantService, ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,12 @@
+mat-table {
+    margin-bottom: 25px;
+}
+
+.small {
+    flex: 0 0 40px;
+}
+
+.spacer {
+    width: 8px;
+    display: inline-block;
+}
