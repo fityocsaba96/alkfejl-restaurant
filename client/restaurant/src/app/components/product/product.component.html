@@ -20,4 +20,7 @@
       <mat-icon>add_shopping_cart</mat-icon>
     </button>
   </mat-card-actions>
+  <ng-container *ngIf="admin()">
+    <button mat-raised-button class="mat-primary" (click)="clickButton($event)">Delete product</button>
+  </ng-container>
 </mat-card>

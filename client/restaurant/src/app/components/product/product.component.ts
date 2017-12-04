@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
@@ -30,5 +30,19 @@ export class ProductComponent {
 
   private addToCart(): void {
     this.productService.addToCart(this.product.id);
+  }
+
+  private admin(): boolean {
+    return UserService.role === Role.ADMIN;
+  }
+
+  @Output()
+  public delProduct: EventEmitter<Product> = new EventEmitter();
+
+  public clickButton($event: Event): void {
+    $event.preventDefault();
+    $event.stopPropagation();
+    this.delProduct.emit(this.product);
+
   }
 }

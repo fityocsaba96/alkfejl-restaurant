@@ -42,4 +42,8 @@ export class ProductService {
   public deleteFromCart(id: number): void {
     window.sessionStorage.removeItem(`cartQty${id.toString()}`);
   }
+
+  public delProductById(id:number): Observable<any>{
+    return this.http.delete('/api/product/' +id); 
+  }
 }

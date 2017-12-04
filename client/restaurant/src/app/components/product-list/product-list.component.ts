@@ -11,6 +11,7 @@ export class ProductListComponent implements OnInit {
 
   private products: Product[];
   private _pageTitle: string;
+  private idx:number;
 
   constructor(
     private productService: ProductService
@@ -26,5 +27,11 @@ export class ProductListComponent implements OnInit {
 
   public get pageTitle() {
     return this._pageTitle;
+  }
+
+  public delProduct(product:Product): void {
+    this.idx=this.products.indexOf(product);
+    this.products.splice(this.idx,1);
+    this.productService.delProductById(product.id).subscribe();
   }
 }
