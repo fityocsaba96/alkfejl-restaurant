@@ -1,0 +1,9 @@
+<ng-container *ngIf="orders">
+  <ng-container *ngIf="orders.length !== 0">
+    <app-user-order-overview *ngFor="let order of orders" [order]="order"></app-user-order-overview>
+  </ng-container>
+  <mat-card *ngIf="orders.length === 0">
+    <mat-card-title>No orders yet</mat-card-title>
+  </mat-card>
+</ng-container>
+<mat-spinner *ngIf="!orders"></mat-spinner>

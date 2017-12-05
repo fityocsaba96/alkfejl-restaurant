@@ -5,14 +5,13 @@ import { StatusService } from '../../services/status.service';
 import { OrderService } from '../../services/order.service';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+  selector: 'app-incoming-order',
+  templateUrl: './incoming-order.component.html',
+  styleUrls: ['./incoming-order.component.css']
 })
-export class OrderComponent implements OnInit {
+export class IncomingOrderComponent implements OnInit {
   private statuses:Status[];
   private status:Status;
-  private _pageTitle:string;
 
   @Input()
   public order: Order;
@@ -20,9 +19,7 @@ export class OrderComponent implements OnInit {
   constructor(
     private statusService:StatusService,
     private orderService:OrderService,
-    ) {
-    this._pageTitle='Orders'
-   }
+    ) { }
 
   ngOnInit() {
     this.statusService.getStatuses().subscribe((result) => {

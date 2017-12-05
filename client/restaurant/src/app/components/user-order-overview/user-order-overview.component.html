@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>date_range</mat-icon>
+      <span mat-line>{{orderService.createDateMsToDateString(order)}}</span>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>info</mat-icon>
+      <span mat-line>{{order.status.description}}</span>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>attach_money</mat-icon>
+      <span mat-line>{{order.total}}</span>
+    </mat-list-item>
+  </mat-list>
+  <mat-card-actions>
+    <a mat-icon-button color="primary" routerLink="/user/order/{{order.id}}">
+      <mat-icon>zoom_in</mat-icon>
+    </a>
+  </mat-card-actions>
+</mat-card>

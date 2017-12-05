@@ -19,7 +19,7 @@ export class IncomingOrderListComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.orderService.getOrders().subscribe(result => {
+    this.orderService.getIncomingOrders().subscribe(result => {
       this.orders=result.map(object => new Order(object))
     })
   }

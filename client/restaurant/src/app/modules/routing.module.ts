@@ -11,6 +11,8 @@ import { IncomingOrderListComponent } from '../components/incoming-order-list/in
 import { LoginComponent } from '../components/login/login.component';
 import { AddProductComponent } from '../components/add-product/add-product.component';
 import { RegisterComponent } from '../components/register/register.component';
+import { UserOrderListComponent } from '../components/user-order-list/user-order-list.component';
+import { UserOrderComponent } from '../components/user-order/user-order.component';
 
 const routes: Routes = [
   {
@@ -18,16 +20,17 @@ const routes: Routes = [
     canActivateChild: [RoutingGuard],
     children: [
       { path: '', redirectTo: 'restaurants', pathMatch: 'full' },
-      { path: 'restaurants', component: RestaurantListComponent, data: { roles: [Role.ADMIN, Role.USER, Role.GUEST] } }, 
+      { path: 'restaurants', component: RestaurantListComponent, data: { roles: [Role.ADMIN, Role.USER, Role.GUEST] } },
       { path: 'user/register', component: RegisterComponent, data: { roles: [Role.GUEST] } },
-      { path: 'user/login', component: LoginComponent, data: { roles: [Role.GUEST] } },/*
-      { path: 'user/settings', component: UserSettingsComponent, data: { roles: [Role.ADMIN, Role.USER] } },*/
+      { path: 'user/login', component: LoginComponent, data: { roles: [Role.GUEST] } },
+   // { path: 'user/settings', component: UserSettingsComponent, data: { roles: [Role.ADMIN, Role.USER] } },
       { path: 'products', component: ProductListComponent, data: { roles: [Role.ADMIN, Role.USER] } },
       { path: 'category/:id/products', component: ProductListByCategoryComponent, data: { roles: [Role.ADMIN, Role.USER] } },
-      { path: 'cart', component: CartComponent, data: { roles: [Role.USER] } },/*
+      { path: 'cart', component: CartComponent, data: { roles: [Role.USER] } },
       { path: 'user/orders', component: UserOrderListComponent, data: { roles: [Role.USER] } },
-      { path: 'product/:id/reviews', component: ProductReviewListComponent, data: { roles: [Role.ADMIN, Role.USER] } },
-      */{ path: 'orders/incoming', component: IncomingOrderListComponent, data: { roles: [Role.ADMIN] } },
+      { path: 'user/order/:id', component: UserOrderComponent, data: { roles: [Role.USER] } },
+   // { path: 'product/:id/reviews', component: ProductReviewListComponent, data: { roles: [Role.ADMIN, Role.USER] } },
+      { path: 'orders/incoming', component: IncomingOrderListComponent, data: { roles: [Role.ADMIN] } },
       { path: 'products/add', component: AddProductComponent, data: { roles: [Role.ADMIN] } }
     ]
   }

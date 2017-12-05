@@ -16,3 +16,9 @@ body {
 mat-card {
   margin-bottom: 10px;
 }
+
+mat-list-item {
+  height: auto !important;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

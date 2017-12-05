@@ -1,4 +1,4 @@
 <ng-container *ngIf="orders">
-  <app-order *ngFor="let order of orders" [order]="order"></app-order>
+  <app-incoming-order *ngFor="let order of orders" [order]="order"></app-incoming-order>
 </ng-container>
 <mat-spinner *ngIf="!orders"></mat-spinner>

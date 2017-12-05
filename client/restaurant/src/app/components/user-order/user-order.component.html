@@ -1,0 +1,44 @@
+<ng-container *ngIf="order">
+  <h3 class="mat-h3">{{pageSubTitle}}</h3>
+  <mat-card>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>date_range</mat-icon>
+        <span mat-line>{{orderService.createDateMsToDateString(order)}}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>info</mat-icon>
+        <span mat-line>{{order.status.description}}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>note_add</mat-icon>
+        <span class="mat-list-text">{{order.note}}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>attach_money</mat-icon>
+        <span mat-line>{{order.total}}</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+  <div class="orderProductContainer">
+    <mat-card *ngFor="let orderProduct of order.orderProducts">
+      <mat-card-title>
+        {{orderProduct.product.name}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{orderProduct.product.category.name}}
+      </mat-card-subtitle>
+      <mat-list>
+        <mat-list-item>
+          <mat-icon mat-list-icon>attach_money</mat-icon>
+          <span mat-line>{{orderProduct.product.price}}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>grain</mat-icon>
+          <span mat-line>{{orderProduct.quantity}}</span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+  </div>
+</ng-container>
+<mat-spinner *ngIf="!order"></mat-spinner>

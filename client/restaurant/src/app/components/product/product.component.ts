@@ -20,10 +20,7 @@ export class ProductComponent {
   @Output()
   public clickAddToCart: EventEmitter<number>;
 
-  constructor(
-    private productService: ProductService,
-    private userService: UserService
-  ) {
+  constructor() {
     this.showCategory = true;
     this.clickAddToCart = new EventEmitter();
   }
