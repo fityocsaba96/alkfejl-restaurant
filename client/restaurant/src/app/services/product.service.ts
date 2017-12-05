@@ -39,8 +39,27 @@ export class ProductService {
     }) as Observable<Product>;
   }
 
+  public getCartData() {
+    const cartData = [];
+    for (let i = 0; i < window.sessionStorage.length; i++) {
+      const key: string = window.sessionStorage.key(i);
+
+      if (key.substr(0, 7) === 'cartQty') {
+        cartData.push({
+          id: parseInt(key.substr(7)),
+          quantity: parseInt(window.sessionStorage.getItem(key))
+        });
+      }
+    }
+    return cartData.sort((a, b) => a.id - b.id);
+  }
+
   public deleteFromCart(id: number): void {
     window.sessionStorage.removeItem(`cartQty${id.toString()}`);
+  }
+
+  public emptyCart(currentCartProductIds: number[]): void {
+    currentCartProductIds.forEach(id => window.sessionStorage.removeItem(`cartQty${id.toString()}`));
   }
 
   public delProductById(id:number): Observable<any>{

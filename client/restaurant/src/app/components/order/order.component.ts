@@ -7,8 +7,7 @@ import { OrderService } from '../../services/order.service';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css'],
-  providers: [StatusService, OrderService]
+  styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
   private statuses:Status[];

@@ -17,11 +17,15 @@ export class ProductComponent {
   @Input()
   public showCategory: boolean;
 
+  @Output()
+  public clickAddToCart: EventEmitter<number>;
+
   constructor(
     private productService: ProductService,
     private userService: UserService
   ) {
     this.showCategory = true;
+    this.clickAddToCart = new EventEmitter();
   }
 
   private user(): boolean {
@@ -29,7 +33,7 @@ export class ProductComponent {
   }
 
   private addToCart(): void {
-    this.productService.addToCart(this.product.id);
+    this.clickAddToCart.emit(this.product.id);
   }
 
   private admin(): boolean {

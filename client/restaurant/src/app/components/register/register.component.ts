@@ -12,8 +12,7 @@ import { ErrorStateMatcher } from '@angular/material';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  providers: [RestaurantService, CityService]
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup = new FormGroup({

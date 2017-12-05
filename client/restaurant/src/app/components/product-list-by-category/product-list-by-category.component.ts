@@ -3,6 +3,7 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
 import { CategoryService } from '../../services/category.service';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-product-list-by-category',
@@ -18,7 +19,8 @@ export class ProductListByCategoryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private snackBar: MatSnackBar
   ) {
     this._pageTitle = 'Products';
   }
@@ -41,5 +43,12 @@ export class ProductListByCategoryComponent implements OnInit {
 
   public get pageTitle() {
     return this._pageTitle;
+  }
+
+  private addToCart(id: number): void {
+    this.productService.addToCart(id);
+    this.snackBar.open('Added to cart', 'OK', {
+      duration: 3000
+    });
   }
 }

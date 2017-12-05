@@ -16,5 +16,6 @@ export class RoutingGuard implements CanActivateChild {
     if (route.data.roles.includes(UserService.role)) {
       return true;
     }
+    return false;
   }
 }

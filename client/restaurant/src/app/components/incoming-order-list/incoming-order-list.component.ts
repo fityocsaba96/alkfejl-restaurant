@@ -5,8 +5,7 @@ import { OrderService } from '../../services/order.service';
 @Component({
   selector: 'app-incoming-order-list',
   templateUrl: './incoming-order-list.component.html',
-  styleUrls: ['./incoming-order-list.component.css'],
-  providers:[OrderService]
+  styleUrls: ['./incoming-order-list.component.css']
 })
 export class IncomingOrderListComponent implements OnInit {
 

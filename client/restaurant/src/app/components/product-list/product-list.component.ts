@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-product-list',
@@ -14,7 +15,8 @@ export class ProductListComponent implements OnInit {
   private idx:number;
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private snackBar: MatSnackBar
   ) {
     this._pageTitle = 'Products';
   }
@@ -33,5 +35,12 @@ export class ProductListComponent implements OnInit {
     this.idx=this.products.indexOf(product);
     this.products.splice(this.idx,1);
     this.productService.delProductById(product.id).subscribe();
+  }
+
+  private addToCart(id: number): void {
+    this.productService.addToCart(id);
+    this.snackBar.open('Added to cart', 'OK', {
+      duration: 3000
+    });
   }
 }

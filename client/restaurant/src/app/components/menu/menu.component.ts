@@ -21,11 +21,11 @@ export class MenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userService.sharedLoginInfoRequest.subscribe(response => {
+    if (this.user() || this.admin()) {
       this.categoryService.getCategories().subscribe(result => {
         this.categories = result.map(object => new Category(object));
       });
-    }, () => {});
+    }
   }
 
   private guest(): boolean {

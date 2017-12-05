@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User, Role } from '../models/user';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/share';
 import { Restaurant } from '../models/restaurant';
 import { City } from '../models/city';
 
@@ -11,20 +10,23 @@ export class UserService {
 
   private static _user: User;
   private static _role: Role;
-  private _sharedLoginInfoRequest: Observable<User>;
 
   constructor(
     private http: HttpClient
-  ) {
-    UserService._role = Role.GUEST;
-    this._sharedLoginInfoRequest = this.http.get<User>('/api/user/me').share();
-  }
+  ) { }
 
-  public syncLoginStatus(): void {
-    this._sharedLoginInfoRequest.subscribe(response => {
-      UserService._user = new User(response);
-      UserService._role = UserService._user.isAdmin ? Role.ADMIN : Role.USER;
-    }, () => {});
+  public syncLoginStatus(): Promise<User> {
+    return new Promise((resolve, reject) => {
+
+      this.http.get<User>('/api/user/me').subscribe(response => {
+        UserService._user = new User(response);
+        UserService._role = UserService._user.isAdmin ? Role.ADMIN : Role.USER;
+        resolve();
+      }, () => {
+        UserService._role = Role.GUEST;
+        resolve();
+      });
+    });
   }
 
   public login(email:string, password: string): Observable<User>{ 
@@ -40,10 +42,6 @@ export class UserService {
 
   public static get role(): Role {
     return UserService._role;
-  }
-
-  public get sharedLoginInfoRequest() {
-    return this._sharedLoginInfoRequest;
   }
 
   public register(email:string, firstName:string, lastName:string, password:string, zipCode:number, city:City, address: string, 

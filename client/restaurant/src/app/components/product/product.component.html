@@ -16,7 +16,7 @@
     </mat-list-item>
   </mat-list>
   <mat-card-actions>
-    <button *ngIf="user()" mat-icon-button color="primary" (click)="addToCart()">
+    <button *ngIf="user()" mat-icon-button color="primary" (click)="addToCart($event)">
       <mat-icon>add_shopping_cart</mat-icon>
     </button>
   </mat-card-actions>

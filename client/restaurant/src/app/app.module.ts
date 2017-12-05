@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RoutingModule } from './modules/routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,6 +24,9 @@ import { IncomingOrderListComponent } from './components/incoming-order-list/inc
 import { LoginComponent } from './components/login/login.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { RegisterComponent } from './components/register/register.component';
+import { OrderService } from './services/order.service';
+import { StatusService } from './services/status.service';
+import { CityService } from './services/city.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,22 @@ import { RegisterComponent } from './components/register/register.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [RoutingGuard, UserService, CategoryService, RestaurantService, ProductService],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (userService: UserService) => () => userService.syncLoginStatus(),
+      deps: [UserService],
+      multi: true
+    },
+    RoutingGuard,
+    UserService,
+    CategoryService,
+    RestaurantService,
+    ProductService,
+    OrderService,
+    StatusService,
+    CityService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
