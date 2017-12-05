@@ -1,6 +1,6 @@
 # Dokumentáció
 
-## Használt technológiák, fejlesztő környezet
+## Használt technológiák, fejlesztő környezet szerver oldalon
 
 Az alkalmazás JAVA nyelven lett írva. A fejlesztéshez IntelliJ IDEA-t, a verziókezeléshez gitet használtunk.
 
@@ -32,11 +32,43 @@ A Java Persistence API, vagy röviden JPA, egy keretrendszer a Java programozás
 
 Célja az objektum feltérképezésének megkönnyítése, azáltal, hogy automatikusan meghatározza, hogy az egyik objektummodell hogyan kapcsolódik egy másikhoz.
 
+## Használt technológiák, fejlesztő környezet kliens oldalon
+
+A fejlesztéshez Angular keretrendszert használtunk. A fejlesztéshez Visual Studio Code-t, a verziókezeléshez gitet használtunk.
+
+### Angular
+
+AngularJS egy JavaScript keretrendszer. Az AngularJS kiterjeszti a HTML-attribútumokat, és adatokat köt a HTML-hez kifejezésekkel. 
+
+### Angular Material
+
+Az Angular Material egy UI komponens keretrendszer és a Google Material Design specifikációinak referenciamódszere. Az oldalakon az elemek megjelenítéséhez ezt a keretrendszert használtuk.
+
+### AJAX (Asynchronous JavaScript And XML.)
+
+A szerverrel AJAX kérésekkel történik a kommunikáció. Az AJAX lehetővé teszi a weboldalak frissítését aszinkron módon azáltal, hogy az adatokat egy webkiszolgálóval cseréli ki a háttérben. Ez azt jelenti, hogy a weblap egyes részeinek frissítése az egész oldal újbóli töltése nélkül lehetséges.
+
+### Typescript
+
+A TypeScript egy ingyenes és nyílt forrású programozási nyelv, amelyet a Microsoft fejlesztett ki és tart karban. A TypeScript használatával JavaScript-alkalmazások fejleszthetők az kliensoldali vagy szerveroldali végrehajtásra. A TypeScript nagy alkalmazások fejlesztésére és ezek JavaScript-re fordítására készült.
+
+### NPM
+
+NPM egy csomagkezelő JavaScript nyelvhez. Ez az alapértelmezett csomagkezelő a JavaScript futási környezetéhez a Node.js-hez.
+
+### HTML
+
+A HTML (angolul: HyperText Markup Language=hiperszöveges jelölőnyelv) egy leíró nyelv, melyet weboldalak készítéséhez fejlesztettek ki, és mára már internetes szabvánnyá vált a W3C (World Wide Web Consortium) támogatásával. HTML általában szöveges állományokban található meg. Ezek az állományok tartalmazzák azokat a szimbólumokat, amelyek a megjelenítő programnak leírják, hogyan is kell megjeleníteni illetve feldolgozni az adott állomány tartalmát.
+
+### CSS
+
+A stílusok a HTML megjelenítési elemei és attribútumai helyett használhatók, azoknál jóval több lehetőséget biztosítva. A stílusok meghatározzák, hogy hogyan jelenjenek meg vizuálisan a HTML elemek. A stíluslapok segítségével könnyen szét lehet választani az oldal tartalmát annak kinézetétől (a dizájntól).
+
 ## Adatbázis terv
 
 ![Adatbázis terv](/doc/database_design.png?raw=true)
 
-## Könyvtárstruktúra
+## Könyvtárstruktúra szerver oldalon
 
 A projektben 10 csomag található.
 
@@ -79,6 +111,76 @@ Ebben a csomagban található osztály nyújtja a logikát a Role annotáció m�
 ### service.validator
 
 Itt találhatók a végpontokról érkező adatok validálását elvégző osztályok.
+
+## Könyvtárstruktúra kliens oldalon
+
+### app
+
+Ebben a csomagban találhatóak a többi csomagok, ezen kívül az app komponens fájljai és app.module.ts található itt.
+
+### app/components
+
+Ebben találhatóak az egyes komponensek külön csomagokban.
+
+### app/components/add-product
+
+Új termék felvételéhet szükséges komponens fájljai találhatóak itt.
+
+### app/components/cart
+
+A felhasználó vásárlói kosarát megvalósító komponens fájljai.
+
+### app/components/incoming-order-list
+
+A beérkező megrendelések menedzselését megvalósító komponens fájljai.
+
+### app/components/login`
+
+A bejelentkezést megvalósító komponens található itt.
+
+### app/components/menu
+
+A menüt valósítja meg.
+
+### app/components/order
+
+Az egyes megrendelések kinézetével és menedzselésével kapcsolatos fájlok.
+
+### app/components/product
+
+Az egyes termékek kinézetével és menedzselésével kapcsolatos fájlok.
+
+### app/components/product-list
+
+Termékek listázását megvalósító komponens.
+
+### app/components/product-list-by-category
+
+A termékek listázását kategóriák szerint valósítja meg a komponens.
+
+### app/components/register`
+
+Új felhazsnálók regisztrálását megvalósító komponens.
+
+### app/components/restaurant
+
+Az egyes éttermek kinézetével és menedzselésével kapcsolatos fájlok.
+
+### app/components/restaurant-list
+
+Éttermek listázását megvalósító komponens.
+
+### app/models
+
+Ebben a csomagban található fájlok az adatbázisban megjelenő táblákat reprezentálják. Egy tábla egy osztálynak felel meg.
+
+### app/modules
+
+Ebben a könyvtárban 2 fájl található. Az egyik a végpontokat írja le, a másik az Angular Material komponenseket írja le.
+
+### app/services
+
+A models csomagban található fájlok service osztályai találhatóak itt. Ezek az entitások menedzselését valósítják meg.
 
 ## Végpontok
 
