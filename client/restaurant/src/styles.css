@@ -22,3 +22,8 @@ mat-list-item {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+
+.writeReviewAction, .placeOrderAction {
+  margin-bottom: -16px !important;
+  padding-bottom: 0 !important;
+}
