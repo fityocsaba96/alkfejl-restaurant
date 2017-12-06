@@ -30,6 +30,9 @@ import { CityService } from './services/city.service';
 import { UserOrderListComponent } from './components/user-order-list/user-order-list.component';
 import { UserOrderComponent } from './components/user-order/user-order.component';
 import { UserOrderOverviewComponent } from './components/user-order-overview/user-order-overview.component';
+import { ProductReviewListComponent } from './components/product-review-list/product-review-list.component';
+import { ProductReviewComponent } from './components/product-review/product-review.component';
+import { ReviewService } from './services/review.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,9 @@ import { UserOrderOverviewComponent } from './components/user-order-overview/use
     RegisterComponent,
     UserOrderListComponent,
     UserOrderComponent,
-    UserOrderOverviewComponent
+    UserOrderOverviewComponent,
+    ProductReviewListComponent,
+    ProductReviewComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +78,8 @@ import { UserOrderOverviewComponent } from './components/user-order-overview/use
     ProductService,
     OrderService,
     StatusService,
-    CityService
+    CityService,
+    ReviewService
   ],
   bootstrap: [AppComponent]
 })

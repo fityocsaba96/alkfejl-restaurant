@@ -39,11 +39,11 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.restaurantService.getRestaurants().subscribe((result) => {
-      this.restaurants=result.map(object => new Restaurant(object));
+    this.restaurantService.getRestaurants().subscribe(response => {
+      this.restaurants=response.map(object => new Restaurant(object));
     })
-    this.cityService.getCities().subscribe((result) => {
-      this.cities=result.map(object => new City(object));
+    this.cityService.getCities().subscribe(response => {
+      this.cities=response.map(object => new City(object));
     })
   }
 
@@ -95,8 +95,8 @@ export class RegisterComponent implements OnInit {
     console.log('a');
     this.city=new City(city);
     console.log(this.city.name);
-    this.restaurantService.getRestaurantsByCity(this.city).subscribe((result) => {
-      this.restaurants=result.map(object => new Restaurant(object));
+    this.restaurantService.getRestaurantsByCity(this.city).subscribe(response => {
+      this.restaurants=response.map(object => new Restaurant(object));
     })
   }
 

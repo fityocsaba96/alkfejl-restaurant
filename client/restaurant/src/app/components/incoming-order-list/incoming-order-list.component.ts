@@ -19,8 +19,8 @@ export class IncomingOrderListComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.orderService.getIncomingOrders().subscribe(result => {
-      this.orders=result.map(object => new Order(object))
+    this.orderService.getIncomingOrders().subscribe(response => {
+      this.orders=response.map(object => new Order(object))
     })
   }
 

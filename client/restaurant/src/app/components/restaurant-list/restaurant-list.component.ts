@@ -19,8 +19,8 @@ export class RestaurantListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.restaurantService.getRestaurants().subscribe(result => {
-      this.restaurants = result.map(object => new Restaurant(object));
+    this.restaurantService.getRestaurants().subscribe(response => {
+      this.restaurants = response.map(object => new Restaurant(object));
     });
   }
 

@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-title>
+    <mat-icon mat-list-icon *ngFor="let star of stars">star</mat-icon>
+  </mat-card-title>
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>date_range</mat-icon>
+      <span mat-line>{{reviewService.createDateMsToDateString(review)}}</span>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>person</mat-icon>
+      <span mat-line>{{review.userFirstName}} {{review.userLastName}}</span>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>description</mat-icon>
+      <span class="mat-list-text">{{review.description}}</span>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

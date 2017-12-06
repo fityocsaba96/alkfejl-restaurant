@@ -33,11 +33,11 @@ export class ProductListByCategoryComponent implements OnInit {
 
   private initializeComponent(categoryId: number): void {
     this.products = this.pageSubTitle = undefined;
-    this.categoryService.getCategories().subscribe(result => {
-      this.pageSubTitle = result.find(object => object.id === categoryId).name;
+    this.categoryService.getCategories().subscribe(response => {
+      this.pageSubTitle = response.find(object => object.id === categoryId).name;
     });
-    this.productService.getProductsByCategory(categoryId).subscribe(result => {
-      this.products = result.map(object => new Product(object));
+    this.productService.getProductsByCategory(categoryId).subscribe(response => {
+      this.products = response.map(object => new Product(object));
     });
   }
 

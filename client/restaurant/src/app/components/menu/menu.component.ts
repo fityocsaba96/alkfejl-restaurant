@@ -22,8 +22,8 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.user() || this.admin()) {
-      this.categoryService.getCategories().subscribe(result => {
-        this.categories = result.map(object => new Category(object));
+      this.categoryService.getCategories().subscribe(response => {
+        this.categories = response.map(object => new Category(object));
       });
     }
   }

@@ -22,8 +22,8 @@ export class IncomingOrderComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.statusService.getStatuses().subscribe((result) => {
-      this.statuses=result.map(object=> new Status(object))
+    this.statusService.getStatuses().subscribe(response => {
+      this.statuses=response.map(object=> new Status(object))
     })
   }
 

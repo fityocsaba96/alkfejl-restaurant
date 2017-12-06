@@ -32,8 +32,8 @@ export class CartComponent implements OnInit {
     const cartData = this.productService.getCartData(), ids = cartData.map(object => object.id), tableData = [];
 
     if (cartData.length > 0) {
-      this.productService.getProducts().subscribe(result => {
-        result.filter(object => ids.includes(object.id)).forEach((object, index) => {
+      this.productService.getProducts().subscribe(response => {
+        response.filter(object => ids.includes(object.id)).forEach((object, index) => {
 
           const tableRow = {
             name: object.name,

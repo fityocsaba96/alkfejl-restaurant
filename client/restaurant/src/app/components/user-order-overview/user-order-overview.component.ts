@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Order } from '../../models/order';
 import { OrderService } from '../../services/order.service';
+import { OrderResponse } from '../../models/responses/order-response';
 
 @Component({
   selector: 'app-user-order-overview',
@@ -10,7 +10,7 @@ import { OrderService } from '../../services/order.service';
 export class UserOrderOverviewComponent {
 
   @Input()
-  public order: Order;
+  public order: OrderResponse;
 
   constructor(
     private orderService: OrderService

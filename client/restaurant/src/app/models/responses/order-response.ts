@@ -16,7 +16,7 @@ export class OrderResponse extends BaseModel {
     }
 }
 
-class OrderProductResponse extends BaseModel {
+export class OrderProductResponse extends BaseModel {
 
     public quantity: number;
     public product: Product;

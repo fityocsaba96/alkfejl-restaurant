@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Order } from '../models/order';
 import { UserService } from './user.service';
+import { OrderResponse } from '../models/responses/order-response';
 
 @Injectable()
 export class OrderService {
@@ -16,8 +17,8 @@ export class OrderService {
     return this.http.get('api/orders/incoming') as Observable<Order[]>
   }
 
-  public getUserOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>('/api/user/me/orders');
+  public getUserOrders(): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>('/api/user/me/orders');
   }
 
   update(order:Order) {
@@ -42,7 +43,7 @@ export class OrderService {
     };
   }
 
-  public createDateMsToDateString(order: Order): string {
+  public createDateMsToDateString(order: OrderResponse): string {
     return new Date(order.createDate).toLocaleString('en-GB').slice(0, -3);
   }
 }

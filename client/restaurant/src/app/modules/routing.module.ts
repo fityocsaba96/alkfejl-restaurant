@@ -13,6 +13,7 @@ import { AddProductComponent } from '../components/add-product/add-product.compo
 import { RegisterComponent } from '../components/register/register.component';
 import { UserOrderListComponent } from '../components/user-order-list/user-order-list.component';
 import { UserOrderComponent } from '../components/user-order/user-order.component';
+import { ProductReviewListComponent } from '../components/product-review-list/product-review-list.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
       { path: 'cart', component: CartComponent, data: { roles: [Role.USER] } },
       { path: 'user/orders', component: UserOrderListComponent, data: { roles: [Role.USER] } },
       { path: 'user/order/:id', component: UserOrderComponent, data: { roles: [Role.USER] } },
-   // { path: 'product/:id/reviews', component: ProductReviewListComponent, data: { roles: [Role.ADMIN, Role.USER] } },
+      { path: 'product/:id/reviews', component: ProductReviewListComponent, data: { roles: [Role.ADMIN, Role.USER] } },
       { path: 'orders/incoming', component: IncomingOrderListComponent, data: { roles: [Role.ADMIN] } },
       { path: 'products/add', component: AddProductComponent, data: { roles: [Role.ADMIN] } }
     ]

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
-import { Order } from '../../models/order';
+import { OrderResponse } from '../../models/responses/order-response';
 
 @Component({
   selector: 'app-user-order-list',
@@ -9,7 +9,7 @@ import { Order } from '../../models/order';
 })
 export class UserOrderListComponent implements OnInit {
 
-  private orders: Order[];
+  private orders: OrderResponse[];
   private _pageTitle: string;
 
   constructor(
@@ -19,8 +19,8 @@ export class UserOrderListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orderService.getUserOrders().subscribe(result => {
-      this.orders = result.map(object => new Order(object));
+    this.orderService.getUserOrders().subscribe(response => {
+      this.orders = response.map(object => new OrderResponse(object));
     });
   }
 

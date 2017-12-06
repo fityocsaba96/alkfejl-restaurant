@@ -1,0 +1,10 @@
+<ng-container *ngIf="reviews">
+  <h3 class="mat-h3">{{pageSubTitle}}</h3>
+  <ng-container *ngIf="reviews.reviews.length !== 0">
+    <app-product-review *ngFor="let review of reviews.reviews" [review]="review"></app-product-review>
+  </ng-container>
+  <mat-card *ngIf="reviews.reviews.length === 0">
+    <mat-card-title>No reviews yet</mat-card-title>
+  </mat-card>
+</ng-container>
+<mat-spinner *ngIf="!reviews"></mat-spinner>

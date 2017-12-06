@@ -11,7 +11,7 @@ export class ReviewsResponse {
     }
 }
 
-class ReviewResponse extends BaseModel {
+export class ReviewResponse extends BaseModel {
 
     public createDate: number;
     public stars: number;

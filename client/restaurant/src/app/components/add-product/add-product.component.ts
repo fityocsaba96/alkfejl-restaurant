@@ -32,8 +32,8 @@ export class AddProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getCategories().subscribe((result) => {
-      this.categories=result.map(object => new Category(object));
+    this.categoryService.getCategories().subscribe(response => {
+      this.categories=response.map(object => new Category(object));
     })
   }
 
