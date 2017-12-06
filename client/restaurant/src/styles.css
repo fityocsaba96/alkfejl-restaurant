@@ -13,6 +13,18 @@ body {
   margin: auto;
 }
 
+.fullWidth {
+  width: 100%;
+}
+
+.halfWidth {
+  width: 50%;
+}
+
+.thirdWidth {
+  width: calc(100% / 3);
+}
+
 mat-card {
   margin-bottom: 10px;
 }
@@ -23,7 +35,7 @@ mat-list-item {
   margin-bottom: 8px;
 }
 
-.writeReviewAction, .placeOrderAction {
+.formActions {
   margin-bottom: -16px !important;
   padding-bottom: 0 !important;
 }

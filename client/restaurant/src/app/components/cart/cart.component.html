@@ -47,7 +47,7 @@
           <mat-list-item>
             <mat-icon mat-list-icon>note_add</mat-icon>
             <span mat-line>
-              <mat-form-field class="note">
+              <mat-form-field class="fullWidth">
                 <input matInput #note>
               </mat-form-field>
             </span>
@@ -57,7 +57,7 @@
             <span mat-line>{{totalPrice}}</span>
           </mat-list-item>
         </mat-list>
-        <mat-card-actions class="placeOrderAction">
+        <mat-card-actions class="formActions">
           <button mat-icon-button color="primary" (click)="placeOrder(note.value, $event)">
             <mat-icon>done</mat-icon>
           </button>

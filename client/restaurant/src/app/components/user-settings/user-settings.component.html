@@ -1,0 +1,73 @@
+<mat-card *ngIf="cities && restaurants">
+  <form novalidate>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>email</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <input matInput #email [value]="user.email">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>lock</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <input matInput #password type="password">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>person</mat-icon>
+        <span mat-line>
+          <mat-form-field class="halfWidth">
+            <input matInput #firstName [value]="user.firstName">
+          </mat-form-field>
+          <mat-form-field class="halfWidth">
+            <input matInput #lastName [value]="user.lastName">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>location_city</mat-icon>
+        <span mat-line>
+          <mat-form-field class="thirdWidth">
+            <input matInput #zipCode [value]="user.zipCode">
+          </mat-form-field>
+          <mat-form-field class="thirdWidth">
+            <mat-select #cityId [value]="user.city.id" (selectionChange)="refreshRestaurants($event.value)">
+              <mat-option *ngFor="let city of cities" [value]="city.id">{{city.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="thirdWidth">
+            <input matInput #address [value]="user.address">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>phone</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <input matInput #phoneNumber [value]="user.phoneNumber">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>restaurant</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <mat-select #restaurantId [value]="user.restaurant.id">
+              <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">{{restaurant.zipCode}} {{restaurant.city.name}}, {{restaurant.address}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+    </mat-list>
+    <mat-card-actions class="formActions">
+      <button mat-icon-button color="primary" (click)="editSettings(email.value, password.value, firstName.value, lastName.value, zipCode.value, cityId.value, address.value, phoneNumber.value, restaurantId.value, $event)">
+        <mat-icon>done</mat-icon>
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+<mat-spinner *ngIf="!cities || !restaurants"></mat-spinner>

@@ -15,7 +15,7 @@
         <mat-list-item>
           <mat-icon mat-list-icon>star</mat-icon>
           <span mat-line>
-            <mat-form-field>
+            <mat-form-field class="fullWidth">
               <mat-select [value]="5" #stars>
                 <mat-option *ngFor="let star of starsChoices" [value]="star">{{star}}</mat-option>
               </mat-select>
@@ -25,13 +25,13 @@
         <mat-list-item>
           <mat-icon mat-list-icon>description</mat-icon>
           <span mat-line>
-            <mat-form-field class="description">
+            <mat-form-field class="fullWidth">
               <textarea matInput #description></textarea>
             </mat-form-field>
           </span>
         </mat-list-item>
       </mat-list>
-      <mat-card-actions class="writeReviewAction">
+      <mat-card-actions class="formActions">
         <button mat-icon-button color="primary" (click)="writeReview(stars.value, description.value, $event)">
           <mat-icon>done</mat-icon>
         </button>

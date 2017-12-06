@@ -28,7 +28,8 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        User sameEmailUser = userRepository.findByEmail(user.getEmail());
+        if (sameEmailUser != null && (user.getId() == null || !sameEmailUser.getId().equals(user.getId()))) {
             errors.rejectValue("email", "not.unique", "Email address already exists");
         }
 

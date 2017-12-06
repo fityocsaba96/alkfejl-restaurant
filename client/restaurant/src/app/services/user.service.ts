@@ -34,9 +34,13 @@ export class UserService {
         email,
         password
     }) as Observable<User>;
-}
+  }
 
-  public setUser(user: User) {
+  public static get user(): User {
+    return UserService._user;
+  }
+
+  public static set user(user: User) {
     UserService._user = user;
   }
 
@@ -64,6 +68,26 @@ export class UserService {
     this.http.post('api/user/logout','').subscribe(() => {
       UserService._user = undefined;
       UserService._role = Role.GUEST;
+    });
+  }
+
+  public editSettings(email: string, password: string, firstName: string, lastName: string, zipCode: number,
+                      cityId: number, address: string, phoneNumber: string, restaurantId: number): Observable<User> {
+    return this.http.put<User>('/api/user/me', {
+      id: UserService._user.id,
+      email,
+      lastName,
+      firstName,
+      passwordHash: password,
+      zipCode,
+      address,
+      phoneNumber,
+      restaurant: {
+        id: restaurantId
+      },
+      city: {
+        id: cityId
+      }
     });
   }
 }

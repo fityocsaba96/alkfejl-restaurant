@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
   private tryLogin(): void {
     this.userService.login(this.email.value,this.password.value).subscribe((user) => {
       console.log(user); 
-      this.userService.setUser(user as User);
+      UserService.user = user as User;
       this.userService.syncLoginStatus();
       this.router.navigate(['/restaurants']);
     }, (err) => {

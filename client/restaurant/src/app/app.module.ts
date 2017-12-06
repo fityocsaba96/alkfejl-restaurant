@@ -33,6 +33,7 @@ import { UserOrderOverviewComponent } from './components/user-order-overview/use
 import { ProductReviewListComponent } from './components/product-review-list/product-review-list.component';
 import { ProductReviewComponent } from './components/product-review/product-review.component';
 import { ReviewService } from './services/review.service';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ReviewService } from './services/review.service';
     UserOrderComponent,
     UserOrderOverviewComponent,
     ProductReviewListComponent,
-    ProductReviewComponent
+    ProductReviewComponent,
+    UserSettingsComponent
   ],
   imports: [
     BrowserModule,

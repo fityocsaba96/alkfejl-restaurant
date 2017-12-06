@@ -19,7 +19,7 @@ public class User extends BaseEntity {
 
     @Email(message = "Invalid email format")
     @NotNull
-    @Size(max = 50, message = "Email size should be max 50 characters")
+    @Size(min = 1, max = 50, message = "Email size should be 1-50 characters")
     @Column(length = 50, unique = true)
     private String email;
 
