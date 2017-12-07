@@ -19,7 +19,7 @@ export class UserOrderComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
     private errorService: ErrorService
   ) {
     this._pageTitle = 'My orders';

@@ -333,3 +333,9 @@ A megadott termék eltávolítása a kínálatból. Ekkor a termék értékelés
     ]
 }
 ```
+
+## Használati eset diagram
+
+Az alábbi diagram szemlélteti, hogy a különböző szerepkörök mely funkciókhoz tartozó felületekhez férnek hozzá.
+
+![Használati eset diagram](/doc/use_case_diagram.png?raw=true)
