@@ -4,6 +4,8 @@ import { UserService } from '../../services/user.service';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-menu',
@@ -17,14 +19,16 @@ export class MenuComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private userService: UserService,
-    private router:Router
+    private router:Router,
+    private snackBar: MatSnackBar,
+    private errorService: ErrorService
   ) { }
 
   ngOnInit(): void {
     if (this.user() || this.admin()) {
       this.categoryService.getCategories().subscribe(response => {
         this.categories = response.map(object => new Category(object));
-      });
+      }, response => this.errorService.showError(response, this.snackBar));
     }
   }
 

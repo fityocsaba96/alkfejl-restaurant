@@ -3,6 +3,8 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-login',
@@ -15,13 +17,13 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  private error: boolean;
   private _pageTitle: string;
-  private errorString: string;
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private errorService: ErrorService
   ) { 
     this._pageTitle="Log in"
   }
@@ -42,11 +44,6 @@ export class LoginComponent implements OnInit {
       UserService.user = user as User;
       this.userService.syncLoginStatus();
       this.router.navigate(['/restaurants']);
-    }, (err) => {
-      if (err.status === 400) {
-        this.error = true;
-        this.errorString=err.error.error;
-      }
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
 } 
 }

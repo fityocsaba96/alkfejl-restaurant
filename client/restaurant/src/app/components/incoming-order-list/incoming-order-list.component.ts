@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../../models/order';
 import { OrderService } from '../../services/order.service';
+import { MatSnackBar } from '@angular/material';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-incoming-order-list',
@@ -13,7 +15,9 @@ export class IncomingOrderListComponent implements OnInit {
   private _pageTitle:string;
 
   constructor(
-    private orderService:OrderService
+    private orderService:OrderService,
+    private snackBar: MatSnackBar,
+    private errorService: ErrorService
   ) {
     this._pageTitle='Incoming orders';
    }
@@ -21,7 +25,7 @@ export class IncomingOrderListComponent implements OnInit {
   ngOnInit() {
     this.orderService.getIncomingOrders().subscribe(response => {
       this.orders=response.map(object => new Order(object))
-    })
+    }, response => this.errorService.showError(response, this.snackBar))
   }
 
   public get pageTitle() {

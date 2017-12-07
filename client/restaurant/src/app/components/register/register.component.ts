@@ -7,7 +7,8 @@ import { User } from '../../models/user';
 import { RestaurantService } from '../../services/restaurant.service';
 import { CityService } from '../../services/city.service';
 import { FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher, MatSnackBar } from '@angular/material';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-register',
@@ -28,23 +29,23 @@ export class RegisterComponent implements OnInit {
   private restaurant:Restaurant;
   private cities:City[];
   private city:City;
-  private error:boolean;
-  private errorString:string;
 
   constructor(
     private restaurantService: RestaurantService,
     private cityService: CityService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private errorService: ErrorService
   ) { }
 
   ngOnInit() {
     this.restaurantService.getRestaurants().subscribe(response => {
       this.restaurants=response.map(object => new Restaurant(object));
-    })
+    }, response => this.errorService.showError(response, this.snackBar))
     this.cityService.getCities().subscribe(response => {
       this.cities=response.map(object => new City(object));
-    })
+    }, response => this.errorService.showError(response, this.snackBar))
   }
 
   get email(){
@@ -82,13 +83,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(this.email.value,this.firstname.value,this.lastname.value,this.password.value,
       this.zipcode.value,this.city,this.address.value,this.phonenumber.value,this.restaurant,false).subscribe((user) => {
       this.router.navigate(['/user/login']);
-    }, (err) => {
-      if (err.status === 400) {
-        this.error = true;
-        this.errorString=err.error.error;
-        console.log(err.error);
-      }
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
   }
 
   public change(city:object):void{
@@ -97,7 +92,7 @@ export class RegisterComponent implements OnInit {
     console.log(this.city.name);
     this.restaurantService.getRestaurantsByCity(this.city).subscribe(response => {
       this.restaurants=response.map(object => new Restaurant(object));
-    })
+    }, response => this.errorService.showError(response, this.snackBar))
   }
 
 }

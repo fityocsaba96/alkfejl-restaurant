@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
 import { MatSnackBar } from '@angular/material';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-product-list',
@@ -16,7 +17,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private errorService: ErrorService
   ) {
     this._pageTitle = 'Products';
   }
@@ -24,7 +26,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe(response => {
       this.products = response.map(object => new Product(object));
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
   }
 
   public get pageTitle() {
@@ -32,9 +34,10 @@ export class ProductListComponent implements OnInit {
   }
 
   public delProduct(product:Product): void {
-    this.idx=this.products.indexOf(product);
-    this.products.splice(this.idx,1);
-    this.productService.delProductById(product.id).subscribe();
+    this.productService.delProductById(product.id).subscribe(response => {
+      this.idx=this.products.indexOf(product);
+      this.products.splice(this.idx,1);
+    }, response => this.errorService.showError(response, this.snackBar));
   }
 
   private addToCart(id: number): void {

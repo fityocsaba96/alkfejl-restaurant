@@ -1,10 +1,5 @@
 <div class="page-body">
   <h2 class="mat-h2">Add new product</h2>
-  <div *ngIf="error">
-    <div>>
-      <font color="red">{{errorString}}!</font><br>
-      </div>
-   </div>
   <form [formGroup]="addProductForm" novalidate>
       <div class="form-control">
     <mat-form-field class="example-full-width">

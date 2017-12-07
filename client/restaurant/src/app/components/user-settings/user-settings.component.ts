@@ -6,6 +6,7 @@ import { City } from '../../models/city';
 import { Restaurant } from '../../models/restaurant';
 import { RestaurantService } from '../../services/restaurant.service';
 import { CityService } from '../../services/city.service';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -23,7 +24,8 @@ export class UserSettingsComponent implements OnInit {
     private userService: UserService,
     private cityService: CityService,
     private restaurantService: RestaurantService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private errorService: ErrorService
   ) {
     this._pageTitle = 'User settings';
   }
@@ -32,7 +34,7 @@ export class UserSettingsComponent implements OnInit {
     this.user = UserService.user;
     this.cityService.getCities().subscribe(response => {
       this.cities = response.map(object => new City(object));
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
     this.fetchRestaurantsByCity(this.user.city);
   }
 
@@ -43,7 +45,7 @@ export class UserSettingsComponent implements OnInit {
   private fetchRestaurantsByCity(city: City): void {
     this.restaurantService.getRestaurantsByCity(city).subscribe(response => {
       this.restaurants = response.map(object => new Restaurant(object));
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
   }
 
   private refreshRestaurants(cityId: number): void {
@@ -61,8 +63,6 @@ export class UserSettingsComponent implements OnInit {
       this.snackBar.open('User settings has been updated!', 'OK', {
         duration: 3000
       });
-    }, response => {
-      // TODO: display error message
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
   }
 }

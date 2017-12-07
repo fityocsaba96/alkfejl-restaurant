@@ -39,3 +39,7 @@ mat-list-item {
   margin-bottom: -16px !important;
   padding-bottom: 0 !important;
 }
+
+.snackBarError {
+  background-color: #f44336
+}

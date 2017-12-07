@@ -1,6 +1,5 @@
 package hu.elte.alkfejl.restaurant.controller;
 
-import hu.elte.alkfejl.restaurant.entity.response.ErrorResponse;
 import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.Product;
 import hu.elte.alkfejl.restaurant.service.ProductService;
@@ -45,7 +44,7 @@ public class ProductController {
     @DeleteMapping("/product/{id}")
     private ResponseEntity delete(@PathVariable Long id) {
         if (id == 0) {
-            return ResponseEntity.badRequest().body(new ErrorResponse("Cannot delete the deleted product"));
+            return ResponseEntity.badRequest().body("Cannot delete the deleted product");
         } else {
             productService.deleteProduct(id);
             return ResponseEntity.ok(true);

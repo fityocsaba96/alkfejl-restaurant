@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { ProductService } from '../../services/product.service';
 import { OrderService } from '../../services/order.service';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-cart',
@@ -19,7 +20,8 @@ export class CartComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private orderService: OrderService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private errorService: ErrorService
   ) {
     this._pageTitle = 'Cart';
     this.displayedColumns = ['name', 'price', 'quantity', 'delete'];
@@ -46,7 +48,7 @@ export class CartComponent implements OnInit {
         });
         this.dataSource.data = tableData;
         this.tableDataLoaded = true;
-      });
+      }, response => this.errorService.showError(response, this.snackBar));
     } else {
       this.tableDataLoaded = true;
     }
@@ -66,9 +68,7 @@ export class CartComponent implements OnInit {
       this.snackBar.open('Order has been placed!', 'OK', {
         duration: 3000
       });
-    }, response => {
-      // TODO: display error message
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
   }
 
   public get pageTitle() {

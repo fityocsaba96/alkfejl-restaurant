@@ -5,6 +5,7 @@ import { ReviewsResponse } from '../../models/responses/reviews-response';
 import { UserService } from '../../services/user.service';
 import { Role } from '../../models/user';
 import { MatSnackBar } from '@angular/material';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-product-review-list',
@@ -21,7 +22,8 @@ export class ProductReviewListComponent implements OnInit {
   constructor(
     private reviewService: ReviewService,
     private router: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private errorService: ErrorService
   ) {
     this._pageTitle = 'Reviews';
     this.starsChoices = Array(5).fill(undefined).map((e, i) => 5 - i);
@@ -32,7 +34,7 @@ export class ProductReviewListComponent implements OnInit {
     this.reviewService.getReviewsByProductId(productId).subscribe(response => {
       this.reviews = new ReviewsResponse(response);
       this.pageSubTitle = this.reviews.product.name;
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
   }
 
   public get pageTitle() {
@@ -50,8 +52,6 @@ export class ProductReviewListComponent implements OnInit {
       this.snackBar.open('Review has been posted!', 'OK', {
         duration: 3000
       });
-    }, response => {
-      // TODO: display error message
-    });
+    }, response => this.errorService.showError(response, this.snackBar));
   }
 }

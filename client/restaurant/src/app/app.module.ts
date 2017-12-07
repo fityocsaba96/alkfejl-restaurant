@@ -34,6 +34,7 @@ import { ProductReviewListComponent } from './components/product-review-list/pro
 import { ProductReviewComponent } from './components/product-review/product-review.component';
 import { ReviewService } from './services/review.service';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { ErrorService } from './services/error.service';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
       multi: true
     },
     RoutingGuard,
+    ErrorService,
     UserService,
     CategoryService,
     RestaurantService,
