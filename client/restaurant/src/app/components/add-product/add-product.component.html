@@ -1,32 +1,46 @@
-<div class="page-body">
-  <h2 class="mat-h2">Add new product</h2>
-  <form [formGroup]="addProductForm" novalidate>
-      <div class="form-control">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Name" formControlName="name">
-      
-    </mat-form-field>
-    </div>
-    <div class="form-control">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Description" formControlName="description">
-        </mat-form-field>
-        </div>
-        <div class="form-control">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Price" formControlName="price">
-            </mat-form-field>
-            </div>
-            <div>
-                <mat-form-field>
-                    <mat-select placeholder="Category" ng-model="data.model" [(value)]="categoryselect">
-                      <mat-option *ngFor="let category of categories" [value]="category">
-                        {{ category.name }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-            </div>
-        <button mat-raised-button class="mat-primary" (click)="addProduct(categoryselect)" >Add new product</button>
-        <a mat-button class="mat-accent" routerLink="/">Back</a>
-</form>
-</div>
+<mat-card *ngIf="categories">
+  <form novalidate>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>restaurant_menu</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <input matInput #name placeholder="Name">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>description</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <input matInput #description placeholder="Description">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>attach_money</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <input matInput #price placeholder="Price">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>label</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <mat-select #categoryId placeholder="Category">
+              <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+    </mat-list>
+    <mat-card-actions class="formActions">
+      <button mat-icon-button color="primary" (click)="addProduct(name.value, description.value, price.value, categoryId.value, $event)">
+        <mat-icon>done</mat-icon>
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+<mat-spinner *ngIf="!categories"></mat-spinner>

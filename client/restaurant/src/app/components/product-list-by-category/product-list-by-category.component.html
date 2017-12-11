@@ -1,7 +1,7 @@
 <h3 class="mat-h3">{{pageSubTitle}}</h3>
 <ng-container *ngIf="products">
     <ng-container *ngIf="products.length !== 0">
-        <app-product *ngFor="let product of products" [product]="product" [showCategory]="false" (clickAddToCart)="addToCart($event)" (delProduct)="deleteProduct($event)"></app-product>
+        <app-product *ngFor="let product of products" [product]="product" [showCategory]="false" (clickAddToCart)="addToCart($event)" (clickDeleteProduct)="deleteProduct($event)"></app-product>
     </ng-container>
     <mat-card *ngIf="products.length === 0">
         <mat-card-title>No products in this category</mat-card-title>

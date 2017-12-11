@@ -3,6 +3,8 @@ import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
 import { Role } from '../../models/user';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-product',
@@ -20,30 +22,36 @@ export class ProductComponent {
   @Output()
   public clickAddToCart: EventEmitter<number>;
 
-  constructor() {
+  @Output()
+  public clickDeleteProduct: EventEmitter<Product>;
+
+  constructor(
+    private dialog: MatDialog
+  ) {
     this.showCategory = true;
     this.clickAddToCart = new EventEmitter();
+    this.clickDeleteProduct = new EventEmitter();
   }
 
   private user(): boolean {
     return UserService.role === Role.USER;
   }
 
-  private addToCart(): void {
-    this.clickAddToCart.emit(this.product.id);
-  }
-
   private admin(): boolean {
     return UserService.role === Role.ADMIN;
   }
 
-  @Output()
-  public delProduct: EventEmitter<Product> = new EventEmitter();
+  private addToCart(): void {
+    this.clickAddToCart.emit(this.product.id);
+  }
 
-  public clickButton($event: Event): void {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.delProduct.emit(this.product);
-
+  public deleteProduct(): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      autoFocus: false
+    }).beforeClose().subscribe(confirmed => {
+      if (confirmed) {
+        this.clickDeleteProduct.emit(this.product);
+      }
+    });
   }
 }

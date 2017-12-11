@@ -37,6 +37,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { NotificationService } from './services/notification.service';
 import { Subject } from 'rxjs/Subject';
 import { UserDataFormComponent } from './components/user-data-form/user-data-form.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { UserDataFormComponent } from './components/user-data-form/user-data-for
     ProductReviewListComponent,
     ProductReviewComponent,
     UserSettingsComponent,
-    UserDataFormComponent
+    UserDataFormComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -89,6 +91,7 @@ import { UserDataFormComponent } from './components/user-data-form/user-data-for
     CityService,
     ReviewService
   ],
+  entryComponents: [ConfirmDialogComponent]
   bootstrap: [AppComponent]
 })
 export class AppModule { }

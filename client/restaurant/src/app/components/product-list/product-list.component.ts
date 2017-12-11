@@ -12,7 +12,6 @@ export class ProductListComponent implements OnInit {
 
   private products: Product[];
   private _pageTitle: string;
-  private idx:number;
 
   constructor(
     private productService: ProductService,
@@ -31,15 +30,15 @@ export class ProductListComponent implements OnInit {
     return this._pageTitle;
   }
 
-  public delProduct(product:Product): void {
-    this.productService.delProductById(product.id).subscribe(response => {
-      this.idx=this.products.indexOf(product);
-      this.products.splice(this.idx,1);
+  public deleteProduct(product: Product): void {
+    this.productService.deleteProductById(product.id).subscribe(response => {
+      this.products.splice(this.products.indexOf(product), 1);
+      this.notificationService.showSuccess('Product deleted!');
     }, response => this.notificationService.showError(response));
   }
 
   private addToCart(id: number): void {
     this.productService.addToCart(id);
-    this.notificationService.showSuccess('Added to cart');
+    this.notificationService.showSuccess('Added to cart!');
   }
 }

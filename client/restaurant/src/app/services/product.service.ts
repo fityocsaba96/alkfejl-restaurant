@@ -30,13 +30,15 @@ export class ProductService {
     window.sessionStorage.setItem(key, newValue);
   }
 
-  public addProduct(name:string, category:Category, description:string, price:number) : Observable<Product>{
-    return this.http.post('/api/products', {
-      "name": name,
-      "category": category,
-      "description": description,
-      "price": price
-    }) as Observable<Product>;
+  public addProduct(name: string, description: string, price: string, categoryId: number): Observable<Product> {
+    return this.http.post<Product>('/api/products', {
+      name,
+      description,
+      price: parseInt(price),
+      category: categoryId ? {
+        id: categoryId
+      } : undefined
+    });
   }
 
   public getCartData() {
@@ -62,7 +64,7 @@ export class ProductService {
     currentCartProductIds.forEach(id => window.sessionStorage.removeItem(`cartQty${id.toString()}`));
   }
 
-  public delProductById(id:number): Observable<any>{
-    return this.http.delete('/api/product/' +id); 
+  public deleteProductById(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`/api/product/${id}`);
   }
 }

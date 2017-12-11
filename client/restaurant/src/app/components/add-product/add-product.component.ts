@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Category } from '../../models/category';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificationService } from '../../services/notification.service';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-add-product',
@@ -13,43 +11,32 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent implements OnInit {
-  private categories:Category[];
-  private _pageTitle:string;
-  addProductForm: FormGroup = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
-    price: new FormControl('', [Validators.required])
-  });
+
+  private categories: Category[];
+  private _pageTitle: string;
 
   constructor(
     private productService: ProductService,
-    private categoryService:CategoryService,
-    private router: Router,
+    private categoryService: CategoryService,
     private notificationService: NotificationService
-  ) { 
-    this._pageTitle="Add new product"
+  ) {
+    this._pageTitle = 'Add product';
   }
 
   ngOnInit() {
     this.categoryService.getCategories().subscribe(response => {
-      this.categories=response.map(object => new Category(object));
-    }, response => this.notificationService.showError(response))
+      this.categories = response.map(object => new Category(object));
+    }, response => this.notificationService.showError(response));
   }
 
-  get description(){
-    return this.addProductForm.get('description')
+  public get pageTitle() {
+    return this._pageTitle;
   }
 
-  get name(){
-    return this.addProductForm.get("name")
-  }
-  get price(){
-    return this.addProductForm.get('price')
-  }
-
-  public addProduct(category: Category): void {
-    this.productService.addProduct(this.name.value,category,this.description.value,parseInt(this.price.value)).subscribe((product) =>{
-      this.router.navigate(['/products']);
+  public addProduct(name: string, description: string, price: string, categoryId: number, event: Event): void {
+    event.preventDefault();
+    this.productService.addProduct(name, description, price, categoryId).subscribe(response => {
+      this.notificationService.showSuccess('Product has been added!');
     }, response => this.notificationService.showError(response));
   }
 }

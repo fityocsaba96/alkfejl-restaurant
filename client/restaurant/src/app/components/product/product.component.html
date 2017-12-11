@@ -22,8 +22,8 @@
     <a *ngIf="user() || admin()" mat-icon-button color="primary" routerLink="/product/{{product.id}}/reviews">
       <mat-icon>rate_review</mat-icon>
     </a>
+    <button *ngIf="admin()" mat-icon-button color="primary" (click)="deleteProduct($event)">
+      <mat-icon>delete</mat-icon>
+    </button>
   </mat-card-actions>
-  <ng-container *ngIf="admin()">
-    <button mat-raised-button class="mat-primary" (click)="clickButton($event)">Delete product</button>
-  </ng-container>
 </mat-card>
