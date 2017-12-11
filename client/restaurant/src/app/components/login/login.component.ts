@@ -3,8 +3,7 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
-import { ErrorService } from '../../services/error.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -22,8 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
-    private snackBar: MatSnackBar,
-    private errorService: ErrorService
+    private notificationService: NotificationService
   ) { 
     this._pageTitle="Log in"
   }
@@ -44,6 +42,7 @@ export class LoginComponent implements OnInit {
       UserService.user = user as User;
       this.userService.syncLoginStatus();
       this.router.navigate(['/restaurants']);
-    }, response => this.errorService.showError(response, this.snackBar));
+      this.userService.notifyLoggedIn();
+    }, response => this.notificationService.showError(response));
 } 
 }

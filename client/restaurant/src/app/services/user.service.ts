@@ -4,6 +4,7 @@ import { User, Role } from '../models/user';
 import { Observable } from 'rxjs/Observable';
 import { Restaurant } from '../models/restaurant';
 import { City } from '../models/city';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class UserService {
@@ -11,9 +12,13 @@ export class UserService {
   private static _user: User;
   private static _role: Role;
 
+  private _loggedIn: Subject<any>;
+
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    this._loggedIn = new Subject();
+  }
 
   public syncLoginStatus(): Promise<User> {
     return new Promise((resolve, reject) => {
@@ -34,6 +39,14 @@ export class UserService {
         email,
         password
     }) as Observable<User>;
+  }
+
+  public get loggedIn(): Subject<any> {
+    return this._loggedIn;
+  }
+
+  public notifyLoggedIn(): void {
+    this._loggedIn.next();
   }
 
   public static get user(): User {
@@ -82,12 +95,12 @@ export class UserService {
       zipCode,
       address,
       phoneNumber,
-      restaurant: {
+      restaurant: restaurantId ? {
         id: restaurantId
-      },
-      city: {
+      } : undefined,
+      city: cityId ? {
         id: cityId
-      }
+      } : undefined
     });
   }
 }

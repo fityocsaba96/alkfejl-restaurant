@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Role } from '../models/user';
 import { RoutingGuard } from '../services/routing-guard.service';
-import { UserService } from '../services/user.service';
 import { RestaurantListComponent } from '../components/restaurant-list/restaurant-list.component';
 import { ProductListComponent } from '../components/product-list/product-list.component';
 import { ProductListByCategoryComponent } from '../components/product-list-by-category/product-list-by-category.component';
@@ -44,7 +43,6 @@ const routes: Routes = [
   ],
   exports: [
     RouterModule
-  ],
-  providers: [UserService]
+  ]
 })
 export class RoutingModule { }

@@ -7,8 +7,8 @@ import { User } from '../../models/user';
 import { RestaurantService } from '../../services/restaurant.service';
 import { CityService } from '../../services/city.service';
 import { FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
-import { ErrorStateMatcher, MatSnackBar } from '@angular/material';
-import { ErrorService } from '../../services/error.service';
+import { ErrorStateMatcher } from '@angular/material';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -35,17 +35,16 @@ export class RegisterComponent implements OnInit {
     private cityService: CityService,
     private userService: UserService,
     private router: Router,
-    private snackBar: MatSnackBar,
-    private errorService: ErrorService
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
     this.restaurantService.getRestaurants().subscribe(response => {
       this.restaurants=response.map(object => new Restaurant(object));
-    }, response => this.errorService.showError(response, this.snackBar))
+    }, response => this.notificationService.showError(response))
     this.cityService.getCities().subscribe(response => {
       this.cities=response.map(object => new City(object));
-    }, response => this.errorService.showError(response, this.snackBar))
+    }, response => this.notificationService.showError(response))
   }
 
   get email(){
@@ -83,7 +82,7 @@ export class RegisterComponent implements OnInit {
     this.userService.register(this.email.value,this.firstname.value,this.lastname.value,this.password.value,
       this.zipcode.value,this.city,this.address.value,this.phonenumber.value,this.restaurant,false).subscribe((user) => {
       this.router.navigate(['/user/login']);
-    }, response => this.errorService.showError(response, this.snackBar));
+    }, response => this.notificationService.showError(response));
   }
 
   public change(city:object):void{
@@ -92,7 +91,7 @@ export class RegisterComponent implements OnInit {
     console.log(this.city.name);
     this.restaurantService.getRestaurantsByCity(this.city).subscribe(response => {
       this.restaurants=response.map(object => new Restaurant(object));
-    }, response => this.errorService.showError(response, this.snackBar))
+    }, response => this.notificationService.showError(response))
   }
 
 }

@@ -58,12 +58,12 @@ public class User extends BaseEntity {
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private Boolean isAdmin;
 
-    @NotNull
+    @NotNull(message = "No restaurant selected")
     @ManyToOne
     @JoinColumn
     private Restaurant restaurant;
 
-    @NotNull
+    @NotNull(message = "No city selected")
     @ManyToOne
     @JoinColumn
     private City city;

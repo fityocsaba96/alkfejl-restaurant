@@ -40,6 +40,10 @@ mat-list-item {
   padding-bottom: 0 !important;
 }
 
+.snackBarSuccess {
+  background-color: #3f51b5;
+}
+
 .snackBarError {
   background-color: #f44336
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
-import { MatSnackBar } from '@angular/material';
-import { ErrorService } from '../../services/error.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-product-list',
@@ -17,8 +16,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private snackBar: MatSnackBar,
-    private errorService: ErrorService
+    private notificationService: NotificationService
   ) {
     this._pageTitle = 'Products';
   }
@@ -26,7 +24,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe(response => {
       this.products = response.map(object => new Product(object));
-    }, response => this.errorService.showError(response, this.snackBar));
+    }, response => this.notificationService.showError(response));
   }
 
   public get pageTitle() {
@@ -37,13 +35,11 @@ export class ProductListComponent implements OnInit {
     this.productService.delProductById(product.id).subscribe(response => {
       this.idx=this.products.indexOf(product);
       this.products.splice(this.idx,1);
-    }, response => this.errorService.showError(response, this.snackBar));
+    }, response => this.notificationService.showError(response));
   }
 
   private addToCart(id: number): void {
     this.productService.addToCart(id);
-    this.snackBar.open('Added to cart', 'OK', {
-      duration: 3000
-    });
+    this.notificationService.showSuccess('Added to cart');
   }
 }

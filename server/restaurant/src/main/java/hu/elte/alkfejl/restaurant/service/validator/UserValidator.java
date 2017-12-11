@@ -33,7 +33,7 @@ public class UserValidator implements Validator {
             errors.rejectValue("email", "not.unique", "Email address already exists");
         }
 
-        if (!restaurantRepository.findOne(user.getRestaurant().getId()).getCity().getId()
+        if (user.getRestaurant() != null && !restaurantRepository.findOne(user.getRestaurant().getId()).getCity().getId()
                 .equals(user.getCity().getId())) {
             errors.rejectValue("restaurant", "user.city.different.than.restaurant.city", "Chosen restaurant must be in the same city as you");
         }

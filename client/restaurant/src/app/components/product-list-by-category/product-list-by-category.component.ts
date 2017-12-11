@@ -3,8 +3,7 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
 import { CategoryService } from '../../services/category.service';
 import { ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
-import { ErrorService } from '../../services/error.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-product-list-by-category',
@@ -21,8 +20,7 @@ export class ProductListByCategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private categoryService: CategoryService,
-    private snackBar: MatSnackBar,
-    private errorService: ErrorService
+    private notificationService: NotificationService
   ) {
     this._pageTitle = 'Products';
   }
@@ -37,11 +35,11 @@ export class ProductListByCategoryComponent implements OnInit {
     this.products = this.pageSubTitle = undefined;
     this.categoryService.getCategories().subscribe(response => {
       this.pageSubTitle = response.find(object => object.id === categoryId).name;
-    }, response => this.errorService.showError(response, this.snackBar));
+    }, response => this.notificationService.showError(response));
 
     this.productService.getProductsByCategory(categoryId).subscribe(response => {
       this.products = response.map(object => new Product(object));
-    }, response => this.errorService.showError(response, this.snackBar));
+    }, response => this.notificationService.showError(response));
   }
 
   public get pageTitle() {
@@ -50,8 +48,6 @@ export class ProductListByCategoryComponent implements OnInit {
 
   private addToCart(id: number): void {
     this.productService.addToCart(id);
-    this.snackBar.open('Added to cart', 'OK', {
-      duration: 3000
-    });
+    this.notificationService.showSuccess('Added to cart');
   }
 }

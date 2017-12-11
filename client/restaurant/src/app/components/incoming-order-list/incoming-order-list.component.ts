@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../../models/order';
 import { OrderService } from '../../services/order.service';
-import { MatSnackBar } from '@angular/material';
-import { ErrorService } from '../../services/error.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-incoming-order-list',
@@ -16,8 +15,7 @@ export class IncomingOrderListComponent implements OnInit {
 
   constructor(
     private orderService:OrderService,
-    private snackBar: MatSnackBar,
-    private errorService: ErrorService
+    private notificationService: NotificationService
   ) {
     this._pageTitle='Incoming orders';
    }
@@ -25,7 +23,7 @@ export class IncomingOrderListComponent implements OnInit {
   ngOnInit() {
     this.orderService.getIncomingOrders().subscribe(response => {
       this.orders=response.map(object => new Order(object))
-    }, response => this.errorService.showError(response, this.snackBar))
+    }, response => this.notificationService.showError(response))
   }
 
   public get pageTitle() {

@@ -4,8 +4,7 @@ import { ReviewService } from '../../services/review.service';
 import { ReviewsResponse } from '../../models/responses/reviews-response';
 import { UserService } from '../../services/user.service';
 import { Role } from '../../models/user';
-import { MatSnackBar } from '@angular/material';
-import { ErrorService } from '../../services/error.service';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-product-review-list',
@@ -22,8 +21,7 @@ export class ProductReviewListComponent implements OnInit {
   constructor(
     private reviewService: ReviewService,
     private router: ActivatedRoute,
-    private snackBar: MatSnackBar,
-    private errorService: ErrorService
+    private notificationService: NotificationService
   ) {
     this._pageTitle = 'Reviews';
     this.starsChoices = Array(5).fill(undefined).map((e, i) => 5 - i);
@@ -34,7 +32,7 @@ export class ProductReviewListComponent implements OnInit {
     this.reviewService.getReviewsByProductId(productId).subscribe(response => {
       this.reviews = new ReviewsResponse(response);
       this.pageSubTitle = this.reviews.product.name;
-    }, response => this.errorService.showError(response, this.snackBar));
+    }, response => this.notificationService.showError(response));
   }
 
   public get pageTitle() {
@@ -49,9 +47,7 @@ export class ProductReviewListComponent implements OnInit {
     event.preventDefault();
     this.reviewService.writeReview(this.reviews.product.id, stars, description).subscribe(response => {
       this.ngOnInit();
-      this.snackBar.open('Review has been posted!', 'OK', {
-        duration: 3000
-      });
-    }, response => this.errorService.showError(response, this.snackBar));
+      this.notificationService.showSuccess('Review has been posted!');
+    }, response => this.notificationService.showError(response));
   }
 }
