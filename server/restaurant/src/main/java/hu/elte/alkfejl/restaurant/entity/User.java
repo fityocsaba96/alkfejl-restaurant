@@ -41,7 +41,7 @@ public class User extends BaseEntity {
 
     @Min(value = 1000, message = "ZIP code should be 4 characters long")
     @Max(value = 9999, message = "ZIP code should be 4 characters long")
-    @NotNull
+    @NotNull(message = "ZIP code is a number")
     @Column
     private Short zipCode;
 

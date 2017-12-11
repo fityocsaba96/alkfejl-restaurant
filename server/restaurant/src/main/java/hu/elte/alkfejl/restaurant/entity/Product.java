@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,10 +30,10 @@ public class Product extends BaseEntity {
     private String description;
 
     @Column
-    @NotNull
+    @NotNull(message = "Price is a number")
     private Short price;
 
-    @NotNull
+    @NotNull(message = "No category selected")
     @ManyToOne
     @JoinColumn
     private Category category;

@@ -46,6 +46,13 @@ export class ProductListByCategoryComponent implements OnInit {
     return this._pageTitle;
   }
 
+  public deleteProduct(product: Product): void {
+    this.productService.delProductById(product.id).subscribe(response => {
+      this.products.splice(this.products.indexOf(product), 1);
+      this.notificationService.showSuccess('Product deleted');
+    }, response => this.notificationService.showError(response));
+  }
+
   private addToCart(id: number): void {
     this.productService.addToCart(id);
     this.notificationService.showSuccess('Added to cart');

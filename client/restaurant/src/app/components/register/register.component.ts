@@ -26,9 +26,7 @@ export class RegisterComponent implements OnInit {
     phonenumber: new FormControl('', [Validators.required])
   });
   private restaurants:Restaurant[];
-  private restaurant:Restaurant;
   private cities:City[];
-  private city:City;
 
   constructor(
     private restaurantService: RestaurantService,
@@ -76,20 +74,15 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  public tryRegister(city:object,restaurant:object) : void {
-    this.restaurant=new Restaurant(restaurant);
-    this.city=new City(city);
+  public tryRegister(city: City, restaurant: Restaurant): void {
     this.userService.register(this.email.value,this.firstname.value,this.lastname.value,this.password.value,
-      this.zipcode.value,this.city,this.address.value,this.phonenumber.value,this.restaurant,false).subscribe((user) => {
+      parseInt(this.zipcode.value),city,this.address.value,this.phonenumber.value,restaurant,false).subscribe((user) => {
       this.router.navigate(['/user/login']);
     }, response => this.notificationService.showError(response));
   }
 
-  public change(city:object):void{
-    console.log('a');
-    this.city=new City(city);
-    console.log(this.city.name);
-    this.restaurantService.getRestaurantsByCity(this.city).subscribe(response => {
+  public change(city: City): void {
+    this.restaurantService.getRestaurantsByCity(city).subscribe(response => {
       this.restaurants=response.map(object => new Restaurant(object));
     }, response => this.notificationService.showError(response))
   }

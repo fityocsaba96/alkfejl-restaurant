@@ -14,7 +14,6 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class AddProductComponent implements OnInit {
   private categories:Category[];
-  private category:Category;
   private _pageTitle:string;
   addProductForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -48,9 +47,8 @@ export class AddProductComponent implements OnInit {
     return this.addProductForm.get('price')
   }
 
-  public addProduct(category:object) : void{
-    this.category=new Category(category)
-    this.productService.addProduct(this.name.value,this.category,this.description.value,this.price.value).subscribe((product) =>{
+  public addProduct(category: Category): void {
+    this.productService.addProduct(this.name.value,category,this.description.value,parseInt(this.price.value)).subscribe((product) =>{
       this.router.navigate(['/products']);
     }, response => this.notificationService.showError(response));
   }
