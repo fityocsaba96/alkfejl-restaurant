@@ -16,7 +16,7 @@
           <mat-icon mat-list-icon>star</mat-icon>
           <span mat-line>
             <mat-form-field class="fullWidth">
-              <mat-select [value]="5" #stars>
+              <mat-select #stars placeholder="Rating">
                 <mat-option *ngFor="let star of starsChoices" [value]="star">{{star}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -26,7 +26,7 @@
           <mat-icon mat-list-icon>description</mat-icon>
           <span mat-line>
             <mat-form-field class="fullWidth">
-              <textarea matInput #description></textarea>
+              <textarea matInput #description placeholder="Description"></textarea>
             </mat-form-field>
           </span>
         </mat-list-item>

@@ -15,7 +15,7 @@ export class ProductComponent {
   public product: Product;
 
   @Input()
-  public showCategory: boolean;
+  public showCategory?: boolean;
 
   @Output()
   public clickAddToCart: EventEmitter<number>;

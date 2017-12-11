@@ -36,6 +36,7 @@ import { ReviewService } from './services/review.service';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { NotificationService } from './services/notification.service';
 import { Subject } from 'rxjs/Subject';
+import { UserDataFormComponent } from './components/user-data-form/user-data-form.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { Subject } from 'rxjs/Subject';
     UserOrderOverviewComponent,
     ProductReviewListComponent,
     ProductReviewComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    UserDataFormComponent
   ],
   imports: [
     BrowserModule,

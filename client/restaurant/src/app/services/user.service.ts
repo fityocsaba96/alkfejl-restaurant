@@ -20,32 +20,9 @@ export class UserService {
     this._loggedIn = new Subject();
   }
 
-  public syncLoginStatus(): Promise<User> {
-    return new Promise((resolve, reject) => {
-
-      this.http.get<User>('/api/user/me').subscribe(response => {
-        UserService._user = new User(response);
-        UserService._role = UserService._user.isAdmin ? Role.ADMIN : Role.USER;
-        resolve();
-      }, () => {
-        UserService._role = Role.GUEST;
-        resolve();
-      });
-    });
-  }
-
-  public login(email:string, password: string): Observable<User>{ 
-    return this.http.post('api/user/login', {
-        email,
-        password
-    }) as Observable<User>;
-  }
-
-  public get loggedIn(): Subject<any> {
-    return this._loggedIn;
-  }
-
-  public notifyLoggedIn(): void {
+  public setLoggedIn(user: User) {
+    UserService._user = user;
+    UserService._role = UserService._user.isAdmin ? Role.ADMIN : Role.USER;
     this._loggedIn.next();
   }
 
@@ -61,20 +38,32 @@ export class UserService {
     return UserService._role;
   }
 
-  public register(email:string, firstName:string, lastName:string, password:string, zipCode:number, city:City, address: string, 
-    phoneNumber:string,restaurant:Restaurant, is_admin:boolean) : Observable<User> { 
-    return this.http.post('api/user/register', {
-        "email":email,
-        "firstName":firstName,
-        "lastName":lastName,
-        "passwordHash":password,
-        "zipCode":zipCode,
-        "city":city,
-        "address":address,
-        "phoneNumber":phoneNumber,
-        "restaurant":restaurant,
-        "isAdmin":is_admin
-      }) as Observable<User>;
+  public syncLoginStatus(): Promise<User> {
+    return new Promise((resolve, reject) => {
+
+      this.http.get<User>('/api/user/me').subscribe(response => {
+        this.setLoggedIn(new User(response));
+        resolve();
+      }, () => {
+        UserService._role = Role.GUEST;
+        resolve();
+      });
+    });
+  }
+
+  public logIn(email: string, password: string): Observable<User> {
+    return this.http.post<User>('/api/user/login', {
+      email,
+      password
+    });
+  }
+
+  public get loggedIn(): Subject<any> {
+    return this._loggedIn;
+  }
+
+  public register(user: User): Observable<User> {
+    return this.http.post<User>('/api/user/register', user);
   }
 
   public logout():void{
@@ -84,15 +73,19 @@ export class UserService {
     });
   }
 
-  public editSettings(email: string, password: string, firstName: string, lastName: string, zipCode: number,
-                      cityId: number, address: string, phoneNumber: string, restaurantId: number): Observable<User> {
-    return this.http.put<User>('/api/user/me', {
-      id: UserService._user.id,
+  public editSettings(user: User): Observable<User> {
+    user.id = UserService._user.id;
+    return this.http.put<User>('/api/user/me', user);
+  }
+
+  public userFormDataToUser(email: string, password: string, firstName: string, lastName: string, zipCode: string,
+                      cityId: number, address: string, phoneNumber: string, restaurantId: number): User {
+    return new User({
       email,
       lastName,
       firstName,
       passwordHash: password,
-      zipCode,
+      zipCode: parseInt(zipCode),
       address,
       phoneNumber,
       restaurant: restaurantId ? {

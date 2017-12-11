@@ -1,18 +1,27 @@
-<div class="page-body">
-  <h2 class="mat-h2">Log in</h2>
-  <form [formGroup]="loginForm" novalidate>
-      <div class="form-control">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Email" formControlName="email">
-      
-    </mat-form-field>
-    </div>
-    <div class="form-control">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Password" formControlName="password" type="password">
-        </mat-form-field>
-        </div>
-        <button mat-raised-button class="mat-primary" (click)="tryLogin()" >Log in</button>
-        <a mat-button class="mat-accent" routerLink="/">Back</a>
-</form>
-</div>
+<mat-card>
+  <form novalidate>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>email</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <input matInput #email placeholder="Email">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>lock</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <input matInput #password type="password" placeholder="Password">
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+    </mat-list>
+    <mat-card-actions class="formActions">
+      <button mat-icon-button color="primary" (click)="logIn(email.value, password.value, $event)">
+        <mat-icon>done</mat-icon>
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

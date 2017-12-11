@@ -24,7 +24,7 @@ public class Review extends BaseEntity {
 
     @Min(value = 1, message = "Minimum is 1 stars")
     @Max(value = 5, message = "Maximum is 5 stars")
-    @NotNull
+    @NotNull(message = "No rating selected")
     @Column
     private Byte stars;
 
