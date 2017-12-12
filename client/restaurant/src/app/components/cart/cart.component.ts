@@ -45,7 +45,7 @@ export class CartComponent implements OnInit {
           tableData.push(tableRow);
           this.totalPrice += tableRow.price * tableRow.quantity;
         });
-        this.dataSource.data = tableData;
+        this.dataSource.data = tableData.reverse();
         this.tableDataLoaded = true;
       }, response => this.notificationService.showError(response));
     } else {

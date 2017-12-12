@@ -30,6 +30,7 @@ export class ProductReviewListComponent implements OnInit {
   ngOnInit() {
     const productId = parseInt(this.router.snapshot.paramMap.get('id'));
     this.reviewService.getReviewsByProductId(productId).subscribe(response => {
+      response.reviews.reverse();
       this.reviews = new ReviewsResponse(response);
       this.pageSubTitle = this.reviews.product.name;
     }, response => this.notificationService.showError(response));

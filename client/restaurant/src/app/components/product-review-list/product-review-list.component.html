@@ -6,37 +6,37 @@
   <mat-card *ngIf="reviews.reviews.length === 0">
     <mat-card-title>No reviews yet</mat-card-title>
   </mat-card>
-  <mat-card *ngIf="user()" class="writeReviewCard">
-    <form>
-      <mat-card-title>
-        Write review
-      </mat-card-title>
-      <mat-list>
-        <mat-list-item>
-          <mat-icon mat-list-icon>star</mat-icon>
-          <span mat-line>
-            <mat-form-field class="fullWidth">
-              <mat-select #stars placeholder="Rating">
-                <mat-option *ngFor="let star of starsChoices" [value]="star">{{star}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </span>
-        </mat-list-item>
-        <mat-list-item>
-          <mat-icon mat-list-icon>description</mat-icon>
-          <span mat-line>
-            <mat-form-field class="fullWidth">
-              <textarea matInput #description placeholder="Description"></textarea>
-            </mat-form-field>
-          </span>
-        </mat-list-item>
-      </mat-list>
-      <mat-card-actions class="formActions">
-        <button mat-icon-button color="primary" (click)="writeReview(stars.value, description.value, $event)">
-          <mat-icon>done</mat-icon>
-        </button>
-      </mat-card-actions>
-    </form>
-  </mat-card>
 </ng-container>
 <mat-spinner *ngIf="!reviews"></mat-spinner>
+<mat-card *ngIf="user()" class="writeReviewCard">
+  <form novalidate>
+    <mat-card-title>
+      Write review
+    </mat-card-title>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>star</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <mat-select #stars placeholder="Rating">
+              <mat-option *ngFor="let star of starsChoices" [value]="star">{{star}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>description</mat-icon>
+        <span mat-line>
+          <mat-form-field class="fullWidth">
+            <textarea matInput #description placeholder="Description"></textarea>
+          </mat-form-field>
+        </span>
+      </mat-list-item>
+    </mat-list>
+    <mat-card-actions class="formActions">
+      <button mat-icon-button color="primary" (click)="writeReview(stars.value, description.value, $event)">
+        <mat-icon>done</mat-icon>
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

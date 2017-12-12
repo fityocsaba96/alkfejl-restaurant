@@ -15,7 +15,7 @@ export class RestaurantService {
     return this.http.get<Restaurant[]>('/api/restaurants');
   }
 
-  public getRestaurantsByCity(city:City):Observable<Restaurant[]> {
-    return this.http.get<Restaurant[]>('/api/city/'+city.id+'/restaurants');
+  public getRestaurantsByCity(city: City): Observable<Restaurant[]> {
+    return this.http.get<Restaurant[]>(`/api/city/${city.id}/restaurants`);
   }
 }

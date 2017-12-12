@@ -20,10 +20,15 @@ export class UserService {
     this._loggedIn = new Subject();
   }
 
-  public setLoggedIn(user: User) {
+  public setLoggedIn(user: User): void {
     UserService._user = user;
     UserService._role = UserService._user.isAdmin ? Role.ADMIN : Role.USER;
     this._loggedIn.next();
+  }
+
+  public setLoggedOut(): void {
+    UserService._user = undefined;
+    UserService._role = Role.GUEST;
   }
 
   public static get user(): User {
@@ -66,11 +71,8 @@ export class UserService {
     return this.http.post<User>('/api/user/register', user);
   }
 
-  public logout():void{
-    this.http.post('api/user/logout','').subscribe(() => {
-      UserService._user = undefined;
-      UserService._role = Role.GUEST;
-    });
+  public logOut(): Observable<boolean> {
+    return this.http.post<boolean>('/api/user/logout', undefined);
   }
 
   public editSettings(user: User): Observable<User> {

@@ -1,4 +1,9 @@
 <ng-container *ngIf="restaurants">
+  <ng-container *ngIf="restaurants.length !== 0">
     <app-restaurant *ngFor="let restaurant of restaurants" [restaurant]="restaurant"></app-restaurant>
+  </ng-container>
+  <mat-card *ngIf="restaurants.length === 0">
+    <mat-card-title>No restaurants</mat-card-title>
+  </mat-card>
 </ng-container>
 <mat-spinner *ngIf="!restaurants"></mat-spinner>

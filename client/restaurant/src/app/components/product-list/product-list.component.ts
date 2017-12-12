@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.productService.getProducts().subscribe(response => {
-      this.products = response.map(object => new Product(object));
+      this.products = response.map(object => new Product(object)).reverse();
     }, response => this.notificationService.showError(response));
   }
 
@@ -30,7 +30,7 @@ export class ProductListComponent implements OnInit {
     return this._pageTitle;
   }
 
-  public deleteProduct(product: Product): void {
+  private deleteProduct(product: Product): void {
     this.productService.deleteProductById(product.id).subscribe(response => {
       this.products.splice(this.products.indexOf(product), 1);
       this.notificationService.showSuccess('Product deleted!');

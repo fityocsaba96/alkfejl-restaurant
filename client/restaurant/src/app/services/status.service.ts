@@ -7,9 +7,10 @@ import { Status } from '../models/status';
 export class StatusService {
 
   constructor(
-    private http:HttpClient
+    private http: HttpClient
   ) { }
-  public getStatuses():Observable<Status[]>{
-    return this.http.get('api/statuses') as Observable<Status[]>;
+
+  public getStatuses(): Observable<Status[]> {
+    return this.http.get<Status[]>('/api/statuses');
   }
 }

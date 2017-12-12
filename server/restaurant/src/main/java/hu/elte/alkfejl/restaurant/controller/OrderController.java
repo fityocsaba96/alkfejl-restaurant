@@ -1,5 +1,6 @@
 package hu.elte.alkfejl.restaurant.controller;
 
+import hu.elte.alkfejl.restaurant.service.UserService;
 import hu.elte.alkfejl.restaurant.service.annotation.Role;
 import hu.elte.alkfejl.restaurant.entity.Order;
 import hu.elte.alkfejl.restaurant.entity.request.OrderRequest;
@@ -21,11 +22,13 @@ import static hu.elte.alkfejl.restaurant.entity.User.Role.USER;
 public class OrderController {
 
     private OrderService orderService;
+    private UserService userService;
     private OrderRequestValidator orderRequestValidator;
 
     @Autowired
-    public OrderController(OrderService orderService, OrderRequestValidator orderRequestValidator) {
+    public OrderController(OrderService orderService, UserService userService, OrderRequestValidator orderRequestValidator) {
         this.orderService = orderService;
+        this.userService = userService;
         this.orderRequestValidator = orderRequestValidator;
     }
 
@@ -36,14 +39,24 @@ public class OrderController {
 
     @Role(USER)
     @GetMapping("/user/me/orders")
-    private ResponseEntity<List<OrderResponse>> listMyOwn() {
+    private ResponseEntity<List<Order>> listMyOwn() {
         return ResponseEntity.ok(orderService.listMyOwn());
     }
 
     @Role(ADMIN)
     @GetMapping("/orders/incoming")
-    private ResponseEntity<Iterable<Order>> listByOwnRestaurant() {
+    private ResponseEntity<List<Order>> listByOwnRestaurant() {
         return ResponseEntity.ok(orderService.listByOwnRestaurant());
+    }
+
+    @Role({ADMIN, USER})
+    @GetMapping("/order/{id}")
+    private ResponseEntity<OrderResponse> getById(@PathVariable Long id) {
+        OrderResponse orderResponse = orderService.getById(id);
+        if (userService.getRole().equals(USER) && !orderResponse.getUser().getId().equals(userService.getUser().getId())) {
+            return ResponseEntity.status(401).build();
+        }
+        return ResponseEntity.ok(orderResponse);
     }
 
     @Role(ADMIN)

@@ -15,8 +15,14 @@ export class ReviewService {
     return this.http.get<ReviewsResponse>(`/api/product/${id.toString()}/reviews`);
   }
 
-  public createDateMsToDateString(review: ReviewResponse): string {
-    return new Date(review.createDate).toLocaleString('en-GB').slice(0, -3);
+  public dateMsToDateString(date: number): string {
+    return new Date(date).toLocaleString(undefined, {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   }
 
   public writeReview(productId: number, stars: number, description: string): Observable<Review> {

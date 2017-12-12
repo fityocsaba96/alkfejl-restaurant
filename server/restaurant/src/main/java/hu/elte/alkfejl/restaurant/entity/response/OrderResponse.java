@@ -2,6 +2,7 @@ package hu.elte.alkfejl.restaurant.entity.response;
 
 import hu.elte.alkfejl.restaurant.entity.Product;
 import hu.elte.alkfejl.restaurant.entity.Status;
+import hu.elte.alkfejl.restaurant.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,6 +16,8 @@ public class OrderResponse extends BaseResponse {
     private Timestamp createDate;
 
     private String note;
+
+    private User user;
 
     private Status status;
 

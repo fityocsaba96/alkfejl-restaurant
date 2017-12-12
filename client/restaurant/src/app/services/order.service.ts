@@ -14,15 +14,24 @@ export class OrderService {
   ) { }
 
   public getIncomingOrders(): Observable<Order[]> {
-    return this.http.get('api/orders/incoming') as Observable<Order[]>
+    return this.http.get<Order[]>('/api/orders/incoming');
   }
 
-  public getUserOrders(): Observable<OrderResponse[]> {
-    return this.http.get<OrderResponse[]>('/api/user/me/orders');
+  public getUserOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>('/api/user/me/orders');
   }
 
-  update(order:Order) {
-    return this.http.put('api/order/' + order.id, order);
+  public getOrderById(id: number): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(`/api/order/${id}`);
+  }
+
+  public update(id: number, statusId: number): Observable<Order> {
+    return this.http.put<Order>(`/api/order/${id}`, {
+      id,
+      status: statusId ? {
+        id: statusId
+      } : undefined
+    });
   }
 
   public placeOrder(cartTableData: any[], note: string): Observable<Order> {
@@ -43,7 +52,13 @@ export class OrderService {
     };
   }
 
-  public createDateMsToDateString(order: OrderResponse): string {
-    return new Date(order.createDate).toLocaleString('en-GB').slice(0, -3);
+  public dateMsToDateString(date: number): string {
+    return new Date(date).toLocaleString(undefined, {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   }
 }

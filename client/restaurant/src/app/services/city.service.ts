@@ -11,6 +11,6 @@ export class CityService {
   ) { }
 
   public getCities(): Observable<City[]> {
-    return this.http.get("api/cities") as Observable<City[]>;
+    return this.http.get<City[]>('/api/cities');
   }
 }

@@ -22,7 +22,7 @@ export class RestaurantListComponent implements OnInit {
 
   ngOnInit() {
     this.restaurantService.getRestaurants().subscribe(response => {
-      this.restaurants = response.map(object => new Restaurant(object));
+      this.restaurants = response.map(object => new Restaurant(object)).reverse();
     }, response => this.notificationService.showError(response));
   }
 

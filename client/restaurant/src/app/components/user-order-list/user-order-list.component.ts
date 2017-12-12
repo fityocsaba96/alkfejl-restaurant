@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
-import { OrderResponse } from '../../models/responses/order-response';
 import { NotificationService } from '../../services/notification.service';
+import { Order } from '../../models/order';
 
 @Component({
   selector: 'app-user-order-list',
@@ -10,8 +10,8 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class UserOrderListComponent implements OnInit {
 
-  private orders: OrderResponse[];
   private _pageTitle: string;
+  private orders: Order[];
 
   constructor(
     private orderService: OrderService,
@@ -22,7 +22,7 @@ export class UserOrderListComponent implements OnInit {
 
   ngOnInit() {
     this.orderService.getUserOrders().subscribe(response => {
-      this.orders = response.map(object => new OrderResponse(object));
+      this.orders = response.map(object => new Order(object)).reverse();
     }, response => this.notificationService.showError(response));
   }
 

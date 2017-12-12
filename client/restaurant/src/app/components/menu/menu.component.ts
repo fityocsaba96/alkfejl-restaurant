@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private userService: UserService,
-    private router:Router,
+    private router: Router,
     private notificationService: NotificationService
   ) { }
 
@@ -47,8 +47,11 @@ export class MenuComponent implements OnInit {
     return UserService.role === Role.ADMIN;
   }
 
-  private logout():void{
-    this.userService.logout();
-    this.router.navigate(['/restaurants']);
+  private logOut(): void {
+    this.userService.logOut().subscribe(response => {
+      this.userService.setLoggedOut();
+      this.router.navigate(['/restaurants']);
+      this.notificationService.showSuccess('Logout successful!');
+    }, response => this.notificationService.showError(response));
   }
 }

@@ -22,6 +22,7 @@ public class OrderService {
     private UserService userService;
     private OrderProductService orderProductService;
     private StatusService statusService;
+    private ModelMapper modelMapper;
 
     @Autowired
     public OrderService(OrderRepository orderRepository, UserService userService,
@@ -30,39 +31,44 @@ public class OrderService {
         this.userService = userService;
         this.orderProductService = orderProductService;
         this.statusService = statusService;
+        this.modelMapper = new ModelMapper();
     }
 
-    public List<OrderResponse> listMyOwn() {
-        List<Order> list = orderRepository.findAllByUser(userService.getUser());
-        List<OrderResponse> listResponse = new ArrayList<>();
-        ModelMapper modelMapper = new ModelMapper();
-
-        for (Order order : list) {
-            OrderResponse orderResponse = modelMapper.map(order, OrderResponse.class);
-
-            List<OrderProduct> orderProducts = orderProductService.listByOrder(order);
-            Type listType = new TypeToken<List<OrderResponse.OrderProductResponse>>() {}.getType();
-            orderResponse.setOrderProducts(modelMapper.map(orderProducts, listType));
-
-            Short total = (short) orderProducts.stream().mapToInt(orderProduct -> orderProduct.getProduct().getPrice() * orderProduct.getQuantity()).sum();
-            orderResponse.setTotal(total);
-
-            listResponse.add(orderResponse);
-        }
-        return listResponse;
+    public List<Order> listMyOwn() {
+        List<Order> orderList = orderRepository.findAllByUser(userService.getUser());
+        return orderList;
     }
 
     public boolean hasUserOrderedProduct(Long userId, Long productId) {
         return orderRepository.countByUserAndOrderProduct(userId, productId) != 0;
     }
 
-    public Iterable<Order> listByOwnRestaurant() {
+    public List<Order> listByOwnRestaurant() {
         List<User> usersInRestaurant = userService.findAllByRestaurant(userService.getUser().getRestaurant());
-        List<Order> orders = new ArrayList<>();
+        List<Order> listResponse = new ArrayList<>();
+
         for (User user : usersInRestaurant) {
-            orders.addAll(orderRepository.findAllByUser(user));
+            listResponse.addAll(orderRepository.findAllByUser(user));
         }
-        return orders;
+        return listResponse;
+    }
+
+    private OrderResponse orderToOrderResponse(Order order) {
+        OrderResponse orderResponse = modelMapper.map(order, OrderResponse.class);
+
+        List<OrderProduct> orderProducts = orderProductService.listByOrder(order);
+        Type listType = new TypeToken<List<OrderResponse.OrderProductResponse>>() {}.getType();
+        orderResponse.setOrderProducts(modelMapper.map(orderProducts, listType));
+
+        Short total = (short) orderProducts.stream().mapToInt(orderProduct -> orderProduct.getProduct().getPrice() * orderProduct.getQuantity()).sum();
+        orderResponse.setTotal(total);
+
+        return orderResponse;
+    }
+
+    public OrderResponse getById(Long id) {
+        Order order = orderRepository.findById(id);
+        return orderToOrderResponse(order);
     }
 
     public Order update(Long id, Order updatedOrder) {
@@ -72,7 +78,6 @@ public class OrderService {
     }
 
     public Order create(OrderRequest orderRequest) {
-        ModelMapper modelMapper = new ModelMapper();
         Order order = modelMapper.map(orderRequest, Order.class);
         order.setCreateDate(new Timestamp(System.currentTimeMillis()));
         order.setUser(userService.getUser());

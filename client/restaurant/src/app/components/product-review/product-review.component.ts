@@ -13,6 +13,7 @@ export class ProductReviewComponent implements OnInit {
   public review: ReviewResponse;
 
   private stars: any[];
+  private reviewCreateDate: string;
 
   constructor(
     private reviewService: ReviewService
@@ -20,5 +21,6 @@ export class ProductReviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.stars = Array(this.review.stars);
+    this.reviewCreateDate = this.reviewService.dateMsToDateString(this.review.createDate);
   }
 }

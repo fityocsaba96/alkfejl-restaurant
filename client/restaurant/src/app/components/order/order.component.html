@@ -1,0 +1,73 @@
+<ng-container *ngIf="order && (!admin || statuses)">
+  <h3 class="mat-h3">{{pageSubTitle}}</h3>
+  <mat-card>
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>date_range</mat-icon>
+        <span mat-line>{{orderCreateDate}}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>info</mat-icon>
+        <span mat-line>
+          <span *ngIf="!admin">{{order.status.description}}</span>
+          <form *ngIf="admin" novalidate>
+            <mat-form-field class="fullWidth">
+              <mat-select (selectionChange)="changeStatus($event.value)" [value]="order.status.id">
+                <mat-option *ngFor="let status of statuses" [value]="status.id">{{status.description}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
+        </span>
+      </mat-list-item>
+      <mat-list-item *ngIf="order.note !== ''">
+        <mat-icon mat-list-icon>note_add</mat-icon>
+        <span class="mat-list-text">{{order.note}}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>attach_money</mat-icon>
+        <span mat-line>{{order.total}}</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+  <mat-card *ngIf="admin">
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>person</mat-icon>
+        <span mat-line>{{order.user.firstName}} {{order.user.lastName}}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>location_city</mat-icon>
+        <span mat-line>{{order.user.zipCode}} {{order.user.city.name}}, {{order.user.address}}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>phone</mat-icon>
+        <span mat-line>{{order.user.phoneNumber}}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-icon mat-list-icon>email</mat-icon>
+        <span mat-line>{{order.user.email}}</span>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+  <div class="orderProductContainer">
+    <mat-card *ngFor="let orderProduct of order.orderProducts">
+      <mat-card-title>
+        {{orderProduct.product.name}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{orderProduct.product.category.name}}
+      </mat-card-subtitle>
+      <mat-list>
+        <mat-list-item>
+          <mat-icon mat-list-icon>attach_money</mat-icon>
+          <span mat-line>{{orderProduct.product.price}}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>grain</mat-icon>
+          <span mat-line>{{orderProduct.quantity}}</span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card>
+  </div>
+</ng-container>
+<mat-spinner *ngIf="!(order && (!admin || statuses))"></mat-spinner>

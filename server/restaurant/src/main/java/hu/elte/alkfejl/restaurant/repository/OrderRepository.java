@@ -12,6 +12,7 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
     List<Order> findAllByUser(User user);
+    Order findById(Long id);
 
     @Query(value = "SELECT COUNT (*) FROM \"order\" O, ORDER_PRODUCT OP WHERE O.ID=OP.\"order_id\" AND USER_ID=?1 AND PRODUCT_ID=?2",
             nativeQuery = true)
