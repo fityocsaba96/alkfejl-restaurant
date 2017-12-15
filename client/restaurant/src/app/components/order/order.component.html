@@ -11,7 +11,7 @@
           <span *ngIf="!userService.isAdmin">{{order.status.description}}</span>
           <form *ngIf="userService.isAdmin" novalidate>
             <mat-form-field class="fullWidth">
-              <mat-select (selectionChange)="changeStatus($event.value)" [value]="order.status.id">
+              <mat-select (selectionChange)="changeStatus($event.value)" [value]="order.status.id" name="status">
                 <mat-option *ngFor="let status of statuses" [value]="status.id">{{status.description}}</mat-option>
               </mat-select>
             </mat-form-field>

@@ -10,8 +10,8 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class ProductListComponent implements OnInit {
 
-  private products: Product[];
   public pageTitle: string;
+  public products: Product[];
 
   constructor(
     private productService: ProductService,
@@ -26,14 +26,14 @@ export class ProductListComponent implements OnInit {
     }, response => this.notificationService.showError(response));
   }
 
-  private deleteProduct(product: Product): void {
+  public deleteProduct(product: Product): void {
     this.productService.deleteProductById(product.id).subscribe(response => {
       this.products.splice(this.products.indexOf(product), 1);
       this.notificationService.showSuccess('Product deleted!');
     }, response => this.notificationService.showError(response));
   }
 
-  private addToCart(id: number): void {
+  public addToCart(id: number): void {
     this.productService.addToCart(id);
     this.notificationService.showSuccess('Added to cart!');
   }

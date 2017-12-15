@@ -5,7 +5,7 @@
         <mat-icon mat-list-icon>email</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <input matInput #email placeholder="Email" [value]="user ? user.email : null">
+            <input matInput #email placeholder="Email" name="email" [value]="user ? user.email : null">
           </mat-form-field>
         </span>
       </mat-list-item>
@@ -13,7 +13,7 @@
         <mat-icon mat-list-icon>lock</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <input matInput #password placeholder="Password" type="password">
+            <input matInput #password placeholder="Password" type="password" name="password">
           </mat-form-field>
         </span>
       </mat-list-item>
@@ -21,10 +21,10 @@
         <mat-icon mat-list-icon>person</mat-icon>
         <span mat-line>
           <mat-form-field class="halfWidth">
-            <input matInput #firstName placeholder="First name" [value]="user ? user.firstName : null">
+            <input matInput #firstName placeholder="First name" name="first_name" [value]="user ? user.firstName : null">
           </mat-form-field>
           <mat-form-field class="halfWidth">
-            <input matInput #lastName placeholder="Last name" [value]="user ? user.lastName : null">
+            <input matInput #lastName placeholder="Last name" name="last_name" [value]="user ? user.lastName : null">
           </mat-form-field>
         </span>
       </mat-list-item>
@@ -32,15 +32,15 @@
         <mat-icon mat-list-icon>location_city</mat-icon>
         <span mat-line>
           <mat-form-field class="thirdWidth">
-            <input matInput #zipCode placeholder="ZIP code" [value]="user ? user.zipCode : null">
+            <input matInput #zipCode placeholder="ZIP code" name="zip_code" [value]="user ? user.zipCode : null">
           </mat-form-field>
           <mat-form-field class="thirdWidth">
-            <mat-select #cityId placeholder="City" [value]="user ? user.city.id : null" (selectionChange)="refreshRestaurants($event.value)">
+            <mat-select #cityId placeholder="City" [value]="user ? user.city.id : null" (selectionChange)="refreshRestaurants($event.value)" name="city">
               <mat-option *ngFor="let city of cities" [value]="city.id">{{city.name}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="thirdWidth">
-            <input matInput #address placeholder="Address" [value]="user ? user.address : null">
+            <input matInput #address placeholder="Address" name="address" [value]="user ? user.address : null">
           </mat-form-field>
         </span>
       </mat-list-item>
@@ -48,7 +48,7 @@
         <mat-icon mat-list-icon>phone</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <input matInput #phoneNumber placeholder="Phone number" [value]="user ? user.phoneNumber : null">
+            <input matInput #phoneNumber placeholder="Phone number" name="phone_number" [value]="user ? user.phoneNumber : null">
           </mat-form-field>
         </span>
       </mat-list-item>
@@ -56,7 +56,7 @@
         <mat-icon mat-list-icon>restaurant</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <mat-select #restaurantId placeholder="Restaurant" [value]="user ? user.restaurant.id : null">
+            <mat-select #restaurantId placeholder="Restaurant" [value]="user ? user.restaurant.id : null" name="restaurant">
               <mat-option *ngFor="let restaurant of restaurants" [value]="restaurant.id">{{restaurant.zipCode}} {{restaurant.city.name}}, {{restaurant.address}}</mat-option>
             </mat-select>
           </mat-form-field>

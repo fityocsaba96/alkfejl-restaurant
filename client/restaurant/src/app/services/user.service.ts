@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User, Role } from '../models/user';
 import { Observable } from 'rxjs/Observable';
-import { Restaurant } from '../models/restaurant';
-import { City } from '../models/city';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
@@ -106,13 +104,13 @@ export class UserService {
   }
 
   public userFormDataToUser(email: string, password: string, firstName: string, lastName: string, zipCode: string,
-                      cityId: number, address: string, phoneNumber: string, restaurantId: number): User {
+                            cityId: number, address: string, phoneNumber: string, restaurantId: number): User {
     return new User({
       email,
       lastName,
       firstName,
       passwordHash: password,
-      zipCode: parseInt(zipCode),
+      zipCode: Number(zipCode),
       address,
       phoneNumber,
       restaurant: restaurantId ? {

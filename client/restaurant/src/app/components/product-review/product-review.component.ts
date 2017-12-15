@@ -12,8 +12,8 @@ export class ProductReviewComponent implements OnInit {
   @Input()
   public review: ReviewResponse;
 
-  private stars: any[];
-  private reviewCreateDate: string;
+  public stars: any[];
+  public reviewCreateDate: string;
 
   constructor(
     private reviewService: ReviewService

@@ -12,9 +12,9 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class ProductListByCategoryComponent implements OnInit {
 
-  private products: Product[];
   public pageTitle: string;
   public pageSubTitle: string;
+  public products: Product[];
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +27,7 @@ export class ProductListByCategoryComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.initializeComponent(parseInt(params['id']));
+      this.initializeComponent(Number(params['id']));
     });
   }
 
@@ -42,14 +42,14 @@ export class ProductListByCategoryComponent implements OnInit {
     }, response => this.notificationService.showError(response));
   }
 
-  private deleteProduct(product: Product): void {
+  public deleteProduct(product: Product): void {
     this.productService.deleteProductById(product.id).subscribe(response => {
       this.products.splice(this.products.indexOf(product), 1);
       this.notificationService.showSuccess('Product deleted!');
     }, response => this.notificationService.showError(response));
   }
 
-  private addToCart(id: number): void {
+  public addToCart(id: number): void {
     this.productService.addToCart(id);
     this.notificationService.showSuccess('Added to cart!');
   }

@@ -11,7 +11,7 @@ import { NotificationService } from '../../services/notification.service';
 export class IncomingOrderListComponent implements OnInit {
 
   public pageTitle: string;
-  private orders: Order[];
+  public orders: Order[];
 
   constructor(
     private orderService: OrderService,

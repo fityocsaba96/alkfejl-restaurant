@@ -26,4 +26,3 @@ export class OrderProductResponse extends BaseModel {
         Object.assign(this, object);
     }
 }
-

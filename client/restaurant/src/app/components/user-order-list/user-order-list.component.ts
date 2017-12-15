@@ -11,7 +11,7 @@ import { Order } from '../../models/order';
 export class UserOrderListComponent implements OnInit {
 
   public pageTitle: string;
-  private orders: Order[];
+  public orders: Order[];
 
   constructor(
     private orderService: OrderService,

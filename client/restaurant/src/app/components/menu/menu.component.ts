@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Role } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { Category } from '../../models/category';
 import { CategoryService } from '../../services/category.service';
@@ -13,11 +12,11 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class MenuComponent implements OnInit {
 
-  private categories: Category[];
+  public categories: Category[];
 
   constructor(
+    public userService: UserService,
     private categoryService: CategoryService,
-    private userService: UserService,
     private router: Router,
     private notificationService: NotificationService
   ) { }
@@ -35,7 +34,7 @@ export class MenuComponent implements OnInit {
     }, response => this.notificationService.showError(response));
   }
 
-  private logOut(): void {
+  public logOut(): void {
     this.userService.logOut().subscribe(response => {
       this.userService.setLoggedOut();
       this.router.navigate(['/restaurants']);

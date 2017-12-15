@@ -2,7 +2,6 @@
   <a mat-button routerLink="/restaurants">
     <mat-icon>restaurant</mat-icon> <span class="mat-h1">Restaurant</span>
   </a>
-  
   <ng-container *ngIf="userService.isAdmin">
     <button mat-button [matMenuTriggerFor]="adminMenu">Admin menu</button>
     <mat-menu #adminMenu="matMenu">
@@ -10,7 +9,6 @@
       <a mat-menu-item routerLink="/products/add">Add product</a>
     </mat-menu>
   </ng-container>
-  
   <ng-container *ngIf="userService.isAdmin || userService.isUser">
     <button mat-button [matMenuTriggerFor]="productsMenu">Products</button>
     <mat-menu #productsMenu="matMenu">
@@ -22,17 +20,12 @@
       <button mat-menu-item *ngIf="!categories"><mat-spinner [diameter]="25"></mat-spinner></button>
     </mat-menu>
   </ng-container>
-
   <a *ngIf="userService.isUser" mat-button routerLink="/cart">Cart</a>
-
   <span class="fill-space"></span>
-
   <ng-container *ngIf="userService.isGuest">
     <a mat-button routerLink="/user/login">Log in</a>
-
     <a mat-button routerLink="/user/register">Register</a>
   </ng-container>
-  
   <ng-container *ngIf="userService.isAdmin || userService.isUser">
       <button mat-button [matMenuTriggerFor]="userMenu"><mat-icon>person</mat-icon> {{userService.user.firstName}} {{userService.user.lastName}}</button>
       <mat-menu #userMenu="matMenu">

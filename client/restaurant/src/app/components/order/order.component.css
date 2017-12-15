@@ -1,12 +1,12 @@
-.orderProductContainer > mat-card:nth-child(odd) {
-    margin-right: 10px;
+.orderProductContainer>mat-card:nth-child(odd) {
+  margin-right: 10px;
 }
 
-.orderProductContainer > mat-card{
-    width: calc(100% * (1/2) - 53px);
+.orderProductContainer>mat-card {
+  width: calc(100% * (1/2) - 53px);
 }
-    
+
 .orderProductContainer {
-    display: flex;
-    flex-flow: row wrap;
+  display: flex;
+  flex-flow: row wrap;
 }

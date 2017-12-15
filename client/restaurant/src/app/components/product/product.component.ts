@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../models/product';
-import { ProductService } from '../../services/product.service';
 import { UserService } from '../../services/user.service';
-import { Role } from '../../models/user';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
@@ -26,7 +24,7 @@ export class ProductComponent {
   public clickDeleteProduct: EventEmitter<Product>;
 
   constructor(
-    private userService: UserService,
+    public userService: UserService,
     private dialog: MatDialog
   ) {
     this.showCategory = true;
@@ -34,7 +32,7 @@ export class ProductComponent {
     this.clickDeleteProduct = new EventEmitter();
   }
 
-  private addToCart(): void {
+  public addToCart(): void {
     this.clickAddToCart.emit(this.product.id);
   }
 

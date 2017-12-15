@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificationService } from '../../services/notification.service';
 
 @Component({
@@ -22,8 +21,9 @@ export class LoginComponent {
     this.pageTitle = 'Log in';
   }
 
-  private logIn(email: string, password: string, event: Event): void {
+  public logIn(email: string, password: string, event: Event): void {
     event.preventDefault();
+
     this.userService.logIn(email, password).subscribe(response => {
       this.userService.setLoggedIn(new User(response));
       this.router.navigate(['/restaurants']);

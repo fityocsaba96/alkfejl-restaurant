@@ -1,28 +1,24 @@
 <ng-container *ngIf="tableDataLoaded">
   <ng-container *ngIf="dataSource.data.length !== 0">
     <mat-table [dataSource]="dataSource" class="mat-elevation-z3">
-
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef>
           <mat-icon>restaurant_menu</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
       </ng-container>
-
       <ng-container matColumnDef="price">
         <mat-header-cell *matHeaderCellDef>
           <mat-icon>attach_money</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">${{element.price}}</mat-cell>
       </ng-container>
-
       <ng-container matColumnDef="quantity">
         <mat-header-cell *matHeaderCellDef>
           <mat-icon>grain</mat-icon>
         </mat-header-cell>
         <mat-cell *matCellDef="let element">{{element.quantity}}</mat-cell>
       </ng-container>
-
       <ng-container matColumnDef="delete">
         <mat-header-cell class="small" *matHeaderCellDef>
           <div class="spacer"></div><mat-icon>remove_shopping_cart</mat-icon>
@@ -33,11 +29,9 @@
           </button>
         </mat-cell>
       </ng-container>
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-
     <mat-card>
       <form novalidate>
         <mat-card-title>
@@ -48,7 +42,7 @@
             <mat-icon mat-list-icon>note_add</mat-icon>
             <span mat-line>
               <mat-form-field class="fullWidth">
-                <input matInput #note placeholder="Note">
+                <textarea matInput #note placeholder="Note" name="note"></textarea>
               </mat-form-field>
             </span>
           </mat-list-item>
@@ -64,13 +58,9 @@
         </mat-card-actions>
       </form>
     </mat-card>
-
   </ng-container>
-
   <mat-card *ngIf="dataSource.data.length === 0">
     <mat-card-title>Cart is empty</mat-card-title>
   </mat-card>
-
 </ng-container>
-
 <mat-spinner *ngIf="!tableDataLoaded"></mat-spinner>

@@ -11,7 +11,7 @@ import { NotificationService } from '../../services/notification.service';
 export class UserSettingsComponent {
 
   public pageTitle: string;
-  private user: User;
+  public user: User;
 
   constructor(
     private userService: UserService,
@@ -21,7 +21,7 @@ export class UserSettingsComponent {
     this.user = this.userService.user;
   }
 
-  private editSettings(user: User): void {
+  public editSettings(user: User): void {
     this.userService.editSettings(user).subscribe(response => {
       this.userService.user = new User(response);
       this.notificationService.showSuccess('User settings has been updated!');

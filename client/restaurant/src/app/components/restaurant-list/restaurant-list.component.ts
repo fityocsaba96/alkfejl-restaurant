@@ -10,8 +10,8 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class RestaurantListComponent implements OnInit {
 
-  private restaurants: Restaurant[];
   public pageTitle: string;
+  public restaurants: Restaurant[];
 
   constructor(
     private restaurantService: RestaurantService,

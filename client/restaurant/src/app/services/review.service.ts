@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { ReviewsResponse, ReviewResponse } from '../models/responses/reviews-response';
+import { ReviewsResponse } from '../models/responses/reviews-response';
 import { Review } from '../models/review';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class ReviewService {
   ) { }
 
   public getReviewsByProductId(id: number): Observable<ReviewsResponse> {
-    return this.http.get<ReviewsResponse>(`/api/product/${id.toString()}/reviews`);
+    return this.http.get<ReviewsResponse>(`/api/product/${String(id)}/reviews`);
   }
 
   public dateMsToDateString(date: number): string {
@@ -26,7 +26,7 @@ export class ReviewService {
   }
 
   public writeReview(productId: number, stars: number, description: string): Observable<Review> {
-    return this.http.post<Review>(`/api/product/${productId.toString()}/review`, {
+    return this.http.post<Review>(`/api/product/${String(productId)}/review`, {
       stars,
       description
     });

@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { OrderResponse } from '../../models/responses/order-response';
 import { NotificationService } from '../../services/notification.service';
 import { UserService } from '../../services/user.service';
-import { Role } from '../../models/user';
 import { StatusService } from '../../services/status.service';
 import { Status } from '../../models/status';
 
@@ -17,14 +16,14 @@ export class OrderComponent implements OnInit {
 
   public pageTitle: string;
   public pageSubTitle: string;
-  private order: OrderResponse;
-  private orderCreateDate: string;
-  private statuses: Status[];
+  public order: OrderResponse;
+  public orderCreateDate: string;
+  public statuses: Status[];
 
   constructor(
+    public userService: UserService,
     private orderService: OrderService,
     private statusService: StatusService,
-    private userService: UserService,
     private route: ActivatedRoute,
     private notificationService: NotificationService
   ) {
@@ -32,10 +31,10 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const orderId = parseInt(this.route.snapshot.paramMap.get('id'));
+    const orderId = Number(this.route.snapshot.paramMap.get('id'));
     this.orderService.getOrderById(orderId).subscribe(response => {
       this.order = new OrderResponse(response);
-      this.pageSubTitle = `Order #${this.order.id}`;
+      this.pageSubTitle = `Order #${String(this.order.id)}`;
       this.orderCreateDate = this.orderService.dateMsToDateString(this.order.createDate);
     }, response => this.notificationService.showError(response));
 
@@ -46,7 +45,7 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  private changeStatus(statusId: number): void {
+  public changeStatus(statusId: number): void {
     this.orderService.update(this.order.id, statusId).subscribe(response => {
       this.order.status = this.statuses.find(status => status.id === statusId);
       this.notificationService.showSuccess('Changed status!');

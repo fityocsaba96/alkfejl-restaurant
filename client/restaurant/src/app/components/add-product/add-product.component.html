@@ -1,11 +1,11 @@
 <mat-card *ngIf="categories">
-  <form novalidate>
+  <form #addProductForm="ngForm" novalidate>
     <mat-list>
       <mat-list-item>
         <mat-icon mat-list-icon>restaurant_menu</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <input matInput #name placeholder="Name">
+            <input matInput #name placeholder="Name" name="product_name" ngModel>
           </mat-form-field>
         </span>
       </mat-list-item>
@@ -13,7 +13,7 @@
         <mat-icon mat-list-icon>description</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <input matInput #description placeholder="Description">
+            <textarea matInput #description placeholder="Description" name="description" ngModel></textarea>
           </mat-form-field>
         </span>
       </mat-list-item>
@@ -21,7 +21,7 @@
         <mat-icon mat-list-icon>attach_money</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <input matInput #price placeholder="Price">
+            <input matInput #price placeholder="Price" name="price" ngModel>
           </mat-form-field>
         </span>
       </mat-list-item>
@@ -29,7 +29,7 @@
         <mat-icon mat-list-icon>label</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <mat-select #categoryId placeholder="Category">
+            <mat-select #categoryId placeholder="Category" name="category" ngModel>
               <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
             </mat-select>
           </mat-form-field>

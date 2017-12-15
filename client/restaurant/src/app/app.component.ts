@@ -10,7 +10,7 @@ import { Router, NavigationStart } from '@angular/router';
 })
 export class AppComponent {
 
-  private child;
+  public child;
 
   constructor(
     private snackBar: MatSnackBar,

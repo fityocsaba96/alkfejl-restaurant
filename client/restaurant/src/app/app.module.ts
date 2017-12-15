@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RoutingModule } from './modules/routing.module';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Subject } from 'rxjs/Subject';
+import { RoutingModule } from './modules/routing.module';
 import { MaterialModule } from './modules/material.module';
 import { RoutingGuard } from './services/routing-guard.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { RestaurantListComponent } from './components/restaurant-list/restaurant-list.component';
@@ -34,7 +34,6 @@ import { ProductReviewComponent } from './components/product-review/product-revi
 import { ReviewService } from './services/review.service';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { NotificationService } from './services/notification.service';
-import { Subject } from 'rxjs/Subject';
 import { UserDataFormComponent } from './components/user-data-form/user-data-form.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
@@ -67,8 +66,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule
+    FormsModule
   ],
   providers: [
     {

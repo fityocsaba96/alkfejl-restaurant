@@ -16,6 +16,6 @@ export class RestaurantService {
   }
 
   public getRestaurantsByCity(city: City): Observable<Restaurant[]> {
-    return this.http.get<Restaurant[]>(`/api/city/${city.id}/restaurants`);
+    return this.http.get<Restaurant[]>(`/api/city/${String(city.id)}/restaurants`);
   }
 }

@@ -2,15 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Order } from '../models/order';
-import { UserService } from './user.service';
 import { OrderResponse } from '../models/responses/order-response';
 
 @Injectable()
 export class OrderService {
 
   constructor(
-    private http: HttpClient,
-    private userService: UserService
+    private http: HttpClient
   ) { }
 
   public getIncomingOrders(): Observable<Order[]> {
@@ -22,11 +20,11 @@ export class OrderService {
   }
 
   public getOrderById(id: number): Observable<OrderResponse[]> {
-    return this.http.get<OrderResponse[]>(`/api/order/${id}`);
+    return this.http.get<OrderResponse[]>(`/api/order/${String(id)}`);
   }
 
   public update(id: number, statusId: number): Observable<Order> {
-    return this.http.put<Order>(`/api/order/${id}`, {
+    return this.http.put<Order>(`/api/order/${String(id)}`, {
       id,
       status: statusId ? {
         id: statusId

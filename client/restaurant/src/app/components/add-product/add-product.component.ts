@@ -3,7 +3,8 @@ import { Category } from '../../models/category';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
 import { NotificationService } from '../../services/notification.service';
-import { Product } from '../../models/product';
+import { NgForm } from '@angular/forms';
+import { MatSelect } from '@angular/material';
 
 @Component({
   selector: 'app-add-product',
@@ -12,8 +13,14 @@ import { Product } from '../../models/product';
 })
 export class AddProductComponent implements OnInit {
 
-  private categories: Category[];
   public pageTitle: string;
+  public categories: Category[];
+
+  @ViewChild('addProductForm')
+  private addProductForm: NgForm;
+
+  @ViewChild('categoryId')
+  private categoryId: MatSelect;
 
   constructor(
     private productService: ProductService,
@@ -32,6 +39,8 @@ export class AddProductComponent implements OnInit {
   public addProduct(name: string, description: string, price: string, categoryId: number, event: Event): void {
     event.preventDefault();
     this.productService.addProduct(name, description, price, categoryId).subscribe(response => {
+      this.addProductForm.resetForm();
+      this.categoryId.value = undefined;
       this.notificationService.showSuccess('Product has been added!');
     }, response => this.notificationService.showError(response));
   }

@@ -12,10 +12,10 @@ import { NotificationService } from '../../services/notification.service';
 export class CartComponent implements OnInit {
 
   public pageTitle: string;
-  private displayedColumns: string[];
-  private dataSource: MatTableDataSource<any>;
-  private tableDataLoaded: boolean;
-  private totalPrice: number;
+  public displayedColumns: string[];
+  public dataSource: MatTableDataSource<any>;
+  public tableDataLoaded: boolean;
+  public totalPrice: number;
 
   constructor(
     private productService: ProductService,
@@ -53,14 +53,14 @@ export class CartComponent implements OnInit {
     }
   }
 
-  private deleteFromCart(productId: number): void {
+  public deleteFromCart(productId: number): void {
     this.productService.deleteFromCart(productId);
     this.dataSource.data.splice(this.dataSource.data.findIndex(object => object.id === productId), 1);
     this.dataSource.data = this.dataSource.data;
     this.notificationService.showSuccess('Deleted from cart!');
   }
 
-  private placeOrder(note: string, event: Event) {
+  public placeOrder(note: string, event: Event) {
     event.preventDefault();
     this.orderService.placeOrder(this.dataSource.data, note).subscribe(response => {
       this.productService.emptyCart(this.dataSource.data.map(object => object.id));

@@ -12,7 +12,7 @@ export class OrderOverviewComponent implements OnInit {
   @Input()
   public order: Order;
 
-  private orderCreateDate: string;
+  public orderCreateDate: string;
 
   constructor(
     private orderService: OrderService

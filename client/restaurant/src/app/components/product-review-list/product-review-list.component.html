@@ -7,8 +7,8 @@
   </mat-card>
 </ng-container>
 <mat-spinner *ngIf="!reviews"></mat-spinner>
-<mat-card *ngIf="userService.isUser" class="writeReviewCard">
-  <form novalidate>
+<mat-card *ngIf="userService.isUser">
+  <form #reviewForm="ngForm" novalidate>
     <mat-card-title>
       Write review
     </mat-card-title>
@@ -17,7 +17,7 @@
         <mat-icon mat-list-icon>star</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <mat-select #stars placeholder="Rating">
+            <mat-select #stars placeholder="Rating" name="rating" ngModel>
               <mat-option *ngFor="let star of starsChoices" [value]="star">{{star}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -27,7 +27,7 @@
         <mat-icon mat-list-icon>description</mat-icon>
         <span mat-line>
           <mat-form-field class="fullWidth">
-            <textarea matInput #description placeholder="Description"></textarea>
+            <textarea matInput #description placeholder="Description" name="description" ngModel></textarea>
           </mat-form-field>
         </span>
       </mat-list-item>

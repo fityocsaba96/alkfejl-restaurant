@@ -25,8 +25,8 @@ export class UserDataFormComponent implements OnInit {
   @ViewChild('restaurantId')
   private restaurantId: MatSelect;
 
-  private cities: City[];
-  private restaurants: Restaurant[];
+  public cities: City[];
+  public restaurants: Restaurant[];
 
   constructor(
     private http: HttpClient,
@@ -56,14 +56,14 @@ export class UserDataFormComponent implements OnInit {
     }, response => this.notificationService.showError(response));
   }
 
-  private refreshRestaurants(cityId: number): void {
+  public refreshRestaurants(cityId: number): void {
     this.fetchRestaurantsByCity(new City({
       id: cityId
     }));
     this.restaurantId.value = undefined;
   }
 
-  private done(email: string, password: string, firstName: string, lastName: string, zipCode: string,
+  public done(email: string, password: string, firstName: string, lastName: string, zipCode: string,
                cityId: number, address: string, phoneNumber: string, restaurantId: number, event: Event): void {
     event.preventDefault();
     this.clickDone.emit(this.userService.userFormDataToUser(email, password, firstName, lastName, zipCode,

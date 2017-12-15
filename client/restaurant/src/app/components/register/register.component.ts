@@ -21,7 +21,7 @@ export class RegisterComponent {
     this.pageTitle = 'Register';
   }
 
-  private register(user: User): void {
+  public register(user: User): void {
     this.userService.register(user).subscribe(response => {
       this.router.navigate(['/user/login']);
       this.notificationService.showSuccess('Registration successful!');

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product';
 import { Observable } from 'rxjs/Observable';
-import { Category } from '../models/category';
 
 @Injectable()
 export class ProductService {
@@ -16,14 +15,14 @@ export class ProductService {
   }
 
   public getProductsByCategory(id: number): Observable<Product[]> {
-    return this.http.get<Product[]>(`/api/category/${id}/products`);
+    return this.http.get<Product[]>(`/api/category/${String(id)}/products`);
   }
 
   public addToCart(id: number): void {
-    const key = `cartQty${id.toString()}`, value = window.sessionStorage.getItem(key);
+    const key = `cartQty${String(id)}`, value = window.sessionStorage.getItem(key);
     let newValue;
     if (value) {
-      newValue = (parseInt(value) + 1).toString();
+      newValue = String((Number(value) + 1));
     } else {
       newValue = '1';
     }
@@ -34,7 +33,7 @@ export class ProductService {
     return this.http.post<Product>('/api/products', {
       name,
       description,
-      price: parseInt(price),
+      price: Number(price),
       category: categoryId ? {
         id: categoryId
       } : undefined
@@ -48,8 +47,8 @@ export class ProductService {
 
       if (key.substr(0, 7) === 'cartQty') {
         cartData.push({
-          id: parseInt(key.substr(7)),
-          quantity: parseInt(window.sessionStorage.getItem(key))
+          id: Number(key.substr(7)),
+          quantity: Number(window.sessionStorage.getItem(key))
         });
       }
     }
@@ -57,14 +56,14 @@ export class ProductService {
   }
 
   public deleteFromCart(id: number): void {
-    window.sessionStorage.removeItem(`cartQty${id.toString()}`);
+    window.sessionStorage.removeItem(`cartQty${String(id)}`);
   }
 
   public emptyCart(currentCartProductIds: number[]): void {
-    currentCartProductIds.forEach(id => window.sessionStorage.removeItem(`cartQty${id.toString()}`));
+    currentCartProductIds.forEach(id => window.sessionStorage.removeItem(`cartQty${String(id)}`));
   }
 
   public deleteProductById(id: number): Observable<boolean> {
-    return this.http.delete<boolean>(`/api/product/${id}`);
+    return this.http.delete<boolean>(`/api/product/${String(id)}`);
   }
 }
