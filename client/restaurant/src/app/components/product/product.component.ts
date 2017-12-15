@@ -26,19 +26,12 @@ export class ProductComponent {
   public clickDeleteProduct: EventEmitter<Product>;
 
   constructor(
+    private userService: UserService,
     private dialog: MatDialog
   ) {
     this.showCategory = true;
     this.clickAddToCart = new EventEmitter();
     this.clickDeleteProduct = new EventEmitter();
-  }
-
-  private user(): boolean {
-    return UserService.role === Role.USER;
-  }
-
-  private admin(): boolean {
-    return UserService.role === Role.ADMIN;
   }
 
   private addToCart(): void {

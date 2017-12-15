@@ -10,7 +10,7 @@ import { Router, NavigationStart } from '@angular/router';
 })
 export class AppComponent {
 
-  private pageTitle: string;
+  private child;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -38,6 +38,6 @@ export class AppComponent {
   }
 
   onActivate(component): void {
-    this.pageTitle = component.pageTitle;
+    this.child = component;
   }
 }

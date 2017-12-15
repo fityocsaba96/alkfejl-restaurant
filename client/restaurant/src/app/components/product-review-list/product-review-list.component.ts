@@ -14,16 +14,17 @@ import { NotificationService } from '../../services/notification.service';
 export class ProductReviewListComponent implements OnInit {
 
   private reviews: ReviewsResponse;
-  private _pageTitle: string;
-  private pageSubTitle: string;
+  public pageTitle: string;
+  public pageSubTitle: string;
   private starsChoices: number[];
 
   constructor(
     private reviewService: ReviewService,
+    private userService: UserService,
     private router: ActivatedRoute,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Reviews';
+    this.pageTitle = 'Reviews';
     this.starsChoices = Array(5).fill(undefined).map((e, i) => 5 - i);
   }
 
@@ -34,14 +35,6 @@ export class ProductReviewListComponent implements OnInit {
       this.reviews = new ReviewsResponse(response);
       this.pageSubTitle = this.reviews.product.name;
     }, response => this.notificationService.showError(response));
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
-  }
-
-  private user(): boolean {
-    return UserService.role === Role.USER;
   }
 
   private writeReview(stars: number, description: string, event: Event) {

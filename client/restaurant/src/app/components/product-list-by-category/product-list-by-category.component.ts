@@ -13,8 +13,8 @@ import { NotificationService } from '../../services/notification.service';
 export class ProductListByCategoryComponent implements OnInit {
 
   private products: Product[];
-  private _pageTitle: string;
-  private pageSubTitle: string;
+  public pageTitle: string;
+  public pageSubTitle: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +22,7 @@ export class ProductListByCategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Products';
+    this.pageTitle = 'Products';
   }
 
   ngOnInit() {
@@ -40,10 +40,6 @@ export class ProductListByCategoryComponent implements OnInit {
     this.productService.getProductsByCategory(categoryId).subscribe(response => {
       this.products = response.map(object => new Product(object)).reverse();
     }, response => this.notificationService.showError(response));
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
   }
 
   private deleteProduct(product: Product): void {

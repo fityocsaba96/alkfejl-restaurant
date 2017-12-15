@@ -13,24 +13,20 @@ import { Product } from '../../models/product';
 export class AddProductComponent implements OnInit {
 
   private categories: Category[];
-  private _pageTitle: string;
+  public pageTitle: string;
 
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Add product';
+    this.pageTitle = 'Add product';
   }
 
   ngOnInit() {
     this.categoryService.getCategories().subscribe(response => {
       this.categories = response.map(object => new Category(object));
     }, response => this.notificationService.showError(response));
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
   }
 
   public addProduct(name: string, description: string, price: string, categoryId: number, event: Event): void {

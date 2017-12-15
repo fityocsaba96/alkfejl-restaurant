@@ -11,23 +11,19 @@ import { NotificationService } from '../../services/notification.service';
 export class ProductListComponent implements OnInit {
 
   private products: Product[];
-  private _pageTitle: string;
+  public pageTitle: string;
 
   constructor(
     private productService: ProductService,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Products';
+    this.pageTitle = 'Products';
   }
 
   ngOnInit() {
     this.productService.getProducts().subscribe(response => {
       this.products = response.map(object => new Product(object)).reverse();
     }, response => this.notificationService.showError(response));
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
   }
 
   private deleteProduct(product: Product): void {

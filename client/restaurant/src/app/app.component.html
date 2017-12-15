@@ -1,5 +1,8 @@
 <app-menu></app-menu>
 <div class="content">
-    <h2 class="mat-h2">{{pageTitle}}</h2>
+    <ng-container *ngIf="child">
+        <h2 class="mat-h2">{{child.pageTitle}}</h2>
+        <h3 class="mat-h3">{{child.pageSubTitle}}</h3>
+    </ng-container>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>

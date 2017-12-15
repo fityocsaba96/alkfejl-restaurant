@@ -1,5 +1,4 @@
-<ng-container *ngIf="order && (!admin || statuses)">
-  <h3 class="mat-h3">{{pageSubTitle}}</h3>
+<ng-container *ngIf="order && (!userService.isAdmin || statuses)">
   <mat-card>
     <mat-list>
       <mat-list-item>
@@ -9,8 +8,8 @@
       <mat-list-item>
         <mat-icon mat-list-icon>info</mat-icon>
         <span mat-line>
-          <span *ngIf="!admin">{{order.status.description}}</span>
-          <form *ngIf="admin" novalidate>
+          <span *ngIf="!userService.isAdmin">{{order.status.description}}</span>
+          <form *ngIf="userService.isAdmin" novalidate>
             <mat-form-field class="fullWidth">
               <mat-select (selectionChange)="changeStatus($event.value)" [value]="order.status.id">
                 <mat-option *ngFor="let status of statuses" [value]="status.id">{{status.description}}</mat-option>
@@ -29,7 +28,7 @@
       </mat-list-item>
     </mat-list>
   </mat-card>
-  <mat-card *ngIf="admin">
+  <mat-card *ngIf="userService.isAdmin">
     <mat-list>
       <mat-list-item>
         <mat-icon mat-list-icon>person</mat-icon>
@@ -70,4 +69,4 @@
     </mat-card>
   </div>
 </ng-container>
-<mat-spinner *ngIf="!(order && (!admin || statuses))"></mat-spinner>
+<mat-spinner *ngIf="!(order && (!userService.isAdmin || statuses))"></mat-spinner>

@@ -12,18 +12,14 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class LoginComponent {
 
-  private _pageTitle: string;
+  public pageTitle: string;
 
   constructor(
     private userService: UserService,
     private router: Router,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Log in';
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
+    this.pageTitle = 'Log in';
   }
 
   private logIn(email: string, password: string, event: Event): void {

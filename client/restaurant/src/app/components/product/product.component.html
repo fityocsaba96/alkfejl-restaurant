@@ -16,13 +16,13 @@
     </mat-list-item>
   </mat-list>
   <mat-card-actions>
-    <button *ngIf="user()" mat-icon-button color="primary" (click)="addToCart($event)">
+    <button *ngIf="userService.isUser" mat-icon-button color="primary" (click)="addToCart($event)">
       <mat-icon>add_shopping_cart</mat-icon>
     </button>
-    <a *ngIf="user() || admin()" mat-icon-button color="primary" routerLink="/product/{{product.id}}/reviews">
+    <a *ngIf="userService.isUser || userService.isAdmin" mat-icon-button color="primary" routerLink="/product/{{product.id}}/reviews">
       <mat-icon>rate_review</mat-icon>
     </a>
-    <button *ngIf="admin()" mat-icon-button color="primary" (click)="deleteProduct($event)">
+    <button *ngIf="userService.isAdmin" mat-icon-button color="primary" (click)="deleteProduct($event)">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-actions>

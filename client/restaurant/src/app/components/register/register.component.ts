@@ -11,18 +11,14 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class RegisterComponent {
 
-  private _pageTitle: string;
+  public pageTitle: string;
 
   constructor(
     private userService: UserService,
     private router: Router,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Register';
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
+    this.pageTitle = 'Register';
   }
 
   private register(user: User): void {

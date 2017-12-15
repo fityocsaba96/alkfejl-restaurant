@@ -14,6 +14,10 @@ export class UserService {
 
   private _loggedIn: Subject<any>;
 
+  private _isGuest: boolean;
+  private _isUser: boolean;
+  private _isAdmin: boolean;
+
   constructor(
     private http: HttpClient
   ) {
@@ -22,25 +26,46 @@ export class UserService {
 
   public setLoggedIn(user: User): void {
     UserService._user = user;
-    UserService._role = UserService._user.isAdmin ? Role.ADMIN : Role.USER;
+    this._isGuest = false;
+
+    if (UserService._user.isAdmin) {
+      UserService._role = Role.ADMIN;
+      [this._isAdmin, this._isUser] = [true, false];
+    } else {
+      UserService._role = Role.USER;
+      [this._isAdmin, this._isUser] = [false, true];
+    }
     this._loggedIn.next();
   }
 
   public setLoggedOut(): void {
     UserService._user = undefined;
     UserService._role = Role.GUEST;
+    [this._isGuest, this._isAdmin, this._isUser] = [true, false, false];
   }
 
-  public static get user(): User {
+  public get user(): User {
     return UserService._user;
   }
 
-  public static set user(user: User) {
+  public set user(user: User) {
     UserService._user = user;
   }
 
-  public static get role(): Role {
+  public get role(): Role {
     return UserService._role;
+  }
+
+  public get isGuest(): boolean {
+    return this._isGuest;
+  }
+
+  public get isUser(): boolean {
+    return this._isUser;
+  }
+
+  public get isAdmin(): boolean {
+    return this._isAdmin;
   }
 
   public syncLoginStatus(): Promise<User> {
@@ -50,7 +75,7 @@ export class UserService {
         this.setLoggedIn(new User(response));
         resolve();
       }, () => {
-        UserService._role = Role.GUEST;
+        this.setLoggedOut();
         resolve();
       });
     });

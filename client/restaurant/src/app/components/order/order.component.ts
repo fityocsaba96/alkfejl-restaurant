@@ -15,21 +15,20 @@ import { Status } from '../../models/status';
 })
 export class OrderComponent implements OnInit {
 
-  private _pageTitle: string;
-  private pageSubTitle: string;
+  public pageTitle: string;
+  public pageSubTitle: string;
   private order: OrderResponse;
   private orderCreateDate: string;
-  private admin: boolean;
   private statuses: Status[];
 
   constructor(
     private orderService: OrderService,
     private statusService: StatusService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private notificationService: NotificationService
   ) {
-    this.admin = UserService.role === Role.ADMIN;
-    this._pageTitle = this.admin ? 'Incoming orders' : 'My orders';
+    this.pageTitle = this.userService.isAdmin ? 'Incoming orders' : 'My orders';
   }
 
   ngOnInit(): void {
@@ -40,15 +39,11 @@ export class OrderComponent implements OnInit {
       this.orderCreateDate = this.orderService.dateMsToDateString(this.order.createDate);
     }, response => this.notificationService.showError(response));
 
-    if (this.admin) {
+    if (this.userService.isAdmin) {
       this.statusService.getStatuses().subscribe(response => {
         this.statuses = response.map(object => new Status(object));
       }, response => this.notificationService.showError(response));
     }
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
   }
 
   private changeStatus(statusId: number): void {

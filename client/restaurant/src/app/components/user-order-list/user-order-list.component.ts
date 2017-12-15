@@ -10,23 +10,19 @@ import { Order } from '../../models/order';
 })
 export class UserOrderListComponent implements OnInit {
 
-  private _pageTitle: string;
+  public pageTitle: string;
   private orders: Order[];
 
   constructor(
     private orderService: OrderService,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'My orders';
+    this.pageTitle = 'My orders';
   }
 
   ngOnInit() {
     this.orderService.getUserOrders().subscribe(response => {
       this.orders = response.map(object => new Order(object)).reverse();
     }, response => this.notificationService.showError(response));
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
   }
 }

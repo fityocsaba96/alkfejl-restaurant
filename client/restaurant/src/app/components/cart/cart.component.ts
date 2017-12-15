@@ -11,7 +11,7 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class CartComponent implements OnInit {
 
-  private _pageTitle: string;
+  public pageTitle: string;
   private displayedColumns: string[];
   private dataSource: MatTableDataSource<any>;
   private tableDataLoaded: boolean;
@@ -22,7 +22,7 @@ export class CartComponent implements OnInit {
     private orderService: OrderService,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Cart';
+    this.pageTitle = 'Cart';
     this.displayedColumns = ['name', 'price', 'quantity', 'delete'];
     this.dataSource = new MatTableDataSource();
     this.tableDataLoaded = false;
@@ -67,9 +67,5 @@ export class CartComponent implements OnInit {
       this.dataSource.data = [];
       this.notificationService.showSuccess('Order has been placed!');
     }, response => this.notificationService.showError(response));
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
   }
 }

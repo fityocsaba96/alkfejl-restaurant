@@ -3,7 +3,7 @@
     <mat-icon>restaurant</mat-icon> <span class="mat-h1">Restaurant</span>
   </a>
   
-  <ng-container *ngIf="admin()">
+  <ng-container *ngIf="userService.isAdmin">
     <button mat-button [matMenuTriggerFor]="adminMenu">Admin menu</button>
     <mat-menu #adminMenu="matMenu">
       <a mat-menu-item routerLink="/orders/incoming">Incoming orders</a>
@@ -11,7 +11,7 @@
     </mat-menu>
   </ng-container>
   
-  <ng-container *ngIf="admin() || user()">
+  <ng-container *ngIf="userService.isAdmin || userService.isUser">
     <button mat-button [matMenuTriggerFor]="productsMenu">Products</button>
     <mat-menu #productsMenu="matMenu">
       <a mat-menu-item routerLink="/products">All</a>
@@ -21,23 +21,24 @@
       <a *ngFor="let category of categories" mat-menu-item routerLink="/category/{{category.id}}/products">{{category.name}}</a>
       <button mat-menu-item *ngIf="!categories"><mat-spinner [diameter]="25"></mat-spinner></button>
     </mat-menu>
-
-    <a mat-button routerLink="/user/settings">User settings</a>
   </ng-container>
-  
-  <ng-container *ngIf="user()">
-    <a mat-button routerLink="/user/orders">My orders</a>
 
-    <a mat-button routerLink="/cart">Cart</a>
-  </ng-container>
+  <a *ngIf="userService.isUser" mat-button routerLink="/cart">Cart</a>
 
   <span class="fill-space"></span>
 
-  <ng-container *ngIf="guest()">
+  <ng-container *ngIf="userService.isGuest">
     <a mat-button routerLink="/user/login">Log in</a>
 
     <a mat-button routerLink="/user/register">Register</a>
   </ng-container>
   
-  <button *ngIf="admin() || user()" mat-button (click)="logOut()">Log out</button>
+  <ng-container *ngIf="userService.isAdmin || userService.isUser">
+      <button mat-button [matMenuTriggerFor]="userMenu"><mat-icon>person</mat-icon> {{userService.user.firstName}} {{userService.user.lastName}}</button>
+      <mat-menu #userMenu="matMenu">
+        <a mat-menu-item *ngIf="userService.isUser" routerLink="/user/orders">My orders</a>
+        <a mat-menu-item routerLink="/user/settings">User settings</a>
+        <button mat-menu-item (click)="logOut()">Log out</button>
+      </mat-menu>
+  </ng-container>
 </mat-toolbar>

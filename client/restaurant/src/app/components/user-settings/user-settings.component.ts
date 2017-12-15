@@ -10,24 +10,20 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class UserSettingsComponent {
 
-  private _pageTitle: string;
+  public pageTitle: string;
   private user: User;
 
   constructor(
     private userService: UserService,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'User settings';
-    this.user = UserService.user;
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
+    this.pageTitle = 'User settings';
+    this.user = this.userService.user;
   }
 
   private editSettings(user: User): void {
     this.userService.editSettings(user).subscribe(response => {
-      UserService.user = new User(response);
+      this.userService.user = new User(response);
       this.notificationService.showSuccess('User settings has been updated!');
     }, response => this.notificationService.showError(response));
   }

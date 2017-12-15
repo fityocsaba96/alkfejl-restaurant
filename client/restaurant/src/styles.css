@@ -10,7 +10,10 @@ body {
 
 .content {
   width: 50%;
-  margin: auto;
+  min-width: 500px;
+  margin: 114px auto 50px auto;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .fullWidth {
@@ -46,4 +49,12 @@ mat-list-item {
 
 .snackBarError {
   background-color: #f44336
+}
+
+app-menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }

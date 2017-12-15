@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.user() || this.admin()) {
+    if (this.userService.isUser || this.userService.isAdmin) {
       this.fetchCategories();
     }
     this.userService.loggedIn.subscribe(() => this.fetchCategories());
@@ -33,18 +33,6 @@ export class MenuComponent implements OnInit {
     this.categoryService.getCategories().subscribe(response => {
       this.categories = response.map(object => new Category(object));
     }, response => this.notificationService.showError(response));
-  }
-
-  private guest(): boolean {
-    return UserService.role === Role.GUEST;
-  }
-
-  private user(): boolean {
-    return UserService.role === Role.USER;
-  }
-
-  private admin(): boolean {
-    return UserService.role === Role.ADMIN;
   }
 
   private logOut(): void {

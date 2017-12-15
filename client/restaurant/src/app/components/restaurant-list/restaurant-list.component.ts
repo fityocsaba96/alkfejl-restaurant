@@ -11,22 +11,18 @@ import { NotificationService } from '../../services/notification.service';
 export class RestaurantListComponent implements OnInit {
 
   private restaurants: Restaurant[];
-  private _pageTitle: string;
+  public pageTitle: string;
 
   constructor(
     private restaurantService: RestaurantService,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Restaurants';
+    this.pageTitle = 'Restaurants';
   }
 
   ngOnInit() {
     this.restaurantService.getRestaurants().subscribe(response => {
       this.restaurants = response.map(object => new Restaurant(object)).reverse();
     }, response => this.notificationService.showError(response));
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
   }
 }

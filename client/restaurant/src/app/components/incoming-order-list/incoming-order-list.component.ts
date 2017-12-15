@@ -10,23 +10,19 @@ import { NotificationService } from '../../services/notification.service';
 })
 export class IncomingOrderListComponent implements OnInit {
 
-  private _pageTitle: string;
+  public pageTitle: string;
   private orders: Order[];
 
   constructor(
     private orderService: OrderService,
     private notificationService: NotificationService
   ) {
-    this._pageTitle = 'Incoming orders';
+    this.pageTitle = 'Incoming orders';
    }
 
   ngOnInit() {
     this.orderService.getIncomingOrders().subscribe(response => {
       this.orders = response.map(object => new Order(object)).reverse();
     }, response => this.notificationService.showError(response));
-  }
-
-  public get pageTitle() {
-    return this._pageTitle;
   }
 }
