@@ -24,7 +24,7 @@ describe('register function', () => {
     expect(element(by.css('.mat-select-panel')).isPresent()).toBeFalsy();
 
     element(by.css('mat-select[name="city"]')).click();
-    element(by.css('mat-option:first-of-type')).click();
+    element.all(by.css('mat-option')).first().click();
     element(by.css('mat-select[name="restaurant"]')).click();
     expect(element(by.css('.mat-select-panel')).isPresent()).toBeTruthy();
   });
@@ -51,12 +51,12 @@ describe('register function', () => {
     element(by.css('input[name="last_name"]')).sendKeys('User');
     element(by.css('input[name="zip_code"]')).sendKeys(validZipCode ? 1000 : 'one thousand');
     element(by.css('mat-select[name="city"]')).click();
-    element(by.css('mat-option:first-of-type')).click();
+    element.all(by.css('mat-option')).first().click();
     element(by.css('input[name="address"]')).sendKeys('Main way 1');
     element(by.css('input[name="phone_number"]')).sendKeys('+36301234567');
     if (selectRestaurant) {
       element(by.css('mat-select[name="restaurant"]')).click();
-      element(by.css('mat-option:first-of-type')).click();
+      element.all(by.css('mat-option')).first().click();
     }
     element(by.css('form button')).click();
   }
