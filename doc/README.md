@@ -226,13 +226,13 @@ A felhasználói adatok megtekintése a módosítás oldalon az előzetes kitöl
 
 Módosított felhasználói adatok elmentése. A regisztrációnál meghatározott követelményeknek a módosítás után is teljesülnie kell.
 
-### Menü megtekintése
+### Termékek megtekintése
 
 `GET /api/products` *(A,U)*
 
 Az összes termék és adatainak megtekintése.
 
-### Menü szűrése kategória alapján
+### Termékek szűrése kategória alapján
 
 `GET /api/categories` *(A,U)*
 
@@ -256,7 +256,11 @@ A rendelés leadása a kiválasztott termékek és azok mennyiségének megadás
 
 `GET /api/user/me/orders` *(U)*
 
-A bejelentkezett felhasználó rendeléseinek megtekintése a rendelt termékekkel, azok állapotával és a végösszeggel együtt.
+A bejelentkezett felhasználó rendeléseinek megtekintése azok adataival, állapotával együtt.
+
+`GET /api/order/:id` *(A,U)*
+
+A megadott rendelés adatainak megtekintése a rendelt termékekkel, állapottal és a végösszeggel együtt.
 
 ### Termékek értékelése
 
@@ -273,6 +277,8 @@ A megadott termékhez beérkezett értékelések megtekintése.
 `GET /api/orders/incoming` *(A)*
 
 A beállított étteremhez beérkezett rendelések megtekintése.
+
+*Ehhez a funkcióhoz szükséges a `GET /api/order/:id` végpont is.*
 
 ### Rendelés állapotának változtatása
 
@@ -301,16 +307,19 @@ A megadott termék eltávolítása a kínálatból. Ekkor a termék értékelés
 ### Lépések
 
 - `POST /api/order` végpont meghívása a kérés testében egy `OrderRequest` objektummal
-- A jogosultság ellenőrzése, nem felhasználó esetén kérés visszautasítása
-- A beérkező `OrderRequest` objektum ellenőrzése
-  - A megjegyzés nem lehet 100 katakternél több
-  - A rendelt termékekben mindegyik mennyiség legalább 1 kell, hogy legyen
-  - Minimum egy terméket meg kell adni a rendeléshez
-  - Csak a beállított étterem nyitvatartási idejében lehet rendelést leadni
-- Valamelyik feltétel megsértése esetén a rendelés nem történik meg, válaszként egy hibaüzenet érkezik a felhasználó részére
-- `OrderRequest` objektum átalakítása egy `Order` és több `OrderProduct` entitássá
-- A rendelés alapértelmezett tulajdonságainak beállítása: létrehozás dátuma, felhasználó, állapot
-- A rendelés elmentése az adatbázisban, ennek visszaadása válaszként
+- A jogosultság ellenőrzése
+- Nem felhasználó esetén kérés visszautasítása
+- Felhasználó esetén
+  - A beérkező `OrderRequest` objektum ellenőrzése
+    - A megjegyzés nem lehet 100 karakternél több
+    - A rendelt termékekben mindegyik mennyiség legalább 1 kell, hogy legyen
+    - Minimum egy terméket meg kell adni a rendeléshez
+    - Csak a beállított étterem nyitvatartási idejében lehet rendelést leadni
+  - Valamelyik feltétel megsértése esetén a rendelés nem történik meg, válaszként egy hibaüzenet érkezik a felhasználó részére
+  - Sértetlen feltételek esetén
+    - `OrderRequest` objektum átalakítása egy `Order` és több `OrderProduct` entitássá
+    - A rendelés alapértelmezett tulajdonságainak beállítása: létrehozás dátuma, felhasználó, állapot
+    - A rendelés elmentése az adatbázisban, ennek visszaadása válaszként
 
 ### Példa kérés test
 
@@ -334,8 +343,123 @@ A megadott termék eltávolítása a kínálatból. Ekkor a termék értékelés
 }
 ```
 
-## Használati eset diagram
+## Kliensoldali szolgáltatások
 
-Az alábbi diagram szemlélteti, hogy a különböző szerepkörök mely funkciókhoz tartozó felületekhez férnek hozzá.
+Az alkalmazásban megvalósított kliensoldali szolgáltatások leírása. A szolgáltatásoknak, illetve egyes részeinek hozzáférhetősége korlátozva van felhasználói szerepek által, amit az alábbi diagram szemléltet.
+
+**Használati eset diagram**
 
 ![Használati eset diagram](/doc/use_case_diagram.png?raw=true)
+
+**Általános mellékszolgáltatások**
+- Navigációs menü, ahol csak a felhasználói szerep szerinti szolgáltatásokhoz lehet hozzáférni
+- Minden HTTP kéréssel kapcsolatos hiba (így a szerveren végzett validációk sikertelensége is) és minden művelet sikeressége megjelenik alul értesítés formájában
+- Minden szolgáltatás egységes, modern Material Design megjelenést használ, ezt még elősegíti az ikonok és a betöltésjelzők használata
+
+### Éttermek megtekintése
+
+Az étterem hálózat összes éttermének megjelenítése a teljes címével, telefonszámával és hétköznapi illetve hétvégi nyitvatartási időkkel együtt.
+
+### Regisztráció
+
+Új felhasználó regisztrációjára alkalmas űrlap. Meg kell adni az email címet, jelszót, vezeték- és keresztnevet, teljes címet (irányítószám, város, cím), telefonszámot és a választott éttermet. Város kiválasztásakor frissül a választható éttermek listája, csak a kiválasztott városban találhatóakat lehet választani. Az űrlap sikeres elküldése után létrejön a felhasználói fiók.
+
+### Bejelentkezés
+
+Már meglévő felhasználó/adminisztrátor beléptetésére szolgáló űrlap. Megfelelő email cím és jelszó páros megadásával az űrlapot elküldve beléptetésre kerülünk. Ezután megjelenik a navigációs menüben az alkalmazás többi szolgáltatása, amiket használhatunk.
+
+### Termékek megtekintése
+
+Az étterem hálózatnál rendelhető összes termék megjelenítése. Megjelenik a termék neve, kategóriája, leírása (ha van) és ára. A terméket a gombok használatával lehet hozzáadni a kosárhoz, megtekinteni az értékeléseit és eltávolítani.
+
+### Termékek megtekintése kategória alapján
+
+Ugyanazokat a lehetőségeket nyújtja, mint a termékek megtekintése, de itt csak a kiválasztott kategóriához tartozó termékek jelennek meg.
+
+### Termék hozzáadása a kosárhoz
+
+Egy terméknél a kosárhoz adás gomb megnyomásával be tudjuk tenni a terméket a kosárba, ekkor a termékből egy darab adódik a kosárhoz.
+
+### Kosár megtekintése
+
+A kosárhoz hozzáadott termékek táblázatos megjelenítése. Megjelenítésre kerül a termékek neve, ára, kosárban lévő darabszáma és egy gomb a kosárból való törlésre. A kosáron kívül megjelenik még a rendelés űrlapja is.
+
+### Termék törlése a kosárból
+
+A kosárban egy terméknél a kosárból való törlés gombjának megnyomásával törlődik a kosárból a termék, függetlenül attól, hogy hány darab volt belőle a kosárban.
+
+### Rendelés leadása
+
+A kosarat megnyitva adhatjuk le rendelésünket is. Az ehhez szükséges űrlap csak nem-üres kosár esetén jelenik meg. Itt már csak egy megjegyzést fűzhetünk hozzá rendeléshez, illetve megjelenik a rendelés végösszege. Az űrlap sikeres elküldésével létrejön a rendelés.
+
+### Felhasználó rendeléseinek megtekintése
+
+A bejelentkezett felhasználó összes rendelésének megjelenítése a rendelés dátumával és állapotával együtt. Megjelenik egy gomb is, amivel az adott rendelés további részleteit lehet megnézni.
+
+### Rendelés részleteinek megtekintése
+
+A felhasználó rendeléseinek illetve a beérkező rendelések megtekintésénél lévő részletek gomb megnyomásával megjelenik a rendelés minden tulajdonsága: rendelés dátuma, állapota, megjegyzése (ha van), végösszege, a rendelést leadó felhasználó adatai (teljes neve, teljes címe, telefonszáma és email címe), illetve minden rendelt termék részletei (termék neve, kategóriája, ára és rendelt darabszáma). Itt lehet változtatni a rendelés állapotát is.
+
+### Termék értékeléseinek megtekintése
+
+A kiválasztott termékhez írt összes értékelés megtekintése. Megjelenik az értékelés osztályzata (csillagok), dátuma, az értékelést író felhasználó teljes neve és maga az értékelés szövege. Az értékeléseken kívül megjelenik még az új értékelés írásához használható űrlap is.
+
+### Értékelés írása termékhez
+
+Egy termék értékeléseit megnyitva írhatjuk meg a saját értékelésünket is. Az itt látható űrlapon meg kell adni a terméknek szánt osztályzatot és az értékelés leírását. Sikeres elküldéskor eltárolódik és megjelenik az értékelés.
+
+### Felhasználó beállításainak megtekintése
+
+A bejelentkezett felhasználó/adminisztrátor beállításainak megjelenítése. Itt megjelenik az összes beállítás, amelyek regisztrációkor meg lettek adva, kivéve a jelszó, mivel az hashelve van tárolva.
+
+### Felhasználó beállításainak szerkesztése
+
+A bejelentkezett felhasználó/adminisztrátor beállításainak szerkesztésére alkalmas űrlap, kitöltve a jelenlegi beállításokkal. Meg kell adni az összes beállítást, amelyek regisztrációkor meg lettek adva. Az űrlap sikeres elküldésekor az összes beállítás frissül.
+
+### Beérkező rendelések megtekintése
+
+A beállított étteremhez tartozó felhasználók összes rendelésének megjelenítése a rendelés dátumával és állapotával együtt. Megjelenik egy gomb is, amivel az adott rendelés további részleteit lehet megnézni.
+
+### Rendelés állapotának változtatása
+
+Egy rendelés részleteinek megtekintésénél van lehetőség változtatni a rendelés állapotát is. Az állapotnál a legördülő listából másikat választva megváltozik a rendelés állapota.
+
+### Termék hozzáadása
+
+A termékekhez egy új termék hozzáadására szolgáló űrlap. A hozzáadandó termék nevét, leírását, árát és kategóriáját kell megadni. Az űrlap sikeres elküldése után a termék már a kínálat része lesz.
+
+### Termék eltávolítása
+
+Egy terméknél az eltávolítás gombot használva el tudjuk távolítani a terméket. Ekkor megjelenik egy megerősítés, igen és nem opciókkal. Igen választása esetén a termék eltávolításra kerül a kínálatból, illetve ezt a terméket tartalmazó rendelések részleteinél ezután törölt termékként jelenik meg.
+
+### Kijelentkezés
+
+A bejelentkezett felhasználó/adminisztrátor kiléptetése. Ekkor átirányításra kerül és a navigációs menü tartalma frissül.
+
+## Kapcsolat a szerverrel
+
+A szerver a 8080-as porton, a kliens pedig a 4200-as porton működik. Annak érdekében, hogy a kliens kommunikálni tudjon a szerverrel, bevezetünk egy proxyt, ami megfelelteti a kliens portjára érkező API hívásokat a szerver portjára érkezőknek. Így a kliens már tudja használni a szerver végpontjait.
+
+## Egy funkció folyamatának bemutatása: rendelés leadása
+
+### Feltételek
+
+- Felhasználó van bejelentkezve
+- Van termék a kosárban
+- Kosár oldal van megnyitva
+
+### Lépések (felhasználó)
+
+- Megjegyzés kitöltése
+- Űrlap elküldése
+
+### Lépések (program)
+
+- Kérés testének összeállítása a kosárban lévő termékek adatai és a megjegyzés felhasználásával
+- HTTP kérés elküldése `POST /api/order` végpontra
+- (Kérés kiértékelése szerveren)
+- Hibás HTTP státuszkódú válasz esetén a hibaüzenet megjelenítése a felhasználónak értesítésben
+- Sikeres HTTP státuszkódú válasz esetén
+  - Kosár tartalmának kiürítése session storage-ban
+  - Kosár megjelenítésének frissítése
+  - Siker megjelenítése a felhasználónak értesítésben
