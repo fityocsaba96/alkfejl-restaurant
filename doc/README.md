@@ -463,3 +463,47 @@ A szerver a 8080-as porton, a kliens pedig a 4200-as porton működik. Annak ér
   - Kosár tartalmának kiürítése session storage-ban
   - Kosár megjelenítésének frissítése
   - Siker megjelenítése a felhasználónak értesítésben
+  
+## Felhasználói dokumentáció
+
+### Ajánlott követelmények
+
+A program bármilyen operációs rendszeren futtatható.
+
+### Telepítés előtt pár szükséges lépés
+
+NodeJS és az npm amit itt lehet letölteni : www.npmjs.com/get-npm
+Internet elérés
+
+### Telepítés
+
+-Látogasson el a https://github.com/fityocsaba96/alkfejl-restaurant oldalra
+-Itt kattintson a "Clone and Download" gombra, és azon belül kattintson a "Download as Zip" gombra.
+-A letöltött állományt csomagoljuk ki
+-A szervert indítsuk el, maven indításhoz a spring-boot:run paranccsal
+-npm install parancsot adjuk ki parancssorban a kicsomagolt kliens állomány mappájában.
+-npm start-al elindíthatjuk a kliens oldali programot
+
+### Használata
+
+Böngészőben a keresősávba írjuk be http://localhost:4200/restaurants, innen tudunk elindulni a program használata során.
+Regisztrálás és bejelentkezés után használhatjuk a programot.
+
+## Tesztelés
+
+A tesztelés során 3 funkció tesztelését végeztük el. A tesztelést protractor segítségével végeztük el. 
+Protractor egy end-to-end tesztkörnyezet Angular és AngularJS alkalmazásokhoz. 
+A Protractor úgy futtatja a teszteket mintha valódi böngészőben futna, úgy használja az alkalmazást mintha egy felhasználó tenné. 
+A teszteket az npm run e2e paranccsal futtathatjuk le.
+
+### Új termék hozzáadása tesztelése
+
+Ebben a tesztesetben az új termék hozzáadása funkciót teszteltük. Itt először be kell jelentkezni az alkalmazásba mint adminisztrátor, mivel ez a funkció csak adminisztrátori jogokkal érhető el. Ezután elvégezzük a teszteket, hibás adatokkal, ahol azt várjuk, hogy hibaüzenetet kapjunk, és az új termék ne kerüljön fel a választható termékek listájára. Majd elvégzünk egy érvényes tesztesetet, itt a termék hozzákerül a termékek listájához.
+
+### Regisztráció tesztelése
+
+Itt a regisztráció funkciót ellenőrizzük. Érvénytelen adatok megadása esetén az alkalmazás nem irányít át sehova hanem egy hibaüzenetben jelzi a hibát nekünk. Érvényes adatok megadása esetén a böngésző átirányítódik a bejelentkező oldalra, innen tudjuk, hogy a regisztráció sikeres volt.
+
+### Rendelés leadása tesztelés
+
+A tesztesetben először be kell jelentkezni mint egy felhasználó. Minden tesztelés előtt hozzáadunk egy terméket a kosárhoz. Majd leteszteljük, hogy tudunk-e rendelést leadni, először hibás adatokkal, majd helyes adatokkal. Ha hibás adatokkal akarjuk leadni a rendelést, hibaüzenetet kapunk, innen tudjuk, hogy helytelen adatokkal az alkalmazás nem engedi leadni a rendelést. 
