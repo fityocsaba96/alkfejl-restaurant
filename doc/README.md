@@ -1,192 +1,94 @@
-# Dokumentáció
+# Dokumentáció - étterem
 
-## Használt technológiák, fejlesztő környezet szerver oldalon
+Egy házhozszállítás alapján működő étterem hálózat webalkalmazása, szerveroldalon Spring Boot, kliensoldalon Angular felhasználásával. Az alkalmazás funkcionalitása szerepkörök mentén eltérő. Lehetőség van a termékek megtekintésére, rendelés leadására kosár használatával, értékelés írására, illetve adminisztrátorként termék hozzáadására, törlésére, rendelések menedzselésére.
+
+## Szerver
+
+### Használt technológiák
 
 Az alkalmazás JAVA nyelven lett írva. A fejlesztéshez IntelliJ IDEA-t, a verziókezeléshez gitet használtunk.
 
-### H2
+#### H2
 
 Relációs adatbázis-kezelő rendszer, az alkalmazásban használt adatok tárolására.
 
-### Spring Boot
+#### Spring Boot
 
 Java keretrendszer, a webes funkciók támogatására, REST API szerver alkalmazás létrehozására használtuk.
 
-### Maven
+#### Maven
 
 Egy szoftver, amelyet szoftverprojektek menedzselésére és a build folyamat automatizálására lehet használni. A Maven fő komponense az úgynevezett Project Object Model (POM), ez egy buildelendő projektet ír le és annak függőségeit. Az egyes lépéseket céloknak, angolul goal-oknak nevezik. Ennél a projektnél a spring-boot:run célt használtuk.
 
-### Lombok
+#### Lombok
 
 Egy Java könyvtár, a boilerplate kód csökkentésére szolgál. Annotációkkal műkődik, egy annotáció használatakor legenerálja nekünk az annotációhoz tartozó metódusokat.
 
-### REST
+#### REST
 
 Egy szoftverarchitektúra típus elosztott szoftverek részére. Egy REST típusú architektúra kliensekből és szerverekből áll. A kliensek kéréseket indítanak a szerverek felé; a szerverek kéréseket dolgoznak fel és a megfelelő választ küldik vissza.
 
-### JPA
+#### JPA
 
 A Java Persistence API, vagy röviden JPA, egy keretrendszer a Java programozási nyelvhez, melynek fő feladata a relációs adatok kezelése. Maga az API, a javax.persistence csomagban van definiálva. A JPA tulajdonképpen egy interfészt ad, melyet implementálni lehet. Az egyik implementációja a Hibernate.
 
-### ModelMapper
+#### ModelMapper
 
 Célja az objektum feltérképezésének megkönnyítése, azáltal, hogy automatikusan meghatározza, hogy az egyik objektummodell hogyan kapcsolódik egy másikhoz.
 
-## Használt technológiák, fejlesztő környezet kliens oldalon
-
-A fejlesztéshez Angular keretrendszert használtunk. A fejlesztéshez Visual Studio Code-t, a verziókezeléshez gitet használtunk.
-
-### Angular
-
-AngularJS egy JavaScript keretrendszer. Az AngularJS kiterjeszti a HTML-attribútumokat, és adatokat köt a HTML-hez kifejezésekkel. 
-
-### Angular Material
-
-Az Angular Material egy UI komponens keretrendszer és a Google Material Design specifikációinak referenciamódszere. Az oldalakon az elemek megjelenítéséhez ezt a keretrendszert használtuk.
-
-### AJAX (Asynchronous JavaScript And XML.)
-
-A szerverrel AJAX kérésekkel történik a kommunikáció. Az AJAX lehetővé teszi a weboldalak frissítését aszinkron módon azáltal, hogy az adatokat egy webkiszolgálóval cseréli ki a háttérben. Ez azt jelenti, hogy a weblap egyes részeinek frissítése az egész oldal újbóli töltése nélkül lehetséges.
-
-### Typescript
-
-A TypeScript egy ingyenes és nyílt forrású programozási nyelv, amelyet a Microsoft fejlesztett ki és tart karban. A TypeScript használatával JavaScript-alkalmazások fejleszthetők az kliensoldali vagy szerveroldali végrehajtásra. A TypeScript nagy alkalmazások fejlesztésére és ezek JavaScript-re fordítására készült.
-
-### NPM
-
-NPM egy csomagkezelő JavaScript nyelvhez. Ez az alapértelmezett csomagkezelő a JavaScript futási környezetéhez a Node.js-hez.
-
-### HTML
-
-A HTML (angolul: HyperText Markup Language=hiperszöveges jelölőnyelv) egy leíró nyelv, melyet weboldalak készítéséhez fejlesztettek ki, és mára már internetes szabvánnyá vált a W3C (World Wide Web Consortium) támogatásával. HTML általában szöveges állományokban található meg. Ezek az állományok tartalmazzák azokat a szimbólumokat, amelyek a megjelenítő programnak leírják, hogyan is kell megjeleníteni illetve feldolgozni az adott állomány tartalmát.
-
-### CSS
-
-A stílusok a HTML megjelenítési elemei és attribútumai helyett használhatók, azoknál jóval több lehetőséget biztosítva. A stílusok meghatározzák, hogy hogyan jelenjenek meg vizuálisan a HTML elemek. A stíluslapok segítségével könnyen szét lehet választani az oldal tartalmát annak kinézetétől (a dizájntól).
-
-## Adatbázis terv
+### Adatbázis terv
 
 ![Adatbázis terv](/doc/database_design.png?raw=true)
 
-## Könyvtárstruktúra szerver oldalon
+### Könyvtárstruktúra
 
 A projektben 10 csomag található.
 
-### controller
+#### controller
 
 A controller csomagban 8 osztály található. A controller osztályok végzik az adatok validálását és továbbítását a service osztályok felé.
 
-### entity
+#### entity
 
 Az entity csomagban található osztályok az adatbázisban megjelenő táblákat reprezentálják. Egy tábla egy osztálynak felel meg. A tábla egy sora az osztály egy példánya.
 
-### entity.request
+#### entity.request
 
 A csomagban egy osztály található, amely egy egyedi kérést valósít meg. A kérésben található entitásokat reprezentálja.
 
-### entity.response
+#### entity.response
 
 A csomagban egy osztály található, amely egy egyedi választ valósít meg. A válaszban található entitásokat reprezentálja.
 
-### repository
+#### repository
 
 A repository osztályok célja, hogy jelentősen csökkentse a boilerplate kód mennyiségét. Az itt található metódusok megkönnyítik az adatok elérését az adatbázisból.
 
-### service
+#### service
 
 A service csomagban található osztályok nyújtják a logikát az adatbázis és a kliens közötti adatfolyamhoz. Az itt található metódusok oldják meg a konkrét feladatokat.
 
-### service.annotation
+#### service.annotation
 
 Ebben a csomagban egyetlen osztály található, ennek az osztálynak a segítségével tudunk annotációt rakni a metódusokra, hogy tudjuk hogy milyen autentikációs szint kell az egyes funkciókhoz.
 
-### service.exceptionhandler
+#### service.exceptionhandler
 
 A csomagban található osztály globálisan lekezeli a végpontokról érkező hibás adatok validálásakor keletkező kivételt.
 
-### service.interceptor
+#### service.interceptor
 
 Ebben a csomagban található osztály nyújtja a logikát a Role annotáció működéséhez.
 
-### service.validator
+#### service.validator
 
 Itt találhatók a végpontokról érkező adatok validálását elvégző osztályok.
 
-## Könyvtárstruktúra kliens oldalon
-
-### app
-
-Ebben a csomagban találhatóak a többi csomagok, ezen kívül az app komponens fájljai és app.module.ts található itt.
-
-### app/components
-
-Ebben találhatóak az egyes komponensek külön csomagokban.
-
-### app/components/add-product
-
-Új termék felvételéhet szükséges komponens fájljai találhatóak itt.
-
-### app/components/cart
-
-A felhasználó vásárlói kosarát megvalósító komponens fájljai.
-
-### app/components/incoming-order-list
-
-A beérkező megrendelések menedzselését megvalósító komponens fájljai.
-
-### app/components/login`
-
-A bejelentkezést megvalósító komponens található itt.
-
-### app/components/menu
-
-A menüt valósítja meg.
-
-### app/components/order
-
-Az egyes megrendelések kinézetével és menedzselésével kapcsolatos fájlok.
-
-### app/components/product
-
-Az egyes termékek kinézetével és menedzselésével kapcsolatos fájlok.
-
-### app/components/product-list
-
-Termékek listázását megvalósító komponens.
-
-### app/components/product-list-by-category
-
-A termékek listázását kategóriák szerint valósítja meg a komponens.
-
-### app/components/register`
-
-Új felhazsnálók regisztrálását megvalósító komponens.
-
-### app/components/restaurant
-
-Az egyes éttermek kinézetével és menedzselésével kapcsolatos fájlok.
-
-### app/components/restaurant-list
-
-Éttermek listázását megvalósító komponens.
-
-### app/models
-
-Ebben a csomagban található fájlok az adatbázisban megjelenő táblákat reprezentálják. Egy tábla egy osztálynak felel meg.
-
-### app/modules
-
-Ebben a könyvtárban 2 fájl található. Az egyik a végpontokat írja le, a másik az Angular Material komponenseket írja le.
-
-### app/services
-
-A models csomagban található fájlok service osztályai találhatóak itt. Ezek az entitások menedzselését valósítják meg.
-
-## Végpontok
+### Végpontok
 
 Az alkalmazásban megvalósított végpontok leírása, a hozzájuk tartozó funkció szerint csoportosítva. Zárójelben látható az adott végpont hozzáférhetősége felhasználói szerepek alapján *(A = adminisztrátor, U = felhasználó, G = vendég)*.
 
-### Regisztráció
+#### Regisztráció
 
 `GET /api/restaurants` *(A,U,G)*
 
@@ -204,19 +106,19 @@ A megadott városban található éttermek megtekintése. A megfelelő étterem 
 
 A regisztráció leadása a megadott adatok ellenőrzésével. A regisztráció visszautasításra kerül, ha a megadott email cím már létezik, vagy ha a kiválasztott étterem nem a felhasználó városában található.
 
-### Bejelentkezés
+#### Bejelentkezés
 
 `POST /api/user/login` *(G)*
 
 Email és jelszó alapján történő bejelentkezés. Ha az email cím nem létezik, vagy a hozzá tartozó jelszó nem egyezik, a bejelentkezés nem történik meg.
 
-### Kijelentkezés
+#### Kijelentkezés
 
 `POST /api/user/logout` *(A,U)*
 
 A bejelentkezett felhasználó kijelentkeztetése.
 
-### Felhasználó adatainak módosítása
+#### Felhasználó adatainak módosítása
 
 `GET /api/user/me` *(A,U)*
 
@@ -226,13 +128,13 @@ A felhasználói adatok megtekintése a módosítás oldalon az előzetes kitöl
 
 Módosított felhasználói adatok elmentése. A regisztrációnál meghatározott követelményeknek a módosítás után is teljesülnie kell.
 
-### Termékek megtekintése
+#### Termékek megtekintése
 
 `GET /api/products` *(A,U)*
 
 Az összes termék és adatainak megtekintése.
 
-### Termékek szűrése kategória alapján
+#### Termékek szűrése kategória alapján
 
 `GET /api/categories` *(A,U)*
 
@@ -242,17 +144,17 @@ Az elérhető kategóriák megtekintése a szűrés alapjának meghatározásár
 
 A megadott kategóriában található termékek és adatainak megtekintése.
 
-### Termék hozzáadása a kosárhoz
+#### Termék hozzáadása a kosárhoz
 
 *Nem szükséges végpont ehhez a funkcióhoz, a kosarat kizárólag a kliens kezeli, a szerver csak az összeállított rendelést kapja meg rendelés leadás esetén.*
 
-### Rendelés leadása
+#### Rendelés leadása
 
 `POST /api/order` *(U)*
 
 A rendelés leadása a kiválasztott termékek és azok mennyiségének megadásával. A rendelés a beállított étteremhez érkezik be. Nem lehet üres rendelést leadni, illetve zárva tartó étteremből rendelni.
 
-### Felhasználó rendeléseinek megtekintése
+#### Felhasználó rendeléseinek megtekintése
 
 `GET /api/user/me/orders` *(U)*
 
@@ -262,7 +164,7 @@ A bejelentkezett felhasználó rendeléseinek megtekintése azok adataival, áll
 
 A megadott rendelés adatainak megtekintése a rendelt termékekkel, állapottal és a végösszeggel együtt.
 
-### Termékek értékelése
+#### Termékek értékelése
 
 `GET /api/product/:id/reviews` *(A,U)*
 
@@ -272,7 +174,7 @@ A megadott termékhez beérkezett értékelések megtekintése.
 
 Új értékelés leadása a megadott termékhez. Csak akkor lehetséges, ha a felhasználó már rendelt az adott termékből, de még nem írt hozzá értékelést.
 
-### Beérkező rendelések megtekintése
+#### Beérkező rendelések megtekintése
 
 `GET /api/orders/incoming` *(A)*
 
@@ -280,7 +182,7 @@ A beállított étteremhez beérkezett rendelések megtekintése.
 
 *Ehhez a funkcióhoz szükséges a `GET /api/order/:id` végpont is.*
 
-### Rendelés állapotának változtatása
+#### Rendelés állapotának változtatása
 
 `GET /api/statuses` *(A)*
 
@@ -290,21 +192,21 @@ A beállítható állapotok megtekintése a beállítás könnyítése céljáb�
 
 A megadott rendelés állapotának változtatása a megadott új állapotra.
 
-### Termék hozzáadása
+#### Termék hozzáadása
 
 `POST /api/products` *(A)*
 
 Új termék hozzáadása a kínálathoz a megadott adatokkal. 
 
-### Termék eltávolítása
+#### Termék eltávolítása
 
 `DELETE /api/product/:id` *(A)*
 
 A megadott termék eltávolítása a kínálatból. Ekkor a termék értékelései is törlődnek, a hozzá tartozó rendelésekben pedig ezentúl törölt termékként fog megjelenni. A törölt terméket nem lehet törölni.
 
-## Egy végpont bemutatása: rendelés leadása
+### Egy végpont bemutatása: rendelés leadása
 
-### Lépések
+#### Lépések
 
 - `POST /api/order` végpont meghívása a kérés testében egy `OrderRequest` objektummal
 - A jogosultság ellenőrzése
@@ -321,7 +223,7 @@ A megadott termék eltávolítása a kínálatból. Ekkor a termék értékelés
     - A rendelés alapértelmezett tulajdonságainak beállítása: létrehozás dátuma, felhasználó, állapot
     - A rendelés elmentése az adatbázisban, ennek visszaadása válaszként
 
-### Példa kérés test
+#### Példa kérés test
 
 ```json
 {
@@ -343,7 +245,143 @@ A megadott termék eltávolítása a kínálatból. Ekkor a termék értékelés
 }
 ```
 
-## Kliensoldali szolgáltatások
+## Kliens
+
+### Használt technológiák
+
+A fejlesztéshez Angular keretrendszert használtunk. A fejlesztéshez Visual Studio Code-t, a verziókezeléshez gitet használtunk.
+
+#### Angular
+
+Angular egy JavaScript keretrendszer. Az Angular kiterjeszti a HTML-attribútumokat, és adatokat köt a HTML-hez kifejezésekkel. 
+
+#### Angular Material
+
+Az Angular Material egy UI komponens keretrendszer és a Google Material Design specifikációinak referenciamódszere. Az oldalakon az elemek megjelenítéséhez ezt a keretrendszert használtuk.
+
+#### AJAX
+
+A szerverrel AJAX kérésekkel történik a kommunikáció. Az AJAX lehetővé teszi a weboldalak frissítését aszinkron módon azáltal, hogy az adatokat egy webkiszolgálóval cseréli ki a háttérben. Ez azt jelenti, hogy a weblap egyes részeinek frissítése az egész oldal újbóli töltése nélkül lehetséges.
+
+#### Typescript
+
+A TypeScript egy ingyenes és nyílt forrású programozási nyelv, amelyet a Microsoft fejlesztett ki és tart karban. A TypeScript használatával JavaScript-alkalmazások fejleszthetők az kliensoldali vagy szerveroldali végrehajtásra. A TypeScript nagy alkalmazások fejlesztésére és ezek JavaScript-re fordítására készült.
+
+#### NPM
+
+NPM egy csomagkezelő JavaScript nyelvhez. Ez az alapértelmezett csomagkezelő a JavaScript futási környezetéhez a Node.js-hez.
+
+#### HTML
+
+A HTML egy leíró nyelv, melyet weboldalak készítéséhez fejlesztettek ki, és mára már internetes szabvánnyá vált a W3C támogatásával. HTML általában szöveges állományokban található meg. Ezek az állományok tartalmazzák azokat a szimbólumokat, amelyek a megjelenítő programnak leírják, hogyan is kell megjeleníteni illetve feldolgozni az adott állomány tartalmát.
+
+#### CSS
+
+A stílusok a HTML megjelenítési elemei és attribútumai helyett használhatók, azoknál jóval több lehetőséget biztosítva. A stílusok meghatározzák, hogy hogyan jelenjenek meg vizuálisan a HTML elemek. A stíluslapok segítségével könnyen szét lehet választani az oldal tartalmát annak kinézetétől (a dizájntól).
+
+#### Protractor
+
+Egy end-to-end tesztelést lehetővé tevő keretrendszer Angular alkalmazásokhoz. A Protractor úgy futtatja a teszteket mintha egy valódi böngészőben egy valódi felhasználó használná az alkalmazást.
+
+### Könyvtárstruktúra
+
+#### app
+
+Ebben a csomagban találhatóak a többi csomagok, az egész alkalmazást összefogó app modul, illetve az app komponens, ami tartalmazza az aloldalakon megjelenített közös részeket (navigációs menü, cím, alcím) és az értesítések megjelenítését.
+
+#### app/components
+
+Ebben találhatóak az egyes komponensek külön csomagokban.
+
+#### app/components/add-product
+
+Új termék felvételéhet szükséges komponens fájljai találhatóak itt.
+
+#### app/components/cart
+
+A felhasználó vásárlói kosarát megvalósító komponens fájljai.
+
+#### app/components/confirm-dialog
+
+Egy megerősítő dialógusablakot megvalósító komponens, amit termék törlésénél használunk.
+
+#### app/components/incoming-order-list
+
+A beérkező megrendelések menedzselését megvalósító komponens fájljai.
+
+#### app/components/login
+
+A bejelentkezést megvalósító komponens található itt.
+
+#### app/components/menu
+
+A navigációs menüt megvalósító komponens.
+
+#### app/components/order
+
+Egy megrendelés részletes adatainak megjelenítésével és a vele végezhető művelettel kapcsolatos komponens.
+
+#### app/components/order-overview
+
+Egy megrendelés áttekintő adatainak megjelenítésével kapcsolatos komponens.
+
+#### app/components/product
+
+Egy termék kinézetével és menedzselésével kapcsolatos komponens.
+
+#### app/components/product-list
+
+Termékek listázását megvalósító komponens.
+
+#### app/components/product-list-by-category
+
+A termékek listázását kategóriák szerint valósítja meg a komponens.
+
+#### app/components/product-review
+
+Egy termékhez kapcsolódó értékelés megjelenítését valósítja meg a komponens.
+
+#### app/components/product-review-list
+
+Egy termékhez kapcsolódó összes értékelés megjelenítését és új értékelés írását megvalósító komponens.
+
+#### app/components/register
+
+Új felhasználó regisztrálását megvalósító komponens.
+
+#### app/components/restaurant
+
+Egy étterem kinézetével kapcsolatos komponens.
+
+#### app/components/restaurant-list
+
+Éttermek listázását megvalósító komponens.
+
+#### app/components/user-data-form
+
+Egy felhasználó adatainak megadására és megjelenítésére, illetve azokkal valamilyen művelet elvégzésére használható komponens.
+
+#### app/components/user-order-list
+
+A bejelentkezett felhasználó rendeléseinek áttekintő megjelenítését megvalósító komponens.
+
+#### app/components/user-settings
+
+A felhasználói adatok megjelenítését és szerkesztését lehetővé tevő komponens.
+
+#### app/models
+
+Ebben a csomagban található fájlok az adatbázisban megjelenő táblákat reprezentálják. Egy tábla egy osztálynak felel meg.
+
+#### app/modules
+
+Ebben a könyvtárban 2 fájl található. Az egyik az útvonalakat írja le, a másik az Angular Material komponenseket írja le.
+
+#### app/services
+
+A models csomagban található entitások service osztályai találhatóak itt. Ezek az entitások menedzselését valósítják meg, mint pl. HTTP kérések küldése a szerver felé.
+
+### Kliensoldali szolgáltatások
 
 Az alkalmazásban megvalósított kliensoldali szolgáltatások leírása. A szolgáltatásoknak, illetve egyes részeinek hozzáférhetősége korlátozva van felhasználói szerepek által, amit az alábbi diagram szemléltet.
 
@@ -356,104 +394,104 @@ Az alkalmazásban megvalósított kliensoldali szolgáltatások leírása. A szo
 - Minden HTTP kéréssel kapcsolatos hiba (így a szerveren végzett validációk sikertelensége is) és minden művelet sikeressége megjelenik alul értesítés formájában
 - Minden szolgáltatás egységes, modern Material Design megjelenést használ, ezt még elősegíti az ikonok és a betöltésjelzők használata
 
-### Éttermek megtekintése
+#### Éttermek megtekintése
 
 Az étterem hálózat összes éttermének megjelenítése a teljes címével, telefonszámával és hétköznapi illetve hétvégi nyitvatartási időkkel együtt.
 
-### Regisztráció
+#### Regisztráció
 
 Új felhasználó regisztrációjára alkalmas űrlap. Meg kell adni az email címet, jelszót, vezeték- és keresztnevet, teljes címet (irányítószám, város, cím), telefonszámot és a választott éttermet. Város kiválasztásakor frissül a választható éttermek listája, csak a kiválasztott városban találhatóakat lehet választani. Az űrlap sikeres elküldése után létrejön a felhasználói fiók.
 
-### Bejelentkezés
+#### Bejelentkezés
 
 Már meglévő felhasználó/adminisztrátor beléptetésére szolgáló űrlap. Megfelelő email cím és jelszó páros megadásával az űrlapot elküldve beléptetésre kerülünk. Ezután megjelenik a navigációs menüben az alkalmazás többi szolgáltatása, amiket használhatunk.
 
-### Termékek megtekintése
+#### Termékek megtekintése
 
 Az étterem hálózatnál rendelhető összes termék megjelenítése. Megjelenik a termék neve, kategóriája, leírása (ha van) és ára. A terméket a gombok használatával lehet hozzáadni a kosárhoz, megtekinteni az értékeléseit és eltávolítani.
 
-### Termékek megtekintése kategória alapján
+#### Termékek megtekintése kategória alapján
 
 Ugyanazokat a lehetőségeket nyújtja, mint a termékek megtekintése, de itt csak a kiválasztott kategóriához tartozó termékek jelennek meg.
 
-### Termék hozzáadása a kosárhoz
+#### Termék hozzáadása a kosárhoz
 
 Egy terméknél a kosárhoz adás gomb megnyomásával be tudjuk tenni a terméket a kosárba, ekkor a termékből egy darab adódik a kosárhoz.
 
-### Kosár megtekintése
+#### Kosár megtekintése
 
 A kosárhoz hozzáadott termékek táblázatos megjelenítése. Megjelenítésre kerül a termékek neve, ára, kosárban lévő darabszáma és egy gomb a kosárból való törlésre. A kosáron kívül megjelenik még a rendelés űrlapja is.
 
-### Termék törlése a kosárból
+#### Termék törlése a kosárból
 
 A kosárban egy terméknél a kosárból való törlés gombjának megnyomásával törlődik a kosárból a termék, függetlenül attól, hogy hány darab volt belőle a kosárban.
 
-### Rendelés leadása
+#### Rendelés leadása
 
 A kosarat megnyitva adhatjuk le rendelésünket is. Az ehhez szükséges űrlap csak nem-üres kosár esetén jelenik meg. Itt már csak egy megjegyzést fűzhetünk hozzá rendeléshez, illetve megjelenik a rendelés végösszege. Az űrlap sikeres elküldésével létrejön a rendelés.
 
-### Felhasználó rendeléseinek megtekintése
+#### Felhasználó rendeléseinek megtekintése
 
 A bejelentkezett felhasználó összes rendelésének megjelenítése a rendelés dátumával és állapotával együtt. Megjelenik egy gomb is, amivel az adott rendelés további részleteit lehet megnézni.
 
-### Rendelés részleteinek megtekintése
+#### Rendelés részleteinek megtekintése
 
 A felhasználó rendeléseinek illetve a beérkező rendelések megtekintésénél lévő részletek gomb megnyomásával megjelenik a rendelés minden tulajdonsága: rendelés dátuma, állapota, megjegyzése (ha van), végösszege, a rendelést leadó felhasználó adatai (teljes neve, teljes címe, telefonszáma és email címe), illetve minden rendelt termék részletei (termék neve, kategóriája, ára és rendelt darabszáma). Itt lehet változtatni a rendelés állapotát is.
 
-### Termék értékeléseinek megtekintése
+#### Termék értékeléseinek megtekintése
 
 A kiválasztott termékhez írt összes értékelés megtekintése. Megjelenik az értékelés osztályzata (csillagok), dátuma, az értékelést író felhasználó teljes neve és maga az értékelés szövege. Az értékeléseken kívül megjelenik még az új értékelés írásához használható űrlap is.
 
-### Értékelés írása termékhez
+#### Értékelés írása termékhez
 
 Egy termék értékeléseit megnyitva írhatjuk meg a saját értékelésünket is. Az itt látható űrlapon meg kell adni a terméknek szánt osztályzatot és az értékelés leírását. Sikeres elküldéskor eltárolódik és megjelenik az értékelés.
 
-### Felhasználó beállításainak megtekintése
+#### Felhasználó beállításainak megtekintése
 
 A bejelentkezett felhasználó/adminisztrátor beállításainak megjelenítése. Itt megjelenik az összes beállítás, amelyek regisztrációkor meg lettek adva, kivéve a jelszó, mivel az hashelve van tárolva.
 
-### Felhasználó beállításainak szerkesztése
+#### Felhasználó beállításainak szerkesztése
 
 A bejelentkezett felhasználó/adminisztrátor beállításainak szerkesztésére alkalmas űrlap, kitöltve a jelenlegi beállításokkal. Meg kell adni az összes beállítást, amelyek regisztrációkor meg lettek adva. Az űrlap sikeres elküldésekor az összes beállítás frissül.
 
-### Beérkező rendelések megtekintése
+#### Beérkező rendelések megtekintése
 
 A beállított étteremhez tartozó felhasználók összes rendelésének megjelenítése a rendelés dátumával és állapotával együtt. Megjelenik egy gomb is, amivel az adott rendelés további részleteit lehet megnézni.
 
-### Rendelés állapotának változtatása
+#### Rendelés állapotának változtatása
 
 Egy rendelés részleteinek megtekintésénél van lehetőség változtatni a rendelés állapotát is. Az állapotnál a legördülő listából másikat választva megváltozik a rendelés állapota.
 
-### Termék hozzáadása
+#### Termék hozzáadása
 
 A termékekhez egy új termék hozzáadására szolgáló űrlap. A hozzáadandó termék nevét, leírását, árát és kategóriáját kell megadni. Az űrlap sikeres elküldése után a termék már a kínálat része lesz.
 
-### Termék eltávolítása
+#### Termék eltávolítása
 
 Egy terméknél az eltávolítás gombot használva el tudjuk távolítani a terméket. Ekkor megjelenik egy megerősítés, igen és nem opciókkal. Igen választása esetén a termék eltávolításra kerül a kínálatból, illetve ezt a terméket tartalmazó rendelések részleteinél ezután törölt termékként jelenik meg.
 
-### Kijelentkezés
+#### Kijelentkezés
 
 A bejelentkezett felhasználó/adminisztrátor kiléptetése. Ekkor átirányításra kerül és a navigációs menü tartalma frissül.
 
-## Kapcsolat a szerverrel
+### Kapcsolat a szerverrel
 
 A szerver a 8080-as porton, a kliens pedig a 4200-as porton működik. Annak érdekében, hogy a kliens kommunikálni tudjon a szerverrel, bevezetünk egy proxyt, ami megfelelteti a kliens portjára érkező API hívásokat a szerver portjára érkezőknek. Így a kliens már tudja használni a szerver végpontjait.
 
-## Egy funkció folyamatának bemutatása: rendelés leadása
+### Egy funkció folyamatának bemutatása: rendelés leadása
 
-### Feltételek
+#### Feltételek
 
 - Felhasználó van bejelentkezve
 - Van termék a kosárban
 - Kosár oldal van megnyitva
 
-### Lépések (felhasználó)
+#### Lépések (felhasználó)
 
 - Megjegyzés kitöltése
 - Űrlap elküldése
 
-### Lépések (program)
+#### Lépések (program)
 
 - Kérés testének összeállítása a kosárban lévő termékek adatai és a megjegyzés felhasználásával
 - HTTP kérés elküldése `POST /api/order` végpontra
@@ -463,47 +501,37 @@ A szerver a 8080-as porton, a kliens pedig a 4200-as porton működik. Annak ér
   - Kosár tartalmának kiürítése session storage-ban
   - Kosár megjelenítésének frissítése
   - Siker megjelenítése a felhasználónak értesítésben
-  
-## Felhasználói dokumentáció
 
-### Ajánlott követelmények
+### Tesztelés
 
-A program bármilyen operációs rendszeren futtatható.
+A tesztelés során 3 funkció tesztelését végeztük el Protractor használatával. A teszteket az npm run e2e paranccsal futtathatjuk le.
 
-### Telepítés előtt pár szükséges lépés
+#### Termék hozzáadása
 
-NodeJS és az npm amit itt lehet letölteni : www.npmjs.com/get-npm
-Internet elérés
+Ebben a tesztesetben a termék hozzáadása funkciót teszteltük. Itt először be kell jelentkezni az alkalmazásba mint adminisztrátor, mivel ez a funkció csak adminisztrátori jogokkal érhető el. Ezután elvégezzük a teszteket, hibás adatokkal, ahol azt várjuk, hogy hibaüzenetet kapjunk, és az új termék ne kerüljön fel a választható termékek listájára. Majd elvégzünk egy érvényes tesztesetet, itt a termék hozzákerül a termékek listájához.
 
-### Telepítés
-
--Látogasson el a https://github.com/fityocsaba96/alkfejl-restaurant oldalra
--Itt kattintson a "Clone and Download" gombra, és azon belül kattintson a "Download as Zip" gombra.
--A letöltött állományt csomagoljuk ki
--A szervert indítsuk el, maven indításhoz a spring-boot:run paranccsal
--npm install parancsot adjuk ki parancssorban a kicsomagolt kliens állomány mappájában.
--npm start-al elindíthatjuk a kliens oldali programot
-
-### Használata
-
-Böngészőben a keresősávba írjuk be http://localhost:4200/restaurants, innen tudunk elindulni a program használata során.
-Regisztrálás és bejelentkezés után használhatjuk a programot.
-
-## Tesztelés
-
-A tesztelés során 3 funkció tesztelését végeztük el. A tesztelést protractor segítségével végeztük el. 
-Protractor egy end-to-end tesztkörnyezet Angular és AngularJS alkalmazásokhoz. 
-A Protractor úgy futtatja a teszteket mintha valódi böngészőben futna, úgy használja az alkalmazást mintha egy felhasználó tenné. 
-A teszteket az npm run e2e paranccsal futtathatjuk le.
-
-### Új termék hozzáadása tesztelése
-
-Ebben a tesztesetben az új termék hozzáadása funkciót teszteltük. Itt először be kell jelentkezni az alkalmazásba mint adminisztrátor, mivel ez a funkció csak adminisztrátori jogokkal érhető el. Ezután elvégezzük a teszteket, hibás adatokkal, ahol azt várjuk, hogy hibaüzenetet kapjunk, és az új termék ne kerüljön fel a választható termékek listájára. Majd elvégzünk egy érvényes tesztesetet, itt a termék hozzákerül a termékek listájához.
-
-### Regisztráció tesztelése
+#### Regisztráció
 
 Itt a regisztráció funkciót ellenőrizzük. Érvénytelen adatok megadása esetén az alkalmazás nem irányít át sehova hanem egy hibaüzenetben jelzi a hibát nekünk. Érvényes adatok megadása esetén a böngésző átirányítódik a bejelentkező oldalra, innen tudjuk, hogy a regisztráció sikeres volt.
 
-### Rendelés leadása tesztelés
+#### Rendelés leadása
 
-A tesztesetben először be kell jelentkezni mint egy felhasználó. Minden tesztelés előtt hozzáadunk egy terméket a kosárhoz. Majd leteszteljük, hogy tudunk-e rendelést leadni, először hibás adatokkal, majd helyes adatokkal. Ha hibás adatokkal akarjuk leadni a rendelést, hibaüzenetet kapunk, innen tudjuk, hogy helytelen adatokkal az alkalmazás nem engedi leadni a rendelést. 
+A tesztesetben először be kell jelentkezni mint egy felhasználó. Minden tesztelés előtt hozzáadunk egy terméket a kosárhoz. Majd leteszteljük, hogy tudunk-e rendelést leadni, először hibás adatokkal, majd helyes adatokkal. Ha hibás adatokkal akarjuk leadni a rendelést, hibaüzenetet kapunk, innen tudjuk, hogy helytelen adatokkal az alkalmazás nem engedi leadni a rendelést.
+
+## Felhasználói dokumentáció
+
+#### Követelmények
+
+A program Windows, Mac és Linux operációs rendszereken futtatható. Ehhez szükséges egy Java fejlesztőkörnyezet és a [Node.js](https://nodejs.org/en).
+
+#### Telepítés
+
+- Töltsük le az alkalmazást [ezen](https://github.com/fityocsaba96/alkfejl-restaurant/archive/master.zip) a linken
+- A letöltött állományt csomagoljuk ki
+- A szervert indítsuk el egy Java fejlesztőkörnyezetben a spring-boot:run paranccsal konfigurálva
+- Adjuk ki az `npm install` parancsot parancssorban a kicsomagolt kliens mappájában
+- A kliens oldali program indítása `npm start` paranccsal
+
+#### Használata
+
+Böngészőben a címsorban nyissuk meg a localhost 4200-as portját, innen tudunk elindulni a program használata során. Regisztrálás és bejelentkezés után használhatjuk a programot.
